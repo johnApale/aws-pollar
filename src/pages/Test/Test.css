@@ -1,0 +1,7 @@
+.Test {
+    text-align: center;
+}
+
+.save__button:hover{
+    cursor: pointer;
+}
