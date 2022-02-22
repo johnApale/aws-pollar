@@ -29,14 +29,16 @@ type Poll @model {
   views: Int!
   timeStart: AWSDateTime!
   timeEnd: AWSDateTime!
-  comments: [String] #comment section is cesspool atm
+  user: [Comment] @hasMany #comment section is cesspool atm
 }
 
-type userReply @model{
+type Comment @model{
   id: ID!
   userID: ID!
   pollID: ID!
   content: [String]
+  parentComment: ID
+
 }
 enum Sex{
   MALE
