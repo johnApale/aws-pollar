@@ -32,7 +32,7 @@ type Poll @model {
   comments: [String] #comment section is cesspool atm
 }
 
-type userReply @#model{
+type userReply @model{
   id: ID!
   userID: ID!
   pollID: ID!
