@@ -29,9 +29,15 @@ type Poll @model {
   views: Int!
   timeStart: AWSDateTime!
   timeEnd: AWSDateTime!
-  comments: [Comment] @hasMany
+  comments: [String] #comment section is cesspool atm
 }
 
+type userReply @#model{
+  id: ID!
+  userID: ID!
+  pollID: ID!
+  content: [String]
+}
 enum Sex{
   MALE
   FEMALE
