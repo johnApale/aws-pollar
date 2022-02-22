@@ -2,10 +2,16 @@ input AMPLIFY {
   globalAuthRule: AuthRule = {allow: public}
 }
 
-type Blog @model {
+type User @model {
   id: ID!
-  name: String!
-  posts: [Post] @hasMany
+  username: String!
+  password: String!
+  firstName: String
+  lastName: String
+  email: AWSEmail!
+  bday: AWSDate!
+  anon: Boolean!
+  accountCreated: AWSDateTime!
 }
 
 type Poll @model {
