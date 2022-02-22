@@ -38,7 +38,7 @@ type Comment @model{
   pollID: ID!
   content: String
   parentComment: ID
-
+  createdDate: AWSDateTime!
 }
 enum Sex{
   MALE
