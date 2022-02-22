@@ -1,7 +1,7 @@
 export const schema = {
     "models": {
-        "Blog": {
-            "name": "Blog",
+        "User": {
+            "name": "User",
             "fields": {
                 "id": {
                     "name": "id",
@@ -10,26 +10,70 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "name": {
-                    "name": "name",
+                "username": {
+                    "name": "username",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
-                "posts": {
-                    "name": "posts",
-                    "isArray": true,
-                    "type": {
-                        "model": "Post"
-                    },
+                "password": {
+                    "name": "password",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "firstName": {
+                    "name": "firstName",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "blogPostsId"
-                    }
+                    "attributes": []
+                },
+                "lastName": {
+                    "name": "lastName",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "email": {
+                    "name": "email",
+                    "isArray": false,
+                    "type": "AWSEmail",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "bday": {
+                    "name": "bday",
+                    "isArray": false,
+                    "type": "AWSDate",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "anon": {
+                    "name": "anon",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "accountCreated": {
+                    "name": "accountCreated",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "sex": {
+                    "name": "sex",
+                    "isArray": false,
+                    "type": {
+                        "enum": "Sex"
+                    },
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -49,7 +93,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Blogs",
+            "pluralName": "Users",
             "attributes": [
                 {
                     "type": "model",
@@ -57,13 +101,34 @@ export const schema = {
                 }
             ]
         },
-        "Post": {
-            "name": "Post",
+        "Poll": {
+            "name": "Poll",
             "fields": {
                 "id": {
                     "name": "id",
                     "isArray": false,
                     "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "creator": {
+                    "name": "creator",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "publicity": {
+                    "name": "publicity",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "disclaimer": {
+                    "name": "disclaimer",
+                    "isArray": false,
+                    "type": "Boolean",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -74,32 +139,72 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "blog": {
-                    "name": "blog",
+                "description": {
+                    "name": "description",
                     "isArray": false,
-                    "type": {
-                        "model": "Blog"
-                    },
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "answerChoices": {
+                    "name": "answerChoices",
+                    "isArray": true,
+                    "type": "String",
                     "isRequired": false,
                     "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "blogPostsId"
-                    }
+                    "isArrayNullable": false
+                },
+                "categories": {
+                    "name": "categories",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "tags": {
+                    "name": "tags",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "likes": {
+                    "name": "likes",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "views": {
+                    "name": "views",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "timeStart": {
+                    "name": "timeStart",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "timeEnd": {
+                    "name": "timeEnd",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "comments": {
                     "name": "comments",
                     "isArray": true,
-                    "type": {
-                        "model": "Comment"
-                    },
+                    "type": "String",
                     "isRequired": false,
                     "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "postCommentsId"
-                    }
+                    "isArrayNullable": true
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -119,7 +224,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Posts",
+            "pluralName": "Polls",
             "attributes": [
                 {
                     "type": "model",
@@ -127,8 +232,8 @@ export const schema = {
                 }
             ]
         },
-        "Comment": {
-            "name": "Comment",
+        "userReply": {
+            "name": "userReply",
             "fields": {
                 "id": {
                     "name": "id",
@@ -137,25 +242,27 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "post": {
-                    "name": "post",
+                "userID": {
+                    "name": "userID",
                     "isArray": false,
-                    "type": {
-                        "model": "Post"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "postCommentsId"
-                    }
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "pollID": {
+                    "name": "pollID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "content": {
                     "name": "content",
-                    "isArray": false,
+                    "isArray": true,
                     "type": "String",
-                    "isRequired": true,
-                    "attributes": []
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -175,7 +282,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Comments",
+            "pluralName": "userReplies",
             "attributes": [
                 {
                     "type": "model",
@@ -184,7 +291,16 @@ export const schema = {
             ]
         }
     },
-    "enums": {},
+    "enums": {
+        "Sex": {
+            "name": "Sex",
+            "values": [
+                "MALE",
+                "FEMALE",
+                "OTHER"
+            ]
+        }
+    },
     "nonModels": {},
-    "version": "165944a36979cd395e3b22145bbfeff0"
+    "version": "62d9b45f90283d77118f3dea7dc7a003"
 };

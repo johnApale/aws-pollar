@@ -2,22 +2,44 @@ input AMPLIFY {
   globalAuthRule: AuthRule = {allow: public}
 }
 
-type Blog @model {
+type User @model {
   id: ID!
-  name: String!
-  posts: [Post] @hasMany
+  username: String!
+  password: String!
+  firstName: String
+  lastName: String
+  email: AWSEmail!
+  bday: AWSDate!
+  anon: Boolean!
+  accountCreated: AWSDateTime!
+  sex: Sex!
 }
 
-type Post @model {
+type Poll @model {
   id: ID!
+  creator: ID!
+  publicity: Boolean!
+  disclaimer: Boolean!
   title: String!
-  blog: Blog @belongsTo
-  comments: [Comment] @hasMany
+  description: String!
+  answerChoices: [String]!
+  categories: [String]
+  tags: [String]
+  likes: Int!
+  views: Int!
+  timeStart: AWSDateTime!
+  timeEnd: AWSDateTime!
+  comments: [String] #comment section is cesspool atm
 }
 
-type Comment @model {
+type userReply @model{
   id: ID!
-  post: Post @belongsTo
-  content: String!
+  userID: ID!
+  pollID: ID!
+  content: [String]
 }
-  
+enum Sex{
+  MALE
+  FEMALE
+  OTHER
+}
