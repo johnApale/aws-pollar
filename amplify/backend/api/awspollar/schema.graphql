@@ -8,16 +8,19 @@ type Blog @model {
   posts: [Post] @hasMany
 }
 
-type Post @model {
+type Poll @model {
   id: ID!
+  creator: ID!
+  publicity: Boolean!
+  disclaimer: Boolean!
   title: String!
-  blog: Blog @belongsTo
+  description: String!
+  answerChoices: [String]!
+  categories: [String]
+  tags: [String]
+  likes: Int!
+  views: Int!
+  timeStart: AWSDateTime!
+  timeEnd: AWSDateTime!
   comments: [Comment] @hasMany
 }
-
-type Comment @model {
-  id: ID!
-  post: Post @belongsTo
-  content: String!
-}
-  
