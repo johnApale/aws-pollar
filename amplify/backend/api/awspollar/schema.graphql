@@ -12,6 +12,7 @@ type User @model {
   bday: AWSDate!
   anon: Boolean!
   accountCreated: AWSDateTime!
+  sex: Sex!
 }
 
 type Poll @model {
@@ -29,4 +30,10 @@ type Poll @model {
   timeStart: AWSDateTime!
   timeEnd: AWSDateTime!
   comments: [Comment] @hasMany
+}
+
+enum Sex{
+  MALE
+  FEMALE
+  OTHER
 }
