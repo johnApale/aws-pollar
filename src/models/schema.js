@@ -1,7 +1,7 @@
 export const schema = {
     "models": {
-        "User": {
-            "name": "User",
+        "UserInformation": {
+            "name": "UserInformation",
             "fields": {
                 "id": {
                     "name": "id",
@@ -12,13 +12,6 @@ export const schema = {
                 },
                 "username": {
                     "name": "username",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "password": {
-                    "name": "password",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
@@ -59,21 +52,42 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "accountCreated": {
-                    "name": "accountCreated",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "sex": {
                     "name": "sex",
                     "isArray": false,
                     "type": {
                         "enum": "Sex"
                     },
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
+                },
+                "polls": {
+                    "name": "polls",
+                    "isArray": true,
+                    "type": {
+                        "model": "Poll"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "userInformationPollsId"
+                    }
+                },
+                "comments": {
+                    "name": "comments",
+                    "isArray": true,
+                    "type": {
+                        "model": "Comment"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "userInformationCommentsId"
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -93,11 +107,19 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Users",
+            "pluralName": "UserInformations",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "id"
+                        ]
+                    }
                 }
             ]
         },
@@ -111,12 +133,25 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "creator": {
-                    "name": "creator",
+                "title": {
+                    "name": "title",
                     "isArray": false,
-                    "type": "ID",
+                    "type": "String",
                     "isRequired": true,
                     "attributes": []
+                },
+                "UserInformation": {
+                    "name": "UserInformation",
+                    "isArray": false,
+                    "type": {
+                        "model": "UserInformation"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "userInformationID"
+                    }
                 },
                 "publicity": {
                     "name": "publicity",
@@ -129,13 +164,6 @@ export const schema = {
                     "name": "disclaimer",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "title": {
-                    "name": "title",
-                    "isArray": false,
-                    "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -201,10 +229,16 @@ export const schema = {
                 "comments": {
                     "name": "comments",
                     "isArray": true,
-                    "type": "String",
+                    "type": {
+                        "model": "Comment"
+                    },
                     "isRequired": false,
                     "attributes": [],
-                    "isArrayNullable": true
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "pollCommentsId"
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -221,6 +255,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "userInformationPollsId": {
+                    "name": "userInformationPollsId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
@@ -229,11 +270,19 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "id"
+                        ]
+                    }
                 }
             ]
         },
-        "userReply": {
-            "name": "userReply",
+        "Comment": {
+            "name": "Comment",
             "fields": {
                 "id": {
                     "name": "id",
@@ -242,27 +291,38 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "userID": {
-                    "name": "userID",
+                "UserInformation": {
+                    "name": "UserInformation",
                     "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
+                    "type": {
+                        "model": "UserInformation"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "userInformationID"
+                    }
                 },
-                "pollID": {
-                    "name": "pollID",
+                "Poll": {
+                    "name": "Poll",
                     "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
+                    "type": {
+                        "model": "Poll"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "pollID"
+                    }
                 },
                 "content": {
                     "name": "content",
-                    "isArray": true,
+                    "isArray": false,
                     "type": "String",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -279,14 +339,36 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "userInformationCommentsId": {
+                    "name": "userInformationCommentsId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "pollCommentsId": {
+                    "name": "pollCommentsId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
-            "pluralName": "userReplies",
+            "pluralName": "Comments",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "id"
+                        ]
+                    }
                 }
             ]
         }
@@ -295,12 +377,11 @@ export const schema = {
         "Sex": {
             "name": "Sex",
             "values": [
-                "MALE",
-                "FEMALE",
-                "OTHER"
+                "Male",
+                "Female"
             ]
         }
     },
     "nonModels": {},
-    "version": "62d9b45f90283d77118f3dea7dc7a003"
+    "version": "d10ee4f32fdfe89948c77b89cc8e8f81"
 };

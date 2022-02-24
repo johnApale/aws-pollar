@@ -1,14 +1,13 @@
 import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
 
 export enum Sex {
-  MALE = "MALE",
-  FEMALE = "FEMALE",
-  OTHER = "OTHER"
+  MALE = "Male",
+  FEMALE = "Female"
 }
 
 
 
-type UserMetaData = {
+type UserInformationMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
@@ -16,33 +15,33 @@ type PollMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type userReplyMetaData = {
+type CommentMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-export declare class User {
+export declare class UserInformation {
   readonly id: string;
   readonly username: string;
-  readonly password: string;
   readonly firstName?: string;
   readonly lastName?: string;
   readonly email: string;
   readonly bday: string;
   readonly anon: boolean;
-  readonly accountCreated: string;
-  readonly sex: Sex | keyof typeof Sex;
+  readonly sex?: Sex | keyof typeof Sex;
+  readonly polls?: (Poll | null)[];
+  readonly comments?: (Comment | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<User, UserMetaData>);
-  static copyOf(source: User, mutator: (draft: MutableModel<User, UserMetaData>) => MutableModel<User, UserMetaData> | void): User;
+  constructor(init: ModelInit<UserInformation, UserInformationMetaData>);
+  static copyOf(source: UserInformation, mutator: (draft: MutableModel<UserInformation, UserInformationMetaData>) => MutableModel<UserInformation, UserInformationMetaData> | void): UserInformation;
 }
 
 export declare class Poll {
   readonly id: string;
-  readonly creator: string;
+  readonly title: string;
+  readonly UserInformation?: UserInformation;
   readonly publicity: boolean;
   readonly disclaimer: boolean;
-  readonly title: string;
   readonly description: string;
   readonly answerChoices: (string | null)[];
   readonly categories?: (string | null)[];
@@ -51,20 +50,23 @@ export declare class Poll {
   readonly views: number;
   readonly timeStart: string;
   readonly timeEnd: string;
-  readonly comments?: (string | null)[];
+  readonly comments?: (Comment | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
+  readonly userInformationPollsId?: string;
   constructor(init: ModelInit<Poll, PollMetaData>);
   static copyOf(source: Poll, mutator: (draft: MutableModel<Poll, PollMetaData>) => MutableModel<Poll, PollMetaData> | void): Poll;
 }
 
-export declare class userReply {
+export declare class Comment {
   readonly id: string;
-  readonly userID: string;
-  readonly pollID: string;
-  readonly content?: (string | null)[];
+  readonly UserInformation?: UserInformation;
+  readonly Poll?: Poll;
+  readonly content: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<userReply, userReplyMetaData>);
-  static copyOf(source: userReply, mutator: (draft: MutableModel<userReply, userReplyMetaData>) => MutableModel<userReply, userReplyMetaData> | void): userReply;
+  readonly userInformationCommentsId?: string;
+  readonly pollCommentsId?: string;
+  constructor(init: ModelInit<Comment, CommentMetaData>);
+  static copyOf(source: Comment, mutator: (draft: MutableModel<Comment, CommentMetaData>) => MutableModel<Comment, CommentMetaData> | void): Comment;
 }
