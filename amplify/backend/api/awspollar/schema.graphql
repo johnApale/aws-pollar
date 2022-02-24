@@ -5,26 +5,25 @@ enum Sex {
   Female
 }
 
-type UserInformation @model {
-  id: ID! @primaryKey
+type User @model {
+  id: ID!
   username: String!
+  password: String!
   firstName: String
   lastName: String
   email: AWSEmail!
   bday: AWSDate!
   anon: Boolean!
-  sex: Sex
-  polls: [Poll] @hasMany
-  comments: [Comment] @hasMany
+  accountCreated: AWSDateTime!
+  sex: Sex!
 }
 
-type Poll @model{
-  id: ID! @primaryKey
-  userInformationID: ID!
-  title: String!
-  UserInformation: UserInformation @belongsTo(fields: ["userInformationID"])
+type Poll @model {
+  id: ID!
+  creator: ID!
   publicity: Boolean!
   disclaimer: Boolean!
+  title: String!
   description: String!
   answerChoices: [String]!
   categories: [String]
@@ -33,14 +32,17 @@ type Poll @model{
   views: Int!
   timeStart: AWSDateTime!
   timeEnd: AWSDateTime!
-  comments: [Comment] @hasMany
+  comments: [String] #comment section is cesspool atm
 }
 
-type Comment @model{
-  id: ID! @primaryKey
-  userInformationID: ID! 
-  pollID: ID! 
-  UserInformation: UserInformation @belongsTo(fields: ["userInformationID"])
-  Poll: Poll @belongsTo(fields: ["pollID"])
-  content: String!
+type userReply @model{
+  id: ID!
+  userID: ID!
+  pollID: ID!
+  content: [String]
+}
+enum Sex{
+  MALE
+  FEMALE
+  OTHER
 }
