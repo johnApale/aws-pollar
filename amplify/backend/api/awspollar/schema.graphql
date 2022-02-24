@@ -1,45 +1,55 @@
-input AMPLIFY {
-  globalAuthRule: AuthRule = {allow: public}
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+enum Sex {
+  Male
+  Female
 }
 
-type User @model {
-  id: ID!
+type UserInformation @model {
+  id: ID! @primaryKey
   username: String!
-  password: String!
   firstName: String
   lastName: String
   email: AWSEmail!
   bday: AWSDate!
   anon: Boolean!
-  accountCreated: AWSDateTime!
-  sex: Sex!
+  sex: Sex
+  polls: [Poll] @hasMany
+  comments: [Comment] @hasMany
 }
 
-type Poll @model {
-  id: ID!
-  creator: ID!
+type Poll @model{
+  id: ID! @primaryKey
+  userInformationID: ID!
+  title: String!
+  UserInformation: UserInformation @belongsTo(fields: ["userInformationID"])
   publicity: Boolean!
   disclaimer: Boolean!
-  title: String!
   description: String!
-  answerChoices: [String]!
+  answerChoices: [Answer]!
   categories: [String]
   tags: [String]
   likes: Int!
   views: Int!
   timeStart: AWSDateTime!
   timeEnd: AWSDateTime!
-  comments: [String] #comment section is cesspool atm
+  comments: [Comment] @hasMany
 }
 
-type userReply @model{
-  id: ID!
-  userID: ID!
+type Answer @model{
+  id: ID! @primaryKey
+  userInformationID: ID!
+  UserInformation: UserInformation @belongsTo(fields: ["userInformationID"])
   pollID: ID!
-  content: [String]
+  Poll: Poll @belongsTo(fields: ["pollID"])
+  content: String!
 }
-enum Sex{
-  MALE
-  FEMALE
-  OTHER
+
+type Comment @model{
+  id: ID! @primaryKey
+  userInformationID: ID! 
+  pollID: ID! 
+  UserInformation: UserInformation @belongsTo(fields: ["userInformationID"])
+  Poll: Poll @belongsTo(fields: ["pollID"])
+  content: String!
 }
