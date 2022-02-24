@@ -1,59 +1,40 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getBlog = /* GraphQL */ `
-  query GetBlog($id: ID!) {
-    getBlog(id: $id) {
+export const getUserInformation = /* GraphQL */ `
+  query GetUserInformation($id: ID!) {
+    getUserInformation(id: $id) {
       id
-      name
-      posts {
+      username
+      firstName
+      lastName
+      email
+      bday
+      anon
+      sex
+      polls {
         items {
           id
           title
+          publicity
+          disclaimer
+          description
+          answerChoices
+          categories
+          tags
+          likes
+          views
+          timeStart
+          timeEnd
           createdAt
           updatedAt
-          blogPostsId
+          _version
+          _deleted
+          _lastChangedAt
+          userInformationPollsId
         }
         nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listBlogs = /* GraphQL */ `
-  query ListBlogs(
-    $filter: ModelBlogFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listBlogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getPost = /* GraphQL */ `
-  query GetPost($id: ID!) {
-    getPost(id: $id) {
-      id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
+        startedAt
       }
       comments {
         items {
@@ -61,40 +42,270 @@ export const getPost = /* GraphQL */ `
           content
           createdAt
           updatedAt
-          postCommentsId
+          _version
+          _deleted
+          _lastChangedAt
+          userInformationCommentsId
+          pollCommentsId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
-      blogPostsId
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
-export const listPosts = /* GraphQL */ `
-  query ListPosts(
-    $filter: ModelPostFilterInput
+export const listUserInformations = /* GraphQL */ `
+  query ListUserInformations(
+    $filter: ModelUserInformationFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listUserInformations(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
+        username
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        polls {
+          nextToken
+          startedAt
         }
         comments {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
-        blogPostsId
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncUserInformations = /* GraphQL */ `
+  query SyncUserInformations(
+    $filter: ModelUserInformationFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncUserInformations(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        username
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        polls {
+          nextToken
+          startedAt
+        }
+        comments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getPoll = /* GraphQL */ `
+  query GetPoll($id: ID!) {
+    getPoll(id: $id) {
+      id
+      title
+      UserInformation {
+        id
+        username
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        polls {
+          nextToken
+          startedAt
+        }
+        comments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      publicity
+      disclaimer
+      description
+      answerChoices
+      categories
+      tags
+      likes
+      views
+      timeStart
+      timeEnd
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          userInformationCommentsId
+          pollCommentsId
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      userInformationPollsId
+    }
+  }
+`;
+export const listPolls = /* GraphQL */ `
+  query ListPolls(
+    $filter: ModelPollFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPolls(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        UserInformation {
+          id
+          username
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        likes
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        userInformationPollsId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncPolls = /* GraphQL */ `
+  query SyncPolls(
+    $filter: ModelPollFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncPolls(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        title
+        UserInformation {
+          id
+          username
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        likes
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        userInformationPollsId
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -102,26 +313,76 @@ export const getComment = /* GraphQL */ `
   query GetComment($id: ID!) {
     getComment(id: $id) {
       id
-      post {
+      UserInformation {
         id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
+        username
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        polls {
+          nextToken
+          startedAt
         }
         comments {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
-        blogPostsId
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      Poll {
+        id
+        title
+        UserInformation {
+          id
+          username
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        likes
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        userInformationPollsId
       }
       content
       createdAt
       updatedAt
-      postCommentsId
+      _version
+      _deleted
+      _lastChangedAt
+      userInformationCommentsId
+      pollCommentsId
     }
   }
 `;
@@ -134,19 +395,116 @@ export const listComments = /* GraphQL */ `
     listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        post {
+        UserInformation {
           id
-          title
+          username
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
           createdAt
           updatedAt
-          blogPostsId
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Poll {
+          id
+          title
+          publicity
+          disclaimer
+          description
+          answerChoices
+          categories
+          tags
+          likes
+          views
+          timeStart
+          timeEnd
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          userInformationPollsId
         }
         content
         createdAt
         updatedAt
-        postCommentsId
+        _version
+        _deleted
+        _lastChangedAt
+        userInformationCommentsId
+        pollCommentsId
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncComments = /* GraphQL */ `
+  query SyncComments(
+    $filter: ModelCommentFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncComments(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        UserInformation {
+          id
+          username
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Poll {
+          id
+          title
+          publicity
+          disclaimer
+          description
+          answerChoices
+          categories
+          tags
+          likes
+          views
+          timeStart
+          timeEnd
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          userInformationPollsId
+        }
+        content
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        userInformationCommentsId
+        pollCommentsId
+      }
+      nextToken
+      startedAt
     }
   }
 `;
