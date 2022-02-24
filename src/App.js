@@ -16,7 +16,7 @@ function App({ user, signOut }) {
         </nav>
         <Routes>
           <Route path="/" element={<Home user={user} />}></Route>
-          <Route path="poll/create" element={<CreatePoll />}></Route>
+          <Route path="poll/create" element={<CreatePoll user={user}/>}></Route>
           <Route path="test" element={<Test user={user} />}></Route>
           <Route
             path="search_results/:query"

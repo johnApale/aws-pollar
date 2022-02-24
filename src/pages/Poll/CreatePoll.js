@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./CreatePoll.css";
-import { Redirect } from "react-router-dom";
+import { DataStore } from "aws-amplify";
+import { Poll } from "../../models";
+import { USER } from "@aws-amplify/datastore/lib-esm/util";
 //import {API, graphqlOperation} from 'aws-amplify';
 //import {createPoll, updatePoll, deletePoll, createPollAnswers, updatePollAnswers, deletePollAnswers} from './graphql/mutations';
 
@@ -24,15 +26,23 @@ function CreatePoll() {
   //makePub = false;
   //disclaimer, createPoll date, Answers as an array of strings
 
-  const createPollFe = () => {
+  const createPollFe = async() => {
     addAnswer();
 
-    //const poll = { id: 001, creatorID: userID, publicity: makePub, disclaimer: disclaimer, title: title, description: summary};
-    //const answerList = {id: 001, pollID: 001, content: answers};
+    await DataStore.save(
+      new Poll({
+        id: id,
+        useerInformationID: USER.id,
+        title: title,
+        publicity: makePub,
+        disclaimer: disclaimer,
+        description: summary,
+        categories: category,
+        answerChoices: answers
 
-    //await API.graphql(graphqlOperation(createPoll, {input: poll}));
-    //await API.graphql(graphqlOperation(createPollAnswers, {input: answerList}))
-    //return <Redirect to={"/home"}/>;
+      })
+    )
+
   };
 
   const addAnswer = () => {
