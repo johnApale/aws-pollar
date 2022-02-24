@@ -1,79 +1,40 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateBlog = /* GraphQL */ `
-  subscription OnCreateBlog {
-    onCreateBlog {
+export const onCreateUserInformation = /* GraphQL */ `
+  subscription OnCreateUserInformation {
+    onCreateUserInformation {
       id
-      name
-      posts {
+      username
+      firstName
+      lastName
+      email
+      bday
+      anon
+      sex
+      polls {
         items {
           id
           title
+          publicity
+          disclaimer
+          description
+          answerChoices
+          categories
+          tags
+          likes
+          views
+          timeStart
+          timeEnd
           createdAt
           updatedAt
-          blogPostsId
+          _version
+          _deleted
+          _lastChangedAt
+          userInformationPollsId
         }
         nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateBlog = /* GraphQL */ `
-  subscription OnUpdateBlog {
-    onUpdateBlog {
-      id
-      name
-      posts {
-        items {
-          id
-          title
-          createdAt
-          updatedAt
-          blogPostsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteBlog = /* GraphQL */ `
-  subscription OnDeleteBlog {
-    onDeleteBlog {
-      id
-      name
-      posts {
-        items {
-          id
-          title
-          createdAt
-          updatedAt
-          blogPostsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreatePost = /* GraphQL */ `
-  subscription OnCreatePost {
-    onCreatePost {
-      id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
+        startedAt
       }
       comments {
         items {
@@ -81,29 +42,57 @@ export const onCreatePost = /* GraphQL */ `
           content
           createdAt
           updatedAt
-          postCommentsId
+          _version
+          _deleted
+          _lastChangedAt
+          userInformationCommentsId
+          pollCommentsId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
-      blogPostsId
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
-export const onUpdatePost = /* GraphQL */ `
-  subscription OnUpdatePost {
-    onUpdatePost {
+export const onUpdateUserInformation = /* GraphQL */ `
+  subscription OnUpdateUserInformation {
+    onUpdateUserInformation {
       id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
+      username
+      firstName
+      lastName
+      email
+      bday
+      anon
+      sex
+      polls {
+        items {
+          id
+          title
+          publicity
+          disclaimer
+          description
+          answerChoices
+          categories
+          tags
+          likes
+          views
+          timeStart
+          timeEnd
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          userInformationPollsId
         }
-        createdAt
-        updatedAt
+        nextToken
+        startedAt
       }
       comments {
         items {
@@ -111,29 +100,57 @@ export const onUpdatePost = /* GraphQL */ `
           content
           createdAt
           updatedAt
-          postCommentsId
+          _version
+          _deleted
+          _lastChangedAt
+          userInformationCommentsId
+          pollCommentsId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
-      blogPostsId
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
-export const onDeletePost = /* GraphQL */ `
-  subscription OnDeletePost {
-    onDeletePost {
+export const onDeleteUserInformation = /* GraphQL */ `
+  subscription OnDeleteUserInformation {
+    onDeleteUserInformation {
       id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
+      username
+      firstName
+      lastName
+      email
+      bday
+      anon
+      sex
+      polls {
+        items {
+          id
+          title
+          publicity
+          disclaimer
+          description
+          answerChoices
+          categories
+          tags
+          likes
+          views
+          timeStart
+          timeEnd
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          userInformationPollsId
         }
-        createdAt
-        updatedAt
+        nextToken
+        startedAt
       }
       comments {
         items {
@@ -141,13 +158,206 @@ export const onDeletePost = /* GraphQL */ `
           content
           createdAt
           updatedAt
-          postCommentsId
+          _version
+          _deleted
+          _lastChangedAt
+          userInformationCommentsId
+          pollCommentsId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
-      blogPostsId
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onCreatePoll = /* GraphQL */ `
+  subscription OnCreatePoll {
+    onCreatePoll {
+      id
+      title
+      UserInformation {
+        id
+        username
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        polls {
+          nextToken
+          startedAt
+        }
+        comments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      publicity
+      disclaimer
+      description
+      answerChoices
+      categories
+      tags
+      likes
+      views
+      timeStart
+      timeEnd
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          userInformationCommentsId
+          pollCommentsId
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      userInformationPollsId
+    }
+  }
+`;
+export const onUpdatePoll = /* GraphQL */ `
+  subscription OnUpdatePoll {
+    onUpdatePoll {
+      id
+      title
+      UserInformation {
+        id
+        username
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        polls {
+          nextToken
+          startedAt
+        }
+        comments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      publicity
+      disclaimer
+      description
+      answerChoices
+      categories
+      tags
+      likes
+      views
+      timeStart
+      timeEnd
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          userInformationCommentsId
+          pollCommentsId
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      userInformationPollsId
+    }
+  }
+`;
+export const onDeletePoll = /* GraphQL */ `
+  subscription OnDeletePoll {
+    onDeletePoll {
+      id
+      title
+      UserInformation {
+        id
+        username
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        polls {
+          nextToken
+          startedAt
+        }
+        comments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      publicity
+      disclaimer
+      description
+      answerChoices
+      categories
+      tags
+      likes
+      views
+      timeStart
+      timeEnd
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          userInformationCommentsId
+          pollCommentsId
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      userInformationPollsId
     }
   }
 `;
@@ -155,26 +365,76 @@ export const onCreateComment = /* GraphQL */ `
   subscription OnCreateComment {
     onCreateComment {
       id
-      post {
+      UserInformation {
         id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
+        username
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        polls {
+          nextToken
+          startedAt
         }
         comments {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
-        blogPostsId
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      Poll {
+        id
+        title
+        UserInformation {
+          id
+          username
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        likes
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        userInformationPollsId
       }
       content
       createdAt
       updatedAt
-      postCommentsId
+      _version
+      _deleted
+      _lastChangedAt
+      userInformationCommentsId
+      pollCommentsId
     }
   }
 `;
@@ -182,26 +442,76 @@ export const onUpdateComment = /* GraphQL */ `
   subscription OnUpdateComment {
     onUpdateComment {
       id
-      post {
+      UserInformation {
         id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
+        username
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        polls {
+          nextToken
+          startedAt
         }
         comments {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
-        blogPostsId
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      Poll {
+        id
+        title
+        UserInformation {
+          id
+          username
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        likes
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        userInformationPollsId
       }
       content
       createdAt
       updatedAt
-      postCommentsId
+      _version
+      _deleted
+      _lastChangedAt
+      userInformationCommentsId
+      pollCommentsId
     }
   }
 `;
@@ -209,26 +519,76 @@ export const onDeleteComment = /* GraphQL */ `
   subscription OnDeleteComment {
     onDeleteComment {
       id
-      post {
+      UserInformation {
         id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
+        username
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        polls {
+          nextToken
+          startedAt
         }
         comments {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
-        blogPostsId
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      Poll {
+        id
+        title
+        UserInformation {
+          id
+          username
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        likes
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        userInformationPollsId
       }
       content
       createdAt
       updatedAt
-      postCommentsId
+      _version
+      _deleted
+      _lastChangedAt
+      userInformationCommentsId
+      pollCommentsId
     }
   }
 `;

@@ -2,12 +2,16 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
+const Sex = {
+  "MALE": "Male",
+  "FEMALE": "Female"
+};
 
-
-const { Blog, Post, Comment } = initSchema(schema);
+const { UserInformation, Poll, Comment } = initSchema(schema);
 
 export {
-  Blog,
-  Post,
-  Comment
+  UserInformation,
+  Poll,
+  Comment,
+  Sex
 };
