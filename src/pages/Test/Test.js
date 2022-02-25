@@ -34,6 +34,19 @@ function Test(props) {
 
   const saveTest = async () => {
     try {
+      // await DataStore.save(
+      //   new UserInformation({
+      //     username: props.user.username,
+      //     firstName: "Colin",
+      //     lastName: "Rayburn",
+      //     email: props.user.attributes.email,
+      //     bday: "2000-12-31",
+      //     anon: false,
+      //     sex: Sex.MALE,
+      //     polls: [],
+      //     comments: [],
+      //   })
+      // );
       await DataStore.save(
         new Poll({
           userInformationID: user.id,

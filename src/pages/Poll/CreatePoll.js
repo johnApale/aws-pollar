@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./CreatePoll.css";
 import { DataStore } from "aws-amplify";
-import { Poll } from "../../models";
-import { USER } from "@aws-amplify/datastore/lib-esm/util";
+import { Poll, UserInformation } from "../../models";
 //import {API, graphqlOperation} from 'aws-amplify';
 //import {createPoll, updatePoll, deletePoll, createPollAnswers, updatePollAnswers, deletePollAnswers} from './graphql/mutations';
 
-function CreatePoll() {
+function CreatePoll(props) {
+  const [userData, setUserData] = useState([]);
+  const [user, setUser] = useState([]);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [summary, setSummary] = useState("");
-  const [disclaimer, setDisclaimer] = useState(true);
-  const [makePub, setMakePub] = useState(true);
+  const [disclaimer, setDisclaimer] = useState(false);
+  const [makePub, setMakePub] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [answer1, setAnswer1] = useState("");
   const [answer2, setAnswer2] = useState("");
@@ -21,46 +22,76 @@ function CreatePoll() {
   const [answer6, setAnswer6] = useState("");
   const [answer7, setAnswer7] = useState("");
   const [answer8, setAnswer8] = useState("");
-  const [answers, setAnswers] = useState([]);
+  const answers = [];
 
   //makePub = false;
   //disclaimer, createPoll date, Answers as an array of strings
 
-  const createPollFe = async() => {
+  useEffect(async () => {
+    setUserData(
+      await DataStore.query(UserInformation, (u) =>
+        u.username("eq", props.user.username)
+      )
+    );
+    userData.map((val, key) => {
+      setUser({
+        id: val.id,
+        username: val.username,
+        firstName: val.firstName,
+        lastName: val.lastName,
+        email: val.email,
+        bday: val.bday,
+        anon: val.anon,
+        sex: val.sex,
+      });
+    });
+  });
+
+  const createPollFe = async (event) => {
+    event.preventDefault();
     addAnswer();
-
-    await DataStore.save(
-      new Poll({
-        id: id,
-        useerInformationID: USER.id,
-        title: title,
-        publicity: makePub,
-        disclaimer: disclaimer,
-        description: summary,
-        categories: category,
-        answerChoices: answers
-
-      })
-    )
-
+    console.log(makePub);
+    console.log(disclaimer);
+    try {
+      await DataStore.save(
+        new Poll({
+          userInformationID: user.id,
+          title: title,
+          UserInformation: user,
+          publicity: makePub,
+          disclaimer: disclaimer,
+          description: summary,
+          answerChoices: answers,
+          categories: [category],
+          tags: [],
+          likes: 0,
+          views: 0,
+          timeStart: "1970-01-01T12:30:23.999Z", //need to look into how to get current date time in amazon date time format
+          timeEnd: "1970-01-01T12:30:23.999Z",
+          comments: [],
+        })
+      );
+      console.log("Post saved successfully!");
+    } catch (error) {
+      console.log("Error in saving ", error);
+    }
   };
 
   const addAnswer = () => {
-    setAnswers([
-      answer1,
-      answer2,
-      answer3,
-      answer4,
-      answer5,
-      answer6,
-      answer7,
-      answer8,
-    ]);
+    answers.push(answer1);
+    answers.push(answer2);
+    answers.push(answer3);
+    answers.push(answer4);
+    answers.push(answer5);
+    answers.push(answer6);
+    answers.push(answer7);
+    answers.push(answer8);
+
   };
 
   return (
     <div className="CreatePoll">
-      <form className="poll_form">
+      <form className="poll_form" onSubmit={createPollFe}>
         <h1>Create A Poll</h1>
         <p>Title</p>
         <input
@@ -175,7 +206,7 @@ function CreatePoll() {
         <input
           type="checkbox"
           className="makePublic"
-          onClick={(event) => {
+          onChange={(event) => {
             setMakePub(!makePub);
           }}
         />
@@ -183,7 +214,7 @@ function CreatePoll() {
         <input
           type="checkbox"
           className="disclaimer"
-          onClick={(event) => {
+          onChange={(event) => {
             setDisclaimer(!disclaimer);
             if (disclaimer == true) {
               alert(
@@ -193,14 +224,11 @@ function CreatePoll() {
           }}
         />
         Disclaimer
-        <input
+        <button
           type="submit"
           className="submit"
           value="Create Poll"
-          onClick={(e) => {
-            createPollFe();
-          }}
-        />
+          >Submit</button>
       </form>
     </div>
   );

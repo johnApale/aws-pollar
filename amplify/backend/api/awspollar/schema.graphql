@@ -26,7 +26,7 @@ type Poll @model{
   publicity: Boolean!
   disclaimer: Boolean!
   description: String!
-  answerChoices: [Answer]!
+  answerChoices: [String]!
   categories: [String]
   tags: [String]
   likes: Int!
@@ -34,15 +34,6 @@ type Poll @model{
   timeStart: AWSDateTime!
   timeEnd: AWSDateTime!
   comments: [Comment] @hasMany
-}
-
-type Answer @model{
-  id: ID! @primaryKey
-  userInformationID: ID!
-  UserInformation: UserInformation @belongsTo(fields: ["userInformationID"])
-  pollID: ID!
-  Poll: Poll @belongsTo(fields: ["pollID"])
-  content: String!
 }
 
 type Comment @model{
