@@ -17,8 +17,8 @@ function Signup(props) {
       await DataStore.save(
         new UserInformation({
           username: props.user.username,
-          firstName: "John",
-          lastName: "Apale",
+          firstName: "Colin",
+          lastName: "Rayburn",
           email: props.user.attributes.email,
           bday: "2000-12-31",
           anon: false,
