@@ -6,6 +6,7 @@ import Home from "./pages/Home/Home";
 import Test from "./pages/Test/Test";
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
+import AnswerPoll from "./pages/Poll/Poll";
 
 function App({ user, signOut }) {
   return (
@@ -18,6 +19,7 @@ function App({ user, signOut }) {
           <Route path="/" element={<Home user={user} />}></Route>
           <Route path="poll/create" element={<CreatePoll user={user}/>}></Route>
           <Route path="test" element={<Test user={user} />}></Route>
+          <Route path="poll/answer" element={<AnswerPoll user={user} />}></Route>
           <Route
             path="search_results/:query"
             element={<Search user={user} />}
