@@ -1,0 +1,409 @@
+/*
+  colors for site
+  #2b6777 (a lighter teall)
+  #c8d8e4 (greyblue-ish)
+  #ffffff (simple)
+  #f2f2f2 (lighter greywhite-ish)
+  #52ab98 (greenblue mix)
+*/
+
+body {
+    background-color:white ;
+  }
+  
+  form.answerPoll {
+    background-color: #ffffff;
+    border: black;
+    border-style: solid;
+    border-width:2px;
+    text-align: left;
+    display:inline-block;
+    width: 510px;
+    max-width: 510px;
+    margin: auto;
+    height: 405px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  div.form {
+    display: block;
+    text-align: center;
+    margin-top: 60px;
+    margin-left: 100px;
+  }
+  
+  form.comments {
+    background-color: #ffffff;
+    border: black;
+    border-style: solid;
+    border-width:2px;
+    text-align: left;
+    display:inline-block;
+    width: 510px;
+    max-width: 510px;
+    margin: auto;
+    height: 350px;
+    margin-left: auto;
+    margin-right: auto;
+  
+  }
+  
+  div.commentSection {
+    display: block;
+    text-align: center;
+    margin-top: 60px;
+    margin-left: 100px;
+  }
+  
+  span.username {
+    padding-left: 10px;
+  }
+  
+  
+  
+  h1 {
+    text-align: center;
+  }
+  
+  h2 {
+    padding-left: 40px;
+  
+  }
+  
+  div.description{
+    text-align: center;
+  }
+  
+  div.pollOptions{
+    padding-left: 150px;
+  }
+  
+  div.pollVote {
+    text-align: center;
+    border: none;
+  }
+  
+  div.userOptions{
+    text-align: center;
+    padding-left: 130px;
+  }
+  
+  div.userInput {
+    margin-left: 40px;
+  }
+  
+  div.submitComment {
+    padding-left: 410px;
+  }
+  
+  input [type = text], [type = reset] {
+    width: 200px;
+  }
+  /* style for the radio buttons */
+  
+  .options {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: -10px;
+    cursor: pointer;
+    font-size: 17px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .options input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width:0;
+  }
+  
+  .options:hover input ~ .selectOption{
+    background-color: grey;
+  }
+  
+  .options input:checked ~ .selectOption{
+    background-color:#52ab98;
+  }
+  
+  .selectOption {
+    margin-top: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    background-color: #eee;
+    border-radius: 50%;
+  }
+  
+  /*style for radio button ends */
+  
+  /* removes the bullets, margins, and padding from list*/
+  ul {
+    list-style-type: none;
+    margin: 0;
+  
+    position: sticky;
+    text-align: center;
+    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display:inline-block;
+  
+  }
+  
+  a {
+    text-decoration: none;
+    color: black;
+    text-align:center;
+  
+  }
+  
+  li {
+    display: inline;
+    text-align: center;
+  
+  }
+  
+  div.dropdown {
+    display: inline;
+    text-align: center;
+  
+  }
+  
+  div.topHeader{
+    display: block;
+    text-align: center;
+  
+  }
+  
+  div.secondMenu{
+    display:block;
+    text-align: center;
+  
+  }
+  
+  /* spacing for the navigation buttons */
+  span.space1 {
+      margin-top: 20px;
+    padding-left: 20px;
+  }
+  
+  span.space2 {
+    padding-left: 10px;
+    margin-top: 100px;
+  }
+  
+  span.space3 {
+    padding-left: 70px;
+  }
+  
+  span.space4 {
+    padding-right: 60px;
+  }
+  
+  span.space5 {
+    padding-left: 60px;
+  }
+  
+  span.space7{
+    padding-left: 110px;
+  }
+  
+  
+  /* anonymous mode slider start*/
+  .switch{
+      position: relative;
+      display: inline-block;
+      width: 30px;
+      height: 20px;
+  }
+  
+  .slider{
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+  }
+  .switch input {display: none}
+  
+  .slider:before
+  {
+      position: absolute;
+      content: "";
+      height: 15px;
+      width: 15px;
+      left: 3px;
+      bottom: 3px;
+      background-color: #fff;
+      transition: .4s;
+      border-radius: 50px;
+  }
+  
+  input:checked + .slider
+  {
+      background-color: #52ab98;
+  }
+  
+  input:checked + .slider::before
+  {
+      transform: translateX(10px);
+  }
+  
+  a:hover + button:hover{
+    color: #2b6777;
+  }
+  /* anonymous mode slider ends */
+  
+  /* dropdown menu start*/
+  .dropbtn {
+    background-color: transparent;
+    border: none;
+  }
+  
+  .dropdown {
+    position: absolute;
+    display: inline-block;
+  }
+  
+  .dropdown_content {
+    display:none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    z-index: 1;
+  }
+  
+  .dropdown_content a {
+    color:black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown_content a:hover {
+    background-color: #ddd;
+  }
+  
+  .dropdown:hover .dropdown_content {
+    display:block;
+  }
+  
+  .dropdown:hover .dropbtn {
+    background-color: #ddd;
+  }
+  /* dropdown menu ends*/
+  
+  /* Search bar start*/
+  .button {
+      display: inline-block;
+      margin: 4px 2px;
+      background-color: #444;
+      font-size: 14px;
+      padding-left: 32px;
+      padding-right: 32px;
+      height: 40px;
+      line-height: 50px;
+      text-align: center;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+  }
+  
+  .button:hover {
+      transition-duration: 0.4s;
+      -moz-transition-duration: 0.4s;
+      -webkit-transition-duration: 0.4s;
+      -o-transition-duration: 0.4s;
+      background-color: white;
+      color: black;
+  }
+  
+  .searchBar {
+      position: relative;
+      display: inline-block;
+      margin: 4px 2px;
+      height: 50px;
+      width: 50px;
+      vertical-align: bottom;
+  }
+  
+  .icon {
+      display: inline-block;
+      pointer-events: none;
+      -webkit-transform: rotate(-45deg);
+      -moz-transform: rotate(-45deg);
+      -o-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+  }
+  
+  .searchbutton {
+      position: absolute;
+      font-size: 30px;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    background-color: transparent;
+    color:black;
+  }
+  
+  .search:focus + .searchbutton {
+      transition-duration: 0.4s;
+      -moz-transition-duration: 0.4s;
+      -webkit-transition-duration: 0.4s;
+      -o-transition-duration: 0.4s;
+      background-color: white;
+      color: black;
+  }
+  
+  .search {
+      position: absolute;
+      left: 49px; /* Button width-1px (Not 50px/100% because that will sometimes show a 1px line between the search box and button) */
+      background-color: white;
+      outline: none;
+      border: none;
+      padding: 0;
+      width: 0;
+      height: 100%;
+      z-index: 10;
+      transition-duration: 0.4s;
+      -moz-transition-duration: 0.4s;
+      -webkit-transition-duration: 0.4s;
+      -o-transition-duration: 0.4s;
+  }
+  
+  .search:focus {
+      width: 363px; /* Bar width+1px */
+      padding: 0 16px 0 0;
+  }
+  
+  .expand {
+      left: auto;
+      right: 49px; /* Button width-1px */
+  }
+  
+  .expand:focus {
+      padding: 0 0 0 16px;
+  }
+  /* Search bar ends */
+  
+  div.secondMenu {
+    color: black;
+  }

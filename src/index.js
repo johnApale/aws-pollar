@@ -4,12 +4,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import "@aws-amplify/ui-react/styles.css";
-import Amplify from "aws-amplify";
+import {Amplify} from "aws-amplify";
 import config from "./aws-exports";
 import { AmplifyProvider } from "@aws-amplify/ui-react";
 
+//import NavBar from "./components/NavBar/NavBar";
+//import "./components/NavBar/NavBar.css";
+
+import awsExports from './aws-exports';
+
 // Get AWS exports to configure app
-Amplify.configure(config);
 
 ReactDOM.render(
   <AmplifyProvider>
