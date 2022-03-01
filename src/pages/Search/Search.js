@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { DataStore } from "aws-amplify";
+import { Poll } from "../../models";
 import "./Search.css";
-import Axios from "axios";
 
-function Search() {
-  let { query } = useParams();
+function Search(props) {
+  const query = useParams();
 
   const [searchList, setSearchList] = useState([]);
+
+  useEffect(async () => {
+    const models = await DataStore.query(Poll, (p) =>
+      p.title("contains", { query })
+    );
+    console.log(searchList);
+    setSearchList(models);
+  });
 
   return (
     <div className="Search">
