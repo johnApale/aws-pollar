@@ -20,7 +20,7 @@ function SearchBar({ placeholder }) {
           }}
         />
         <div className="searchButton">
-          <Link to={{ pathname: "/search_results/" + search }}>
+          <Link to={{ pathname: "/results?search_query=" + search }}>
             <img
               src={process.env.PUBLIC_URL + "/search-icon.png"}
               className="searchIcon"
