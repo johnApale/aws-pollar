@@ -193,22 +193,26 @@ const components = {
 
 export default function App() {
   return (
-    <div className="App">
-      <Router>
-        <nav>
-          <NavBar signOut={signOut} />
-        </nav>
-        <Routes>
-          <Route path="/" element={<Home user={user} />}></Route>
-          <Route path="poll/create" element={<CreatePoll user={user}/>}></Route>
-          <Route path="test" element={<Test user={user} />}></Route>
-          <Route path="poll/answer" element={<AnswerPoll user={user} />}></Route>
-          <Route
-            path="search_results/:query"
-            element={<Search user={user} />}
-          ></Route>
-        </Routes>
-      </Router>
-    </div>
+    <Authenticator>
+      {({ signOut, user}) => (
+        <div className="App">
+          <Router>
+            <nav>
+              <NavBar signOut={signOut} />
+            </nav>
+            <Routes>
+              <Route path="/" element={<Home user={user} />}></Route>
+              <Route path="poll/create" element={<CreatePoll user={user}/>}></Route>
+              <Route path="test" element={<Test user={user} />}></Route>
+              <Route path="poll/answer" element={<AnswerPoll user={user} />}></Route>
+              <Route
+                path="search_results/:query"
+                element={<Search user={user} />}
+              ></Route>
+            </Routes>
+          </Router>
+        </div>
+      )}
+    </Authenticator>
   );
 }
