@@ -5,6 +5,7 @@ import Home from "./pages/Home/Home";
 import Test from "./pages/Test/Test";
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
+import AnswerPoll from "./pages/Poll/Poll";
 
 import { Authenticator, useTheme, useAuthenticator} from "@aws-amplify/ui-react";
 import { Amplify } from 'aws-amplify';
@@ -192,27 +193,22 @@ const components = {
 
 export default function App() {
   return (
-    <Authenticator components={components}>
-      {({ signOut, user }) => (
-        <div className="App">
-          <Router>
-            <nav>
-              <NavBar signOut={signOut} />
-            </nav>
-            
-            <Routes>
-              <Route path="/" element={<Home user={user} />}></Route>
-              <Route path="poll/create" element={<CreatePoll user={user}/>}></Route>
-              <Route path="test" element={<Test user={user} />}></Route>
-              <Route
-                path="search_results/:query"
-                element={<Search user={user} />}
-              ></Route>
-            </Routes>
-          </Router>
-        </div>
-        )
-      }
-    </Authenticator>
+    <div className="App">
+      <Router>
+        <nav>
+          <NavBar signOut={signOut} />
+        </nav>
+        <Routes>
+          <Route path="/" element={<Home user={user} />}></Route>
+          <Route path="poll/create" element={<CreatePoll user={user}/>}></Route>
+          <Route path="test" element={<Test user={user} />}></Route>
+          <Route path="poll/answer" element={<AnswerPoll user={user} />}></Route>
+          <Route
+            path="search_results/:query"
+            element={<Search user={user} />}
+          ></Route>
+        </Routes>
+      </Router>
+    </div>
   );
 }
