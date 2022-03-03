@@ -18,7 +18,7 @@ function Search(props) {
     } catch (error) {
       console.log(error);
     }
-  });
+  }, [query]);
 
   return (
     <div className="Search">
