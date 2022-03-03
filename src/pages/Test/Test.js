@@ -14,20 +14,14 @@ function Test(props) {
   // get userinformation data and store into user object
   useEffect(async () => {
     setUserData(
-      await DataStore.query(UserInformation, (u) =>
-        u.username("eq", props.user.username)
+      await DataStore.query(Poll, (u) =>
+        u.id("eq", "942c8a6e-1cd1-4077-aa5b-6eb0d4f3dd77")
       )
     );
     userData.map((val, key) => {
       setUser({
         id: val.id,
-        username: val.username,
-        firstName: val.firstName,
-        lastName: val.lastName,
-        email: val.email,
-        bday: val.bday,
-        anon: val.anon,
-        sex: val.sex,
+        title: val.title,
       });
     });
   });

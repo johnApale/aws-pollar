@@ -1,13 +1,32 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import "./SearchBar.css";
-// import Home from "../../pages/Home/Home";
-// import Poll from "../../pages/Poll/Poll";
-import Search from "../../pages/Search/Search";
 
 function SearchBar({ placeholder }) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState();
   const navigate = useNavigate();
+
+  const handleSearch = (event) => {
+    setSearch({ query: event.target.value });
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.code === "Enter") {
+      goToResults();
+    }
+  };
+
+  const goToResults = () => {
+    if (!search) {
+      navigate("/");
+    } else {
+      navigate({
+        pathname: "/results",
+        search: `?${createSearchParams(search)}`,
+        replace: true,
+      });
+    }
+  };
 
   return (
     <div className="search">
@@ -15,17 +34,15 @@ function SearchBar({ placeholder }) {
         <input
           type="text"
           placeholder={placeholder}
-          onChange={(event) => {
-            setSearch(event.target.value);
-          }}
+          onChange={handleSearch}
+          onKeyPress={handleKeyPress}
         />
         <div className="searchButton">
-          <Link to={{ pathname: "/search_results/" + search }}>
-            <img
-              src={process.env.PUBLIC_URL + "/search-icon.png"}
-              className="searchIcon"
-            />
-          </Link>
+          <img
+            src={process.env.PUBLIC_URL + "/search-icon.png"}
+            className="searchIcon"
+            onClick={goToResults}
+          />
         </div>
       </div>
     </div>
