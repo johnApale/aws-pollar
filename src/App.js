@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./pages/Home/Home";

@@ -113,6 +113,7 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    margin-top: 10px;
   }
   
   .options input {
@@ -121,6 +122,7 @@ body {
     cursor: pointer;
     height: 0;
     width:0;
+    
   }
   
   .options:hover input ~ .selectOption{
@@ -132,7 +134,6 @@ body {
   }
   
   .selectOption {
-    margin-top: 20px;
     position: absolute;
     top: 0;
     left: 0;
@@ -140,6 +141,7 @@ body {
     width: 15px;
     background-color: #eee;
     border-radius: 50%;
+    padding-left:20px ;
   }
   
   /*style for radio button ends */
@@ -191,13 +193,13 @@ body {
   
   /* spacing for the navigation buttons */
   span.space1 {
-      margin-top: 20px;
+    margin-top: 20px;
     padding-left: 20px;
   }
   
   span.space2 {
-    padding-left: 10px;
-    margin-top: 100px;
+    padding-left: 20px;
+    margin-top: 20px;
   }
   
   span.space3 {
