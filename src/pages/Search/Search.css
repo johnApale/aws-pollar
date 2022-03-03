@@ -1,0 +1,33 @@
+
+.search__results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.poll_results {
+    background-color: whitesmoke;
+    margin: 30px;
+    padding-top: 1px;
+    padding-left: 15px;
+    width: 510px;
+    height: 150px;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 5px 5px;
+}
+
+.poll_results p{
+    font-size: 9pt;
+    display: inline-block;
+}
+
+.views, .likes{
+    padding-right: 20px;
+}
+
+.created {
+    float: right;
+    padding-right: 20px;
+}
