@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"
 import "./CreatePoll.css";
 import { DataStore } from "aws-amplify";
 import { Poll, UserInformation } from "../../models";
@@ -6,6 +7,7 @@ import { Poll, UserInformation } from "../../models";
 //import {createPoll, updatePoll, deletePoll, createPollAnswers, updatePollAnswers, deletePollAnswers} from './graphql/mutations';
 
 function CreatePoll(props) {
+  const nav = useNavigate();
   const [userData, setUserData] = useState([]);
   const [user, setUser] = useState([]);
   const [title, setTitle] = useState("");
@@ -45,6 +47,9 @@ function CreatePoll(props) {
         sex: val.sex,
       });
     });
+    return () => {
+      setUser([]);
+    }
   });
 
   const createPollFe = async (event) => {
@@ -72,9 +77,13 @@ function CreatePoll(props) {
         })
       );
       console.log("Post saved successfully!");
+      nav("/");
+
     } catch (error) {
       console.log("Error in saving ", error);
     }
+
+    //
   };
 
   const addAnswer = () => {
@@ -216,7 +225,7 @@ function CreatePoll(props) {
           className="disclaimer"
           onChange={(event) => {
             setDisclaimer(!disclaimer);
-            if (disclaimer == true) {
+            if (disclaimer === true) {
               alert(
                 "We take precautions to protect your information when engaging in activity within our site. By providing us with your information, you consent to our collection, use, and disclosure of that information that you voluntarily give us through Pollar. By agreeing to these terms, your information will be collected for the analytics of this poll."
               );
