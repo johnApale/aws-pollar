@@ -34,7 +34,7 @@ const components = {
       <View textAlign="center" padding={tokens.space.large}>
         <Image
           alt="Amplify logo"
-          src="https://docs.amplify.aws/assets/logo-dark.svg"
+          src={process.env.PUBLIC_URL + "/transparentpolarbear.png"}
         />
       </View>
     );
@@ -46,7 +46,7 @@ const components = {
     return (
       <View textAlign="center" padding={tokens.space.large}>
         <Text color={`${tokens.colors.neutral["80"]}`}>
-          &copy; All Rights Reserved
+          &copy; Not intended for public distribution
         </Text>
       </View>
     );
@@ -61,7 +61,7 @@ const components = {
           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
           level={3}
         >
-          Sign in to your account
+          Pollar Sign In
         </Heading>
       );
     },
@@ -76,7 +76,7 @@ const components = {
             size="small"
             variation="link"
           >
-            Reset Password
+            Forgot your password? Reset
           </Button>
         </View>
       );
@@ -92,7 +92,7 @@ const components = {
           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
           level={3}
         >
-          Create a new account
+          Create a new Pollar account
         </Heading>
       );
     },
@@ -142,7 +142,7 @@ const components = {
       );
     },
     Footer() {
-      return <Text>Footer Information</Text>;
+      return <Text>aa</Text>;
     },
   },
   ConfirmSignIn: {
@@ -161,6 +161,7 @@ const components = {
       return <Text>Footer Information</Text>;
     },
   },
+  
   ResetPassword: {
     Header() {
       const { tokens } = useTheme();
@@ -169,14 +170,15 @@ const components = {
           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
           level={3}
         >
-          Enter Information:
+          Please Provide Your Username
         </Heading>
       );
     },
     Footer() {
-      return <Text>Footer Information</Text>;
+      return <Text>Your Reset Code will be sent via Email</Text>;
     },
   },
+  
   ConfirmResetPassword: {
     Header() {
       const { tokens } = useTheme();
@@ -185,12 +187,12 @@ const components = {
           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
           level={3}
         >
-          Enter Information:
+          Create a New Password
         </Heading>
       );
     },
     Footer() {
-      return <Text>Footer Information</Text>;
+      return <Text>Your new password cannot match your previous password</Text>;
     },
   },
 };
@@ -264,7 +266,7 @@ const formFields = {
 
 export default function App() {
   return (
-    <Authenticator formFields={formFields}>
+    <Authenticator formFields={formFields} components={components}>
       {({ signOut, user }) => (
         <div className="App">
           <Router>

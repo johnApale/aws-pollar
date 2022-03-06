@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import "./Poll.css"
 import { DataStore } from "aws-amplify";
 import { Poll, Sex, UserInformation } from "../../models";
+//import { Alert } from "@aws-amplify/ui-react";
 
 function AnswerPoll(props) {
   const [creatorInfo, setCreatorInfo] = useState([]);
@@ -10,7 +11,6 @@ function AnswerPoll(props) {
   const [post, setPost] = useState([]);
   const [answers, setAnswers] = useState([]);
   
-
 
   useEffect(async () => {
     setPostData(
@@ -71,9 +71,15 @@ function AnswerPoll(props) {
     
   //   setPost(models);
   // };
+  
+  const [copySuccess, setCopySuccess] = useState("")
+  const textAreaRef = useRef(null)
 
-
-
+  async function copyToClip() {
+      await navigator.clipboard.writeText(location.href);
+      setCopySuccess("Copied");
+      alert("URL copied!");
+  }
   
   return (
       <body>
@@ -98,11 +104,11 @@ function AnswerPoll(props) {
         <div class = "pollOptions">
           <label class = "options"> 
             <input type = "radio" name = "radio" id = "option1"></input>
-            <span class = "selectOption">option1:{post.answerList[0]}</span>
+            <span class = "selectOption">option1:</span>
           </label><br/>
           <label class = "options"> 
             <input type = "radio" name = "radio" id = "option2"/>
-            <span class = "selectOption">option2:{post.answerList[1]}</span>
+            <span class = "selectOption">option2:</span>
           </label><br/>
           <label class = "options"> 
             <input type = "radio" name = "radio" id = "option3"/>
@@ -138,7 +144,7 @@ function AnswerPoll(props) {
     <button type = "button" id = "likeBttn"> Like: {post.likes}</button>
     <button type = "button" id = "changeAns"> Change Answer </button>
     <button type = "button" id = "removeAns"> Remove Answer</button>
-    <button type = "button" id = "shareBttn"> Share </button>
+    <button onClick={copyToClip} type = "button" id = "shareBttn"> Share </button>
   </div>
   </body>
   );
