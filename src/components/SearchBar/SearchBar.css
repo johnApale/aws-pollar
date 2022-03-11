@@ -1,5 +1,6 @@
 .searchInput {
     display: flex;
+    width:200px;
 }
 
 .search input {
@@ -8,11 +9,16 @@
     padding: 15px;
     padding-right: 0px;
     height: 40px;
-    width: 30vw;
+    width: 220px;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     border-width: 1px;
     border-right: none;
+    position:relative; 
+    top:-165px;
+    right:165px;
+    
+    
 }
 
 .searchButton {
@@ -23,6 +29,10 @@
     border-bottom-right-radius: 20px;
     width: 50px;
     height: 40px;
+    position:relative; 
+    top:-165px;
+    right:165px;
+
 }
 
 .searchIcon {
