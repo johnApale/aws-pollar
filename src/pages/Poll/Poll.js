@@ -75,11 +75,11 @@ function AnswerPoll(props) {
   const [copySuccess, setCopySuccess] = useState("")
   const textAreaRef = useRef(null)
 
-  async function copyToClip() {
-      await navigator.clipboard.writeText(location.href);
-      setCopySuccess("Copied");
-      alert("URL copied!");
-  }
+  //async function copyToClip() {
+    //  await navigator.clipboard.writeText(location.href);
+      //setCopySuccess("Copied");
+      //alert("URL copied!");
+  //}
   
   return (
       <body>
@@ -144,7 +144,7 @@ function AnswerPoll(props) {
     <button type = "button" id = "likeBttn"> Like: {post.likes}</button>
     <button type = "button" id = "changeAns"> Change Answer </button>
     <button type = "button" id = "removeAns"> Remove Answer</button>
-    <button onClick={copyToClip} type = "button" id = "shareBttn"> Share </button>
+    <button  type = "button" id = "shareBttn"> Share </button>
   </div>
   </body>
   );
