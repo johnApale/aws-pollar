@@ -18,6 +18,7 @@
   .CreatePoll {
     margin-top: 5%;
     margin-left: 30%;
+    top:90px;
   }  
   .poll_form{
     background-color: #ffffff;
@@ -31,7 +32,8 @@
     height: auto;
     padding-top: 3%;
     padding-bottom: 3%;
-  
+    position: relative;
+    top:-190px;
   }
   
   
@@ -56,6 +58,7 @@
     text-align: center;
     margin:auto;
     display: flex;
+    
   
   }
   

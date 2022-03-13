@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import "./Poll.css"
 import { DataStore } from "aws-amplify";
 import { Poll, Sex, UserInformation } from "../../models";
@@ -13,7 +13,6 @@ function AnswerPoll(props) {
   
   
   
-
 
   useEffect(async () => {
     try{   
@@ -114,7 +113,7 @@ function AnswerPoll(props) {
     <button type = "button" id = "likeBttn"> Like: {post.likes}</button>
     <button type = "button" id = "changeAns"> Change Answer </button>
     <button type = "button" id = "removeAns"> Remove Answer</button>
-    <button type = "button" id = "shareBttn"> Share </button>
+    <button  type = "button" id = "shareBttn"> Share </button>
   </div>
   </body>
   );
