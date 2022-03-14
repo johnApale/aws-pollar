@@ -233,6 +233,7 @@ function CreatePoll(props) {
           }}
         />
         Disclaimer
+        <br></br>
         <button
           type="submit"
           className="submit"
