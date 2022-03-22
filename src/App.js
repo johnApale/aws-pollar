@@ -10,6 +10,7 @@ import AnswerPoll from "./pages/Poll/Poll";
 
 
 
+
 import {
   Authenticator,
   useTheme,
@@ -35,7 +36,7 @@ const components = {
     return (
       <View textAlign="center" padding={tokens.space.large}>
         <Image
-          alt="Amplify logo"
+          alt="Amplify logo" width="210px" height="320px" position = "relative" top="140px"
           src={process.env.PUBLIC_URL + "/transparentpolarbear.png"}
         />
       </View>
@@ -61,7 +62,7 @@ const components = {
       return (
         <Heading
           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
+          level={3} 
         >
           Pollar Sign In
         </Heading>
@@ -94,7 +95,7 @@ const components = {
           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
           level={3}
         >
-          Create a new Pollar account
+          Create a New Pollar Account
         </Heading>
       );
     },

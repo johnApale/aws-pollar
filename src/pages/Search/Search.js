@@ -22,7 +22,7 @@ function Search(props) {
 
   return (
     <div className="Search">
-      <h1>Search for {query}</h1>
+      <h1 className="result_title">Search for {query}</h1>
 
       <div className="search__results">
         {searchList.map((val, key) => {
