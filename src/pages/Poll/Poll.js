@@ -41,10 +41,18 @@ function AnswerPoll(props) {
     //   });
     // });
 
-  
+  const [copySuccess, setCopySuccess] = useState("")
+  const textAreaRef = useRef(null)
 
+  async function copyToClip() {
+      await navigator.clipboard.writeText(location.href);
+      setCopySuccess("Copied");
+      alert("URL copied!");
+  }
 
-
+  async function removeAlert() {
+    alert("Your answer has been removed.");
+  }
   
   return (
       <body>
@@ -54,7 +62,7 @@ function AnswerPoll(props) {
             return(
               <><span class="username">
                 <p1> Creator: {val.UserInformation.username}</p1>
-              </span><br /><h1>Title:{val.title}</h1><div class="description">
+              </span><br /><h1>{val.title}</h1><div class="description">
                 </div><div class="pollOptions">
                   <label class="options">
                     <input type="radio" name="radio" id="option1"></input>
@@ -112,8 +120,8 @@ function AnswerPoll(props) {
   <br/><div class = "userOptions" >
     <button type = "button" id = "likeBttn"> Like: {post.likes}</button>
     <button type = "button" id = "changeAns"> Change Answer </button>
-    <button type = "button" id = "removeAns"> Remove Answer</button>
-    <button  type = "button" id = "shareBttn"> Share </button>
+    <button onClick={removeAlert} type = "button" id = "removeAns"> Remove Answer</button>
+    <button onClick={copyToClip} type = "button" id = "shareBttn"> Share </button>
   </div>
   </body>
   );
