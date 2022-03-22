@@ -6,13 +6,9 @@ import { useNavigate } from "react-router-dom"
 
 function AnswerPoll(props) {
   const nav = useNavigate();
-  const [numAnswers, setNumAnswer] = useState();
   const [postData, setPostData] = useState([]);
   const [post, setPost] = useState([]);
-  //const timer = setTimeout(() => console.log('Initial timeout!'), 10000);
-  
-  
-  
+  const [selectedAnswer, setSelectedAnswer] = useState("");
 
   useEffect(async () => {
     try{   
@@ -23,23 +19,6 @@ function AnswerPoll(props) {
       console.log(error);
     }
     },[]);
-    
-
-    
-    //setAnswers(post.answerChoices);
-
-  
-    // setCreatorInfo(
-    //   await DataStore.query(UserInformation, (u) =>
-    //     u.id("eq", post.userInformationID)
-    //   )
-    // );
-    // creatorInfo.map((val, key) => {
-    //   setCreator({
-    //     id: val.id,
-    //     username: val.username,
-    //   });
-    // });
 
   const [copySuccess, setCopySuccess] = useState("")
   const textAreaRef = useRef(null)
