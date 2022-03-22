@@ -91,6 +91,7 @@
     background-color: #2b6777;
     color: white;
     border-radius: 2px;
+
     
   }
   .disclaimer {
@@ -98,6 +99,14 @@
     width: 13px;
   }
   
+  .submit {
+    border: none;
+    background-color: #2b6777;
+    color: white;
+    position: relative;
+    left:210px;
+    border-radius: 2px;;
+  }
   
   
   /* for the title section heading */

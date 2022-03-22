@@ -4,6 +4,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position:relative; 
+    top:-190px;
 }
 
 .poll_results {
@@ -13,9 +15,9 @@
     padding-left: 15px;
     width: 510px;
     height: 150px;
-    border: 1px solid black;
+    border: 1px #ecebeb;
     border-radius: 5px;
-    box-shadow: 5px 5px;
+    box-shadow: 5px 5px 15px 6px hsl(196, 23%, 78%);
 }
 
 .poll_results p{
@@ -25,9 +27,28 @@
 
 .views, .likes{
     padding-right: 20px;
+    position: relative;
+    top:35px;
 }
 
 .created {
     float: right;
     padding-right: 20px;
+    position: relative;
+    top:40px;
+}
+
+.result_title{
+    position:relative; 
+    top:-180px;
+}
+
+h4 {
+    position:relative; 
+    top:20px;
+    font-size: 20px;
+}
+h3 {
+    position:relative; 
+    top:5px;
 }
