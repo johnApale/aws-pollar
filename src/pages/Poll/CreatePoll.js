@@ -50,7 +50,7 @@ function CreatePoll(props) {
     return () => {
       setUser([]);
     }
-  });
+  }, [user]);
 
   const createPollFe = async (event) => {
     event.preventDefault();
@@ -82,8 +82,6 @@ function CreatePoll(props) {
     } catch (error) {
       console.log("Error in saving ", error);
     }
-
-    //
   };
 
   const addAnswer = () => {
@@ -225,7 +223,7 @@ function CreatePoll(props) {
           className="disclaimer"
           onChange={(event) => {
             setDisclaimer(!disclaimer);
-            if (disclaimer === true) {
+            if (disclaimer) {
               alert(
                 "We take precautions to protect your information when engaging in activity within our site. By providing us with your information, you consent to our collection, use, and disclosure of that information that you voluntarily give us through Pollar. By agreeing to these terms, your information will be collected for the analytics of this poll."
               );

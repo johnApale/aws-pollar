@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import "./NavBar.css";
 import SearchBar from "../SearchBar/SearchBar";
-import 'bootstrap/dist/css/bootstrap.css';
+//import 'bootstrap/dist/css/bootstrap.css';
 import Popup from './Popup';
-import Dropdown from 'react-bootstrap/Dropdown';
+//import Dropdown from 'react-bootstrap/Dropdown';
 
 function NavBar(props) {
   const[isOpen, setIsOpen] = useState(false);
@@ -18,7 +18,8 @@ function NavBar(props) {
     <div style={{ display: 'inline-block', 
                   width: 700, 
                   padding: 30, position:"relative",top:'-25px', left:'290px'}}>
-      <Dropdown>
+
+      {/* <Dropdown>
         <Dropdown.Toggle variant="white" size = "lg">
         &#9776;
         </Dropdown.Toggle>
@@ -36,7 +37,8 @@ function NavBar(props) {
             Sign Out 
           </Dropdown.Item>
         </Dropdown.Menu>
-      </Dropdown>
+      </Dropdown> */}
+
     </div>
      
       <div className="homebttn">
