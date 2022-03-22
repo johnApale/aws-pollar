@@ -7,11 +7,12 @@ const Sex = {
   "FEMALE": "Female"
 };
 
-const { UserInformation, Poll, Comment } = initSchema(schema);
+const { UserInformation, Poll, Comment, UserResponse } = initSchema(schema);
 
 export {
   UserInformation,
   Poll,
   Comment,
+  UserResponse,
   Sex
 };

@@ -291,31 +291,19 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "UserInformation": {
-                    "name": "UserInformation",
+                "userInformationID": {
+                    "name": "userInformationID",
                     "isArray": false,
-                    "type": {
-                        "model": "UserInformation"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "userInformationID"
-                    }
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 },
-                "Poll": {
-                    "name": "Poll",
+                "pollID": {
+                    "name": "pollID",
                     "isArray": false,
-                    "type": {
-                        "model": "Poll"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "pollID"
-                    }
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "content": {
                     "name": "content",
@@ -371,6 +359,71 @@ export const schema = {
                     }
                 }
             ]
+        },
+        "UserResponse": {
+            "name": "UserResponse",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userInformationID": {
+                    "name": "userInformationID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "pollID": {
+                    "name": "pollID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "content": {
+                    "name": "content",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "UserResponses",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "id"
+                        ]
+                    }
+                }
+            ]
         }
     },
     "enums": {
@@ -383,5 +436,5 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "version": "d10ee4f32fdfe89948c77b89cc8e8f81"
+    "version": "37d340a682a1775455dc10f4cb87eb1e"
 };

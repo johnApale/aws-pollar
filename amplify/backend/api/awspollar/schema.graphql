@@ -40,7 +40,12 @@ type Comment @model{
   id: ID! @primaryKey
   userInformationID: ID! 
   pollID: ID! 
-  UserInformation: UserInformation @belongsTo(fields: ["userInformationID"])
-  Poll: Poll @belongsTo(fields: ["pollID"])
+  content: String!
+}
+
+type UserResponse @model{
+  id: ID! @primaryKey
+  userInformationID: ID!
+  pollID: ID!
   content: String!
 }

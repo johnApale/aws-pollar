@@ -19,6 +19,10 @@ type CommentMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
+type UserResponseMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 export declare class UserInformation {
   readonly id: string;
   readonly username: string;
@@ -60,8 +64,8 @@ export declare class Poll {
 
 export declare class Comment {
   readonly id: string;
-  readonly UserInformation?: UserInformation;
-  readonly Poll?: Poll;
+  readonly userInformationID: string;
+  readonly pollID: string;
   readonly content: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
@@ -69,4 +73,15 @@ export declare class Comment {
   readonly pollCommentsId?: string;
   constructor(init: ModelInit<Comment, CommentMetaData>);
   static copyOf(source: Comment, mutator: (draft: MutableModel<Comment, CommentMetaData>) => MutableModel<Comment, CommentMetaData> | void): Comment;
+}
+
+export declare class UserResponse {
+  readonly id: string;
+  readonly userInformationID: string;
+  readonly pollID: string;
+  readonly content: string;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<UserResponse, UserResponseMetaData>);
+  static copyOf(source: UserResponse, mutator: (draft: MutableModel<UserResponse, UserResponseMetaData>) => MutableModel<UserResponse, UserResponseMetaData> | void): UserResponse;
 }
