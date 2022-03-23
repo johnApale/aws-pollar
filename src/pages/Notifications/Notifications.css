@@ -1,0 +1,31 @@
+.bellIcon {
+    width: 25px;
+    height:25px;
+    position: relative;
+    right:300px;
+    top:8px;
+}
+
+.header {
+    width:800px;
+    height:50px;
+    border-style: double;
+    border: 2px solid black;
+}
+
+.title{
+    font-size: 23px;
+    position: relative;
+    right:295px;
+    top:5px;
+    font-weight: 300;
+}
+
+.user_notifications{
+    width: 400px;
+    height: 150px;
+    border:2px solid black;
+    align-content: center;
+    position: relative;
+    top:100px;
+}
