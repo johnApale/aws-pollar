@@ -1,0 +1,79 @@
+.userCreation{
+    width: 500px;
+    height:500px;
+    border: 1px solid black; 
+    border-radius: 30px;
+    position: relative;
+    display:flex;
+    top:120px;
+    overflow: hidden;
+    left:20px;
+    
+}
+
+.submitInfo{
+    border-radius: 25px;
+    border:none; 
+    background-color: #a4d9f8;
+    color:white;
+    font-weight: 800;
+    position: relative;
+    bottom:-80px;
+    left:110px;
+}
+
+.fN, .lN, .bday, .sx {
+    font-weight: 200;
+    position: relative;
+    right:38px;
+    top:35px;
+
+}
+.fN, .lN {
+    position: relative;
+    left:-10px;
+}
+.bday{
+    position: relative;
+    right:45px;
+    left: -17px;
+}
+.sx {
+    position: relative;
+    right:61px;
+    top:45px;
+    left:-30px;
+}
+
+.userSex {
+    position: relative;
+    right:42px;
+    top:35px;
+    left:-10px;
+}
+
+.userBirthday {
+    position: relative;
+    top:40px;
+    left:30px;
+}
+
+.firstN, .lastN {
+    border-top:1px;
+    border-color:#a4d9f8;
+    border-left: none;
+    border-right:none;
+    position: relative;
+    left:105px;
+    width:300px; 
+    top:35px;
+}
+
+.title{
+    position: relative;
+    left:100px;
+    font-weight:300;
+    
+}
+
+
