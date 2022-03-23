@@ -7,7 +7,7 @@ import Test from "./pages/Test/Test";
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
 import AnswerPoll from "./pages/Poll/Poll";
-import myNotifications from "./pages/Notifications/Notifications";
+import Notification from "./pages/Notifications/Notifications";
 
 import {
   Authenticator,

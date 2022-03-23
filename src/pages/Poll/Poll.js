@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Poll.css"
 import { DataStore } from "aws-amplify";
 import { Poll, Sex, UserInformation } from "../../models";
