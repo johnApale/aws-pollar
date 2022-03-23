@@ -7,9 +7,7 @@ import Test from "./pages/Test/Test";
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
 import AnswerPoll from "./pages/Poll/Poll";
-
-
-
+import myNotifications from "./pages/Notifications/Notifications";
 
 import {
   Authenticator,
@@ -272,6 +270,26 @@ export default function App() {
     <Authenticator formFields={formFields} components={components}>
       {({ signOut, user }) => (
         <div className="App">
+          <div>
+            {/* <button className='btn btn-info'
+                onClick={this.createNotification('info')}>Info
+              </button>
+              <hr/>
+              <button className='btn btn-success'
+                onClick={this.createNotification('success')}>Success
+              </button>
+              <hr/>
+              <button className='btn btn-warning'
+                onClick={this.createNotification('warning')}>Warning
+              </button>
+              <hr/>
+              <button className='btn btn-danger'
+                onClick={this.createNotification('error')}>Error
+              </button>
+            
+            <NotificationContainer/> */}
+          </div>
+
           <Router>
             <nav>
               <NavBar signOut={signOut} />
