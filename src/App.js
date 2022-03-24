@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./pages/Home/Home";
 import Test from "./pages/Test/Test";
+import CommentTest from "./pages/Test/CommentTest";
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
 import AnswerPoll from "./pages/Poll/Poll";
@@ -279,6 +280,10 @@ export default function App() {
                 element={<CreatePoll user={user} />}
               ></Route>
               <Route path="test" element={<Test user={user} />}></Route>
+              <Route
+                path="comment_test"
+                element={<CommentTest user={user} />}
+              ></Route>
               <Route
                 path="poll/answer"
                 element={<AnswerPoll user={user} />}
