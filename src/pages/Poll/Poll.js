@@ -44,46 +44,46 @@ function AnswerPoll(props) {
               </span><br /><h1>{val.title}</h1><div class="description">
                 </div><div class="pollOptions">
                   <label class="options">
-                    <input type="radio" name="radio" id="option1"></input>
+                    <input type="radio" name="radio" id="option1" onChange={setSelectedAnswer(val.answerChoices[0])}></input>
                     <span class="selectOption">{val.answerChoices[0]}</span>
                   </label><br />
                   <label class="options">
-                    <input type="radio" name="radio" id="option2" />
+                    <input type="radio" name="radio" id="option2" onChange={setSelectedAnswer(val.answerChoices[1])}/>
                     <span class="selectOption">{val.answerChoices[1]}</span>
                   </label><br />
                   {val.answerChoices[2] !== "" &&(
                     <><label class="options">
-                      <input type="radio" name="radio" id="option3" />
+                      <input type="radio" name="radio" id="option3" onChange={setSelectedAnswer(val.answerChoices[2])}/>
                       <span class="selectOption">{val.answerChoices[2]}</span>
                     </label><br /></>
                   )}
                   {val.answerChoices[3] !== "" &&(
                     <><label class="options">
-                        <input type="radio" name="radio" id="option4" />
+                        <input type="radio" name="radio" id="option4" onChange={setSelectedAnswer(val.answerChoices[3])}/>
                         <span class="selectOption">{val.answerChoices[3]}</span>
                       </label><br /></>
                   )}
                   {val.answerChoices[4] !== "" &&(
                     <><label class="options">
-                        <input type="radio" name="radio" id="option5" />
+                        <input type="radio" name="radio" id="option5" onChange={setSelectedAnswer(val.answerChoices[4])}/>
                         <span class="selectOption">{val.answerChoices[4]}</span>
                       </label><br /></>
                   )}
                   {val.answerChoices[5] !== "" &&(
                     <><label class="options">
-                        <input type="radio" name="radio" id="option6" />
+                        <input type="radio" name="radio" id="option6" onChange={setSelectedAnswer(val.answerChoices[5])}/>
                         <span class="selectOption">{val.answerChoices[5]}</span>
                       </label><br /></>
                   )}
                   {val.answerChoices[6] !== "" &&(
                     <><label class="options">
-                        <input type="radio" name="radio" id="option7" />
+                        <input type="radio" name="radio" id="option7" onChange={setSelectedAnswer(val.answerChoices[6])}/>
                         <span class="selectOption">{val.answerChoices[6]}</span>
                       </label><br /></>
                   )}
                   {val.answerChoices[7] !== "" &&(
                     <><label class="options">
-                        <input type="radio" name="radio" id="option8" />
+                        <input type="radio" name="radio" id="option8" onChange={setSelectedAnswer(val.answerChoices[7])}/>
                         <span class="selectOption">{val.answerChoices[7]}</span>
                       </label><br /></>
                   )}
@@ -97,7 +97,7 @@ function AnswerPoll(props) {
     </form>
   </div>
   <br/><div class = "userOptions" >
-    <button type = "button" id = "likeBttn"> Like: {post.likes}</button>
+    <button type = "button" id = "likeBttn"> Like: {/*post.likes*/}</button>
     <button type = "button" id = "changeAns"> Change Answer </button>
     <button onClick={removeAlert} type = "button" id = "removeAns"> Remove Answer</button>
     <button onClick={copyToClip} type = "button" id = "shareBttn"> Share </button>
