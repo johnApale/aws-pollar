@@ -24,7 +24,7 @@ function AnswerPoll(props) {
   const textAreaRef = useRef(null)
 
   async function copyToClip() {
-      await navigator.clipboard.writeText(location.href);
+      await navigator.clipboard.writeText(window.location.href);
       setCopySuccess("Copied");
       alert("URL copied!");
   }
