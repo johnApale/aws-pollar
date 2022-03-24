@@ -8,6 +8,7 @@ import CommentTest from "./pages/Test/CommentTest";
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
 import AnswerPoll from "./pages/Poll/Poll";
+import Notification from "./pages/Notifications/Notifications";
 
 import {
   Authenticator,
@@ -34,8 +35,8 @@ const components = {
     return (
       <View textAlign="center" padding={tokens.space.large}>
         <Image
-          alt="Amplify logo"
-          src="https://docs.amplify.aws/assets/logo-dark.svg"
+          alt="Amplify logo" width="210px" height="320px" position = "relative" top="140px"
+          src={process.env.PUBLIC_URL + "/transparentpolarbear.png"}
         />
       </View>
     );
@@ -47,7 +48,7 @@ const components = {
     return (
       <View textAlign="center" padding={tokens.space.large}>
         <Text color={`${tokens.colors.neutral["80"]}`}>
-          &copy; All Rights Reserved
+          &copy; Not intended for public distribution
         </Text>
       </View>
     );
@@ -60,9 +61,9 @@ const components = {
       return (
         <Heading
           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
+          level={3} 
         >
-          Sign in to your account
+          Pollar Sign In
         </Heading>
       );
     },
@@ -77,7 +78,7 @@ const components = {
             size="small"
             variation="link"
           >
-            Reset Password
+            Forgot your password? Reset
           </Button>
         </View>
       );
@@ -93,7 +94,7 @@ const components = {
           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
           level={3}
         >
-          Create a new account
+          Create a New Pollar Account
         </Heading>
       );
     },
@@ -143,7 +144,7 @@ const components = {
       );
     },
     Footer() {
-      return <Text>Footer Information</Text>;
+      return <Text>aa</Text>;
     },
   },
   ConfirmSignIn: {
@@ -162,6 +163,7 @@ const components = {
       return <Text>Footer Information</Text>;
     },
   },
+  
   ResetPassword: {
     Header() {
       const { tokens } = useTheme();
@@ -170,14 +172,15 @@ const components = {
           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
           level={3}
         >
-          Enter Information:
+          Please Provide Your Username
         </Heading>
       );
     },
     Footer() {
-      return <Text>Footer Information</Text>;
+      return <Text>Your Reset Code will be sent via Email</Text>;
     },
   },
+  
   ConfirmResetPassword: {
     Header() {
       const { tokens } = useTheme();
@@ -186,12 +189,12 @@ const components = {
           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
           level={3}
         >
-          Enter Information:
+          Create a New Password
         </Heading>
       );
     },
     Footer() {
-      return <Text>Footer Information</Text>;
+      return <Text>Your new password cannot match your previous password</Text>;
     },
   },
 };
@@ -265,9 +268,29 @@ const formFields = {
 
 export default function App() {
   return (
-    <Authenticator formFields={formFields}>
+    <Authenticator formFields={formFields} components={components}>
       {({ signOut, user }) => (
         <div className="App">
+          <div>
+            {/* <button className='btn btn-info'
+                onClick={this.createNotification('info')}>Info
+              </button>
+              <hr/>
+              <button className='btn btn-success'
+                onClick={this.createNotification('success')}>Success
+              </button>
+              <hr/>
+              <button className='btn btn-warning'
+                onClick={this.createNotification('warning')}>Warning
+              </button>
+              <hr/>
+              <button className='btn btn-danger'
+                onClick={this.createNotification('error')}>Error
+              </button>
+            
+            <NotificationContainer/> */}
+          </div>
+
           <Router>
             <nav>
               <NavBar signOut={signOut} />
@@ -291,6 +314,7 @@ export default function App() {
               <Route path="results" element={<Search />}></Route>
             </Routes>
           </Router>
+          
         </div>
       )}
     </Authenticator>
