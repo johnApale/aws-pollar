@@ -12,7 +12,7 @@ function UserProfile() {
       <div className = "profile_header">
       <h1 className="username">username </h1>
 
-      <img src="/1.png" className="user_avatar" />
+      <img src="/profilepic1.png" className="user_avatar" />
 
     
       <div className = 'user_info'>
