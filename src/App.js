@@ -8,6 +8,7 @@ import CommentTest from "./pages/Test/CommentTest";
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
 import AnswerPoll from "./pages/Poll/Poll";
+import ViewPoll from "./pages/Poll/ViewPoll";
 import Notification from "./pages/Notifications/Notifications";
 
 import {
@@ -25,6 +26,7 @@ import { Amplify } from "aws-amplify";
 import awsExports from "./aws-exports";
 import "@aws-amplify/ui-react/styles.css";
 import SearchBar from "./components/SearchBar/SearchBar";
+import UserProfile from "./pages/User/UserProfile";
 
 Amplify.configure(awsExports);
 
@@ -35,7 +37,11 @@ const components = {
     return (
       <View textAlign="center" padding={tokens.space.large}>
         <Image
-          alt="Amplify logo" width="210px" height="320px" position = "relative" top="140px"
+          alt="Amplify logo"
+          width="210px"
+          height="320px"
+          position="relative"
+          top="140px"
           src={process.env.PUBLIC_URL + "/transparentpolarbear.png"}
         />
       </View>
@@ -61,7 +67,7 @@ const components = {
       return (
         <Heading
           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3} 
+          level={3}
         >
           Pollar Sign In
         </Heading>
@@ -163,7 +169,7 @@ const components = {
       return <Text>Footer Information</Text>;
     },
   },
-  
+
   ResetPassword: {
     Header() {
       const { tokens } = useTheme();
@@ -180,7 +186,7 @@ const components = {
       return <Text>Your Reset Code will be sent via Email</Text>;
     },
   },
-  
+
   ConfirmResetPassword: {
     Header() {
       const { tokens } = useTheme();
@@ -293,7 +299,7 @@ export default function App() {
 
           <Router>
             <nav>
-              <NavBar signOut={signOut} />
+              <NavBar user={user} signOut={signOut} />
             </nav>
             <Routes>
               <Route path="/" element={<Home user={user} />}></Route>
@@ -301,6 +307,10 @@ export default function App() {
               <Route
                 path="poll/create"
                 element={<CreatePoll user={user} />}
+              ></Route>
+              <Route
+                path="poll/view"
+                element={<ViewPoll user={user} />}
               ></Route>
               <Route path="test" element={<Test user={user} />}></Route>
               <Route
@@ -312,9 +322,9 @@ export default function App() {
                 element={<AnswerPoll user={user} />}
               ></Route>
               <Route path="results" element={<Search />}></Route>
+              <Route path="profile/:username" element={<UserProfile />}></Route>
             </Routes>
           </Router>
-          
         </div>
       )}
     </Authenticator>

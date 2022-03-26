@@ -1,13 +1,24 @@
-.userCreation{
+.pop__up{
+    position: fixed;
+    top: 0;
+    left:0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userCard{
     width: 500px;
     height:500px;
     border: 1px solid black; 
     border-radius: 30px;
     position: relative;
     display:flex;
-    top:120px;
     overflow: hidden;
-    left:20px;
+    background-color: white;
     
 }
 
@@ -31,31 +42,34 @@
 }
 .fN, .lN {
     position: relative;
-    left:-10px;
+    left:0px;
+    margin: 5px;
 }
 .bday{
     position: relative;
-    right:45px;
-    left: -17px;
+    left: -10px;
+    margin-top: 10px;
+    margin-bottom: 1px;
 }
 .sx {
     position: relative;
     right:61px;
     top:45px;
     left:-30px;
+    margin-top: 5px;
 }
 
 .userSex {
     position: relative;
     right:42px;
     top:35px;
-    left:-10px;
+    left:-5px;
 }
 
 .userBirthday {
     position: relative;
     top:40px;
-    left:30px;
+    left:50px;
 }
 
 .firstN, .lastN {
@@ -72,7 +86,9 @@
 .title{
     position: relative;
     left:100px;
-    font-weight:300;
+    font-weight:bold;
+    margin-top: 20px;
+    margin-bottom: -10px;
     
 }
 

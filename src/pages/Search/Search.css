@@ -52,3 +52,11 @@ h3 {
     position:relative; 
     top:5px;
 }
+
+.poll_title:hover {
+    cursor: pointer;
+}
+
+.created:hover{
+    cursor: pointer;
+}
