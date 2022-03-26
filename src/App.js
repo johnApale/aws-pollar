@@ -4,12 +4,11 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./pages/Home/Home";
 import Test from "./pages/Test/Test";
+import CommentTest from "./pages/Test/CommentTest";
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
 import AnswerPoll from "./pages/Poll/Poll";
-
-
-
+import Notification from "./pages/Notifications/Notifications";
 
 import {
   Authenticator,
@@ -272,6 +271,26 @@ export default function App() {
     <Authenticator formFields={formFields} components={components}>
       {({ signOut, user }) => (
         <div className="App">
+          <div>
+            {/* <button className='btn btn-info'
+                onClick={this.createNotification('info')}>Info
+              </button>
+              <hr/>
+              <button className='btn btn-success'
+                onClick={this.createNotification('success')}>Success
+              </button>
+              <hr/>
+              <button className='btn btn-warning'
+                onClick={this.createNotification('warning')}>Warning
+              </button>
+              <hr/>
+              <button className='btn btn-danger'
+                onClick={this.createNotification('error')}>Error
+              </button>
+            
+            <NotificationContainer/> */}
+          </div>
+
           <Router>
             <nav>
               <NavBar signOut={signOut} />
@@ -284,6 +303,10 @@ export default function App() {
                 element={<CreatePoll user={user} />}
               ></Route>
               <Route path="test" element={<Test user={user} />}></Route>
+              <Route
+                path="comment_test"
+                element={<CommentTest user={user} />}
+              ></Route>
               <Route
                 path="poll/answer"
                 element={<AnswerPoll user={user} />}

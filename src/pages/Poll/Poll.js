@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Poll.css"
 import { DataStore } from "aws-amplify";
 import { Poll, Sex, UserInformation } from "../../models";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 function AnswerPoll(props) {
   const nav = useNavigate();
@@ -10,9 +10,6 @@ function AnswerPoll(props) {
   const [postData, setPostData] = useState([]);
   const [post, setPost] = useState([]);
   //const timer = setTimeout(() => console.log('Initial timeout!'), 10000);
-  
-  
-  
 
   useEffect(async () => {
     try{   
@@ -23,8 +20,6 @@ function AnswerPoll(props) {
       console.log(error);
     }
     },[]);
-    
-
     
     //setAnswers(post.answerChoices);
 
@@ -52,6 +47,21 @@ function AnswerPoll(props) {
 
   async function removeAlert() {
     alert("Your answer has been removed.");
+  }
+
+  let likeButtonState = "Like: ";
+  
+  async function likeButton() {
+    
+    if (likeButtonState == "Like: ")
+    {
+      likeButtonState.replace("Like:", "Unlike:");
+    }
+    
+    else
+    {
+      likeButtonState.replace("Unlike:", "Like:");
+    }
   }
   
   return (
@@ -118,9 +128,9 @@ function AnswerPoll(props) {
     </form>
   </div>
   <br/><div class = "userOptions" >
-    <button type = "button" id = "likeBttn"> Like: {post.likes}</button>
+    <button onClick={likeButton} type = "button" id = "likeBttn"> {likeButtonState} {post.likes} </button>
     <button type = "button" id = "changeAns"> Change Answer </button>
-    <button onClick={removeAlert} type = "button" id = "removeAns"> Remove Answer</button>
+    <button onClick={removeAlert} type = "button" id = "removeAns"> Remove Answer </button>
     <button onClick={copyToClip} type = "button" id = "shareBttn"> Share </button>
   </div>
   </body>
