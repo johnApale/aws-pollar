@@ -19,6 +19,7 @@ function UserProfile() {
     }
   });
 
+<<<<<<< HEAD
   return (
     <div className="user">
       <div className="userProfile">
@@ -28,6 +29,19 @@ function UserProfile() {
               {" "}
               <div className="profile_header">
                 <h1 className="username">{val.username} </h1>
+=======
+      <div className = "profile_header">
+      <h1 className="username">username </h1>
+
+      <img src="/profilepic1.png" className="user_avatar" />
+
+    
+      <div className = 'user_info'>
+      <p className = "user_bday">Birthday: September 13, 1999 </p>
+      <p className="user_gender">Gender:  </p>
+      <p className= "date_joined"> Joined: </p>
+    </div>
+>>>>>>> e3c21daa05d7508d7876c0a2bb54f2f3986f97b0
 
                 {/* <img src="/1.png" className="user_avatar" /> */}
 
