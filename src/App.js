@@ -10,6 +10,11 @@ import CreatePoll from "./pages/Poll/CreatePoll";
 import AnswerPoll from "./pages/Poll/Poll";
 import ViewPoll from "./pages/Poll/ViewPoll";
 import Notification from "./pages/Notifications/Notifications";
+import {NotificationContainer, NotificationManager} from "react-notifications";
+import awsExports from "./aws-exports";
+import "@aws-amplify/ui-react/styles.css";
+import SearchBar from "./components/SearchBar/SearchBar";
+import UserProfile from "./pages/User/UserProfile";
 
 import {
   Authenticator,
@@ -23,187 +28,181 @@ import {
 } from "@aws-amplify/ui-react";
 import { Amplify } from "aws-amplify";
 
-import awsExports from "./aws-exports";
-import "@aws-amplify/ui-react/styles.css";
-import SearchBar from "./components/SearchBar/SearchBar";
-import UserProfile from "./pages/User/UserProfile";
-
 Amplify.configure(awsExports);
 
-const components = {
-  Header() {
-    const { tokens } = useTheme();
+// const components = {
+//   Header() {
+//     const { tokens } = useTheme();
 
-    return (
-      <View textAlign="center" padding={tokens.space.large}>
-        <Image
-          alt="Amplify logo"
-          width="210px"
-          height="320px"
-          position="relative"
-          top="140px"
-          src={process.env.PUBLIC_URL + "/transparentpolarbear.png"}
-        />
-      </View>
-    );
-  },
+//     return (
+//       <View textAlign="center" padding={tokens.space.large}>
+//         <Image alt="Amplify logo"
+//           width="210px"
+//           height="320px"
+//           position="relative"
+//           top="140px"
+//           src={process.env.PUBLIC_URL + "/transparentpolarbear.png"}
+//         />
+//       </View>
+//     );
+//   },
 
-  Footer() {
-    const { tokens } = useTheme();
+//   Footer() {
+//     const { tokens } = useTheme();
 
-    return (
-      <View textAlign="center" padding={tokens.space.large}>
-        <Text color={`${tokens.colors.neutral["80"]}`}>
-          &copy; Not intended for public distribution
-        </Text>
-      </View>
-    );
-  },
+//     return (
+//       <View textAlign="center" padding={tokens.space.large}>
+//         <Text color={`${tokens.colors.neutral["80"]}`}>
+//           &copy; Not intended for public distribution
+//         </Text>
+//       </View>
+//     );
+//   },
 
-  SignIn: {
-    Header() {
-      const { tokens } = useTheme();
+//   SignIn: {
+//     Header() {
+//       const { tokens } = useTheme();
 
-      return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
-          Pollar Sign In
-        </Heading>
-      );
-    },
-    Footer() {
-      const { toResetPassword } = useAuthenticator();
+//       return (
+//         <Heading
+//           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+//           level={3}
+//         >
+//           Pollar Sign In
+//         </Heading>
+//       );
+//     },
+//     Footer() {
+//       const { toResetPassword } = useAuthenticator();
 
-      return (
-        <View textAlign="center">
-          <Button
-            fontWeight="normal"
-            onClick={toResetPassword}
-            size="small"
-            variation="link"
-          >
-            Forgot your password? Reset
-          </Button>
-        </View>
-      );
-    },
-  },
+//       return (
+//         <View textAlign="center">
+//           <Button
+//             fontWeight="normal"
+//             onClick={toResetPassword}
+//             size="small"
+//             variation="link"
+//           >
+//             Forgot your password? Reset
+//           </Button>
+//         </View>
+//       );
+//     },
+//   },
 
-  SignUp: {
-    Header() {
-      const { tokens } = useTheme();
+//   SignUp: {
+//     Header() {
+//       const { tokens } = useTheme();
 
-      return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
-          Create a New Pollar Account
-        </Heading>
-      );
-    },
-    Footer() {
-      const { toSignIn } = useAuthenticator();
+//       return (
+//         <Heading
+//           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+//           level={3}
+//         >
+//           Create a New Pollar Account
+//         </Heading>
+//       );
+//     },
+//     Footer() {
+//       const { toSignIn } = useAuthenticator();
 
-      return (
-        <View textAlign="center">
-          <Button
-            fontWeight="normal"
-            onClick={toSignIn}
-            size="small"
-            variation="link"
-          >
-            Back to Sign In
-          </Button>
-        </View>
-      );
-    },
-  },
-  ConfirmSignUp: {
-    Header() {
-      const { tokens } = useTheme();
-      return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
-          Enter Information:
-        </Heading>
-      );
-    },
-    Footer() {
-      return <Text>Footer Information</Text>;
-    },
-  },
-  SetupTOTP: {
-    Header() {
-      const { tokens } = useTheme();
-      return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
-          Enter Information:
-        </Heading>
-      );
-    },
-    Footer() {
-      return <Text>aa</Text>;
-    },
-  },
-  ConfirmSignIn: {
-    Header() {
-      const { tokens } = useTheme();
-      return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
-          Enter Information:
-        </Heading>
-      );
-    },
-    Footer() {
-      return <Text>Footer Information</Text>;
-    },
-  },
+//       return (
+//         <View textAlign="center">
+//           <Button
+//             fontWeight="normal"
+//             onClick={toSignIn}
+//             size="small"
+//             variation="link"
+//           >
+//             Back to Sign In
+//           </Button>
+//         </View>
+//       );
+//     },
+//   },
+//   ConfirmSignUp: {
+//     Header() {
+//       const { tokens } = useTheme();
+//       return (
+//         <Heading
+//           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+//           level={3}
+//         >
+//           Enter Information:
+//         </Heading>
+//       );
+//     },
+//     Footer() {
+//       return <Text>Footer Information</Text>;
+//     },
+//   },
+//   SetupTOTP: {
+//     Header() {
+//       const { tokens } = useTheme();
+//       return (
+//         <Heading
+//           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+//           level={3}
+//         >
+//           Enter Information:
+//         </Heading>
+//       );
+//     },
+//     Footer() {
+//       return <Text>aa</Text>;
+//     },
+//   },
+//   ConfirmSignIn: {
+//     Header() {
+//       const { tokens } = useTheme();
+//       return (
+//         <Heading
+//           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+//           level={3}
+//         >
+//           Enter Information:
+//         </Heading>
+//       );
+//     },
+//     Footer() {
+//       return <Text>Footer Information</Text>;
+//     },
+//   },
 
-  ResetPassword: {
-    Header() {
-      const { tokens } = useTheme();
-      return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
-          Please Provide Your Username
-        </Heading>
-      );
-    },
-    Footer() {
-      return <Text>Your Reset Code will be sent via Email</Text>;
-    },
-  },
+//   ResetPassword: {
+//     Header() {
+//       const { tokens } = useTheme();
+//       return (
+//         <Heading
+//           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+//           level={3}
+//         >
+//           Please Provide Your Username
+//         </Heading>
+//       );
+//     },
+//     Footer() {
+//       return <Text>Your Reset Code will be sent via Email</Text>;
+//     },
+//   },
 
-  ConfirmResetPassword: {
-    Header() {
-      const { tokens } = useTheme();
-      return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
-          Create a New Password
-        </Heading>
-      );
-    },
-    Footer() {
-      return <Text>Your new password cannot match your previous password</Text>;
-    },
-  },
-};
+//   ConfirmResetPassword: {
+//     Header() {
+//       const { tokens } = useTheme();
+//       return (
+//         <Heading
+//           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+//           level={3}
+//         >
+//           Create a New Password
+//         </Heading>
+//       );
+//     },
+//     Footer() {
+//       return <Text>Your new password cannot match your previous password</Text>;
+//     },
+//   },
+// };
 
 const formFields = {
   signIn: {
@@ -272,29 +271,39 @@ const formFields = {
   },
 };
 
+const myNotif = new Notification();
+
+function receiveNotification(type){
+  switch(type){
+    case 'Liked':
+      {myNotif.createNotification('Liked')};
+      break;
+    case 'Subscribed':
+      {myNotif.createNotification('Subscribed')};
+      break;
+    case 'Posted':
+      {myNotif.createNotification('Posted')};
+      break;
+  }
+}
+
 export default function App() {
   return (
     <Authenticator formFields={formFields} components={components}>
       {({ signOut, user }) => (
         <div className="App">
           <div>
-            {/* <button className='btn btn-info'
-                onClick={this.createNotification('info')}>Info
+
+            <link rel="stylesheet" type="text/css" href="./pages/Notifications/Notifications.css"></link>
+            <button className='btn btn-info'
+                onClick={myNotif.createNotification('Subscribed')}> Info
               </button>
               <hr/>
               <button className='btn btn-success'
-                onClick={this.createNotification('success')}>Success
-              </button>
-              <hr/>
-              <button className='btn btn-warning'
-                onClick={this.createNotification('warning')}>Warning
-              </button>
-              <hr/>
-              <button className='btn btn-danger'
-                onClick={this.createNotification('error')}>Error
+                onClick={myNotif.createNotification('Liked')}> Success
               </button>
             
-            <NotificationContainer/> */}
+            <NotificationContainer/>
           </div>
 
           <Router>

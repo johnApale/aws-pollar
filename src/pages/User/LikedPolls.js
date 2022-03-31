@@ -1,8 +1,6 @@
 import React from "react";
 import "./LikedPolls.css"
 
-
-
 function LikedPolls() {
   return (
 
@@ -15,8 +13,6 @@ function LikedPolls() {
         <p className = "pollCategory">Category: </p>
          
     </div>
-    
-   
   );
 }
 
