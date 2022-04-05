@@ -32,9 +32,9 @@ function UserProfile() {
         anon: val.anon,
         sex: val.sex,
       });
-      const pullData = async () => {
-        const data = await API.graphql({query: getUserPolls, variables: {filter:}})
-      }
+      // const pullData = async () => {
+      //   const data = await API.graphql({query: getUserPolls, variables: {filter:}})
+      // }
     });
     // try {
     //   const pollList = await DataStore.query(Poll, (p) =>
