@@ -4,11 +4,12 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./pages/Home/Home";
 import Test from "./pages/Test/Test";
+import CommentTest from "./pages/Test/CommentTest";
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
 import AnswerPoll from "./pages/Poll/Poll";
-
-
+import ViewPoll from "./pages/Poll/ViewPoll";
+import Notification from "./pages/Notifications/Notifications";
 
 import {
   Authenticator,
@@ -25,6 +26,7 @@ import { Amplify } from "aws-amplify";
 import awsExports from "./aws-exports";
 import "@aws-amplify/ui-react/styles.css";
 import SearchBar from "./components/SearchBar/SearchBar";
+import UserProfile from "./pages/User/UserProfile";
 
 Amplify.configure(awsExports);
 
@@ -36,6 +38,10 @@ const components = {
       <View textAlign="center" padding={tokens.space.large}>
         <Image
           alt="Amplify logo"
+          width="210px"
+          height="320px"
+          position="relative"
+          top="140px"
           src={process.env.PUBLIC_URL + "/transparentpolarbear.png"}
         />
       </View>
@@ -94,7 +100,7 @@ const components = {
           padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
           level={3}
         >
-          Create a new Pollar account
+          Create a New Pollar Account
         </Heading>
       );
     },
@@ -163,7 +169,7 @@ const components = {
       return <Text>Footer Information</Text>;
     },
   },
-  
+
   ResetPassword: {
     Header() {
       const { tokens } = useTheme();
@@ -180,7 +186,7 @@ const components = {
       return <Text>Your Reset Code will be sent via Email</Text>;
     },
   },
-  
+
   ConfirmResetPassword: {
     Header() {
       const { tokens } = useTheme();
@@ -271,9 +277,29 @@ export default function App() {
     <Authenticator formFields={formFields} components={components}>
       {({ signOut, user }) => (
         <div className="App">
+          <div>
+            {/* <button className='btn btn-info'
+                onClick={this.createNotification('info')}>Info
+              </button>
+              <hr/>
+              <button className='btn btn-success'
+                onClick={this.createNotification('success')}>Success
+              </button>
+              <hr/>
+              <button className='btn btn-warning'
+                onClick={this.createNotification('warning')}>Warning
+              </button>
+              <hr/>
+              <button className='btn btn-danger'
+                onClick={this.createNotification('error')}>Error
+              </button>
+            
+            <NotificationContainer/> */}
+          </div>
+
           <Router>
             <nav>
-              <NavBar signOut={signOut} />
+              <NavBar user={user} signOut={signOut} />
             </nav>
             <Routes>
               <Route path="/" element={<Home user={user} />}></Route>
@@ -282,15 +308,23 @@ export default function App() {
                 path="poll/create"
                 element={<CreatePoll user={user} />}
               ></Route>
+              <Route
+                path="poll/view"
+                element={<ViewPoll user={user} />}
+              ></Route>
               <Route path="test" element={<Test user={user} />}></Route>
+              <Route
+                path="comment_test"
+                element={<CommentTest user={user} />}
+              ></Route>
               <Route
                 path="poll/answer"
                 element={<AnswerPoll user={user} />}
               ></Route>
               <Route path="results" element={<Search />}></Route>
+              <Route path="profile/:username" element={<UserProfile />}></Route>
             </Routes>
           </Router>
-          
         </div>
       )}
     </Authenticator>

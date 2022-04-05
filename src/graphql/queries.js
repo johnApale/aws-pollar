@@ -252,6 +252,25 @@ export const listPolls = /* GraphQL */ `
     }
   }
 `;
+
+export const getUserPolls = /* GraphQL */ `
+  query getPollsByUser {
+    listPolls(
+      filter: {
+        userInformationID: { eq: "8a088564-57e3-4e4f-a271-a876e69dac4d" }
+      }
+    ) {
+      items {
+        title
+        likes
+        createdAt
+        views
+        id
+      }
+    }
+  }
+`;
+
 export const syncPolls = /* GraphQL */ `
   query SyncPolls(
     $filter: ModelPollFilterInput

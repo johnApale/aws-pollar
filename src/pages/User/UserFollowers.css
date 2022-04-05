@@ -1,0 +1,40 @@
+.useraccount{
+    border: 2px rgb(228, 238, 245);
+    width: 150px;
+    height: 135px;
+    border-style: solid;
+    align-items: center;
+    text-align: center;
+    left:240px;
+    top:200px;
+    flex-direction: column;
+    justify-content: center;
+    position:relative;
+    overflow-x: hidden;  
+    border-radius: 25px;
+    box-shadow: 0px 3px 15px 2px rgba(126, 173, 204, 0.589);
+}
+
+.poll_avatar{
+    width: 80px;
+    border-radius: 50px;
+    position: relative;
+    left:2px;
+    top:5px;
+
+    
+}
+
+.user_link{
+    font-weight: bold;
+    position:relative;
+    top: 16px;
+    text-align: center;
+    align-items: center;
+    font-size: 15px;
+}
+
+.user_link:hover {
+    cursor: pointer;
+    color: rgb(126, 173, 204);
+}
