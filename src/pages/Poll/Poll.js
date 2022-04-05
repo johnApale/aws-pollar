@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Poll.css";
-import { Auth, DataStore } from "aws-amplify";
+import { DataStore } from "aws-amplify";
 import { Poll, Sex, UserInformation } from "../../models";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Notification from "C:/GitHub/aws-pollar/src/pages/Notifications/Notifications"
-import receiveNotification from "C:/GitHub/aws-pollar/src/App"
 
 function AnswerPoll(props) {
   const nav = useNavigate();
@@ -12,25 +10,20 @@ function AnswerPoll(props) {
   const [postData, setPostData] = useState([]);
   const [post, setPost] = useState([]);
   const [searchParams] = useSearchParams();
-  const [like, setLike] = useState(false);
   const id = searchParams.get("id");
-  const [copySuccess, setCopySuccess] = useState("");
-  const textAreaRef = useRef(null);
-  const [userInfo, setUserInfo] = useState(null);
   //const timer = setTimeout(() => console.log('Initial timeout!'), 10000);
 
   useEffect(async () => {
     try {
       const model = await DataStore.query(Poll, (p) => p.id("eq", id));
       setPostData(model);
-
-      Auth.currentUserInfo().then((userInfo) => {
-        setUserInfo(userInfo)
-      })
     } catch (error) {
       console.log(error);
     }
   }, []);
+
+  const [copySuccess, setCopySuccess] = useState("");
+  const textAreaRef = useRef(null);
 
   async function copyToClip() {
     await navigator.clipboard.writeText(window.location.href);
@@ -42,41 +35,13 @@ function AnswerPoll(props) {
     alert("Your answer has been removed.");
   }
 
-  const myNotif = new Notification();
-  
-  async function likeButton(){
-    setLike(!like)
-    const originalList = DataStore.query(LikedPost, x => x.userInformationID(eq, userInfo.username))
-    //retrive this user's list of liked posts
+  let likeButtonState = "Like: ";
 
-    if (!like)
-    {
-      await DataStore.save(
-        Poll.copyOf(originalList, updatedList => {
-          updatedList.likedPosts.remove(id);
-        })
-      )
-
-      await DataStore.save(
-        Poll.copyOf(model, updatedPoll => {
-          updatedPoll.likes = model.likes - 1;
-        })
-      )
-    }
-
-    if (like)
-    {
-      await DataStore.save(
-        LikedPost.copyOf(originalList, updatedList => {
-          updatedList.likedPosts.append(id);
-        })
-      )
-
-      await DataStore.save(
-        Poll.copyOf(model, updatedPoll => {
-          updatedPoll.likes = model.likes + 1;
-        })
-      )
+  async function likeButton() {
+    if (likeButtonState == "Like: ") {
+      likeButtonState.replace("Like:", "Unlike:");
+    } else {
+      likeButtonState.replace("Unlike:", "Like:");
     }
   }
 
@@ -179,7 +144,7 @@ function AnswerPoll(props) {
       <div class="userOptions">
         <button onClick={likeButton} type="button" id="likeBttn">
           {" "}
-          {like && "Like: "} {!like && "Unlike: "} {post.likes} {" "}
+          {likeButtonState} {post.likes}{" "}
         </button>
         <button type="button" id="changeAns">
           {" "}

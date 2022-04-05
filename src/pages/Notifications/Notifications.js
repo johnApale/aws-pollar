@@ -4,40 +4,47 @@ import {NotificationContainer, NotificationManager} from "react-notifications";
 import "react-notifications/lib/notifications.css";
 import "react-router-dom";
 
-// function Notification() {
-//     return(
-//         <div className="notifications_page">
+function Notification() {
+    return(
+        <div className="notifications_page">
 
-//         <div className="header">
-//         <img src = "notif_icon .png" className="bellIcon"></img>
-//         <h className = "title"> Notifications</h>
-//         </div>
+        <div className="header">
+        <img src = "notif_icon .png" className="bellIcon"></img>
+        <h className = "title"> Notifications</h>
+        </div>
 
-//         <div className = "user_notifications">
-//             <p className = "userName" href = "">username </p>
-//             <p className = "notification_purpose"> nofdsf</p>
-//             <a className = "pollTitle" href = ""> ffddsdf</a>
-//         </div>
+        <div className = "user_notifications">
+            <p className = "userName" href = "">username </p>
+            <p className = "notification_purpose"> nofdsf</p>
+            <a className = "pollTitle" href = ""> ffddsdf</a>
+        </div>
         
-//         </div>
-//     );
+        </div>
+    );
+}
+
+// class Notification extends React.Component {
+//     createNotification = (type) => {
+//         return () => {
+//           switch (type) {
+//             case 'info':
+//             NotificationManager.info('Info message');
+//             break;
+//             case 'success':
+//             NotificationManager.success('Success message', 'Title here');
+//             break;
+//             case 'warning':
+//             NotificationManager.warning('Warning message', 'Close after 3000ms', 3000);
+//             break;
+//             case 'error':
+//             NotificationManager.error('Error message', 'Click me!', 5000, () => {
+//                 alert('callback');
+//             });
+//             break;
+//             }
+//         };
+//     };
 // }
 
-export default class Notification extends React.Component {
-    createNotification(type) {
-        return () => {
-          switch (type) {
-            case 'Subscribed':
-            NotificationManager.info('A user has subscribed to you.');
-            break;
-            case 'Liked':
-            NotificationManager.success('A user liked your post.', 'Liked');
-            break;
-            case 'Posted':
-            NotificationManager.success('Someone you follow has posted a new poll.', 'New Post');
-            break;
-            }
-        };
-    };
-}
+export default Notification;
 
