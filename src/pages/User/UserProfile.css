@@ -1,4 +1,116 @@
-.userProfile {
+.userProfile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 50vw;
+    margin-top: -150px;
+    position: relative;
+    left: 25%;
+
+}
+
+.profile_header{
+    border: 1px solid black;
+    width: 100%;
+    height: 220px;
+    border-style: dashed;
+    border-width: 2px;
+    background-color: white;
+}
+
+.user_info{
+    margin-left: 400px;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    font-size: 15px;
+    font-weight: light;
+}
+
+.profile_username {
+    font-size: 45px;
+    font-weight: 650;
+    margin-top: 20px;
+    margin-left: 400px;
+}
+
+.user_bday {
+    font-size:15px;
+    
+}
+
+.user_gender {
+    margin-left: 50px
+}
+
+.date_joined {
+    margin-left: 400px;
+    margin-top: -15px;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.profile_tabs{
+    width: 40%;
+    margin-left: 400px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.goToPolls:hover, .goToLikes:hover, .goToFollowers:hover, .goToFollowing:hover{
+    cursor: pointer;
+    color: rgb(126, 173, 204);
+}
+
+.polls {
+    width: 50vw;
+    height: 500px;
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 1rem;
+    overflow-y: auto;
+    /* justify-content: space-between; */
+}
+
+.user_poll_cards {
+    background-color: whitesmoke;
+    width: 250px;
+    height: 150px;
+    border-style: solid;
+    border-radius: 5px;
+}
+.user_poll_title {
+    text-align: center;
+    position: relative;
+    margin-top: 15px;
+    font-size: 22px;
+    font-weight: 450;
+}
+
+.user_poll_created {
+    margin-top: -10px;
+    margin-right: 15px;
+    text-align: right;
+    font-size: x-small;
+}
+.stats {
+    width: 150px;
+    margin-left: 15px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    font-size: small;
+    justify-content: space-between;
+}
+.user_poll_cards:hover{
+    cursor:pointer;
+}
+
+
+/* .userProfile {
     align-items: center;
     border: 1px solid black;
     border-style: dashed;
@@ -34,30 +146,11 @@
 }
 
 
-.user_bday {
-    position: fixed;
-    left:402px;
-    top:78px;
-    font-size:15px;
-    
-}
 
-.user_gender {
-    position: fixed;
-    left:625px;
-    top:78px;
-    font-size:15px;
-    font-size:15px;
-    font-weight: light;
-}
 
-.date_joined {
-    position: fixed;
-    left:400px;
-    top:105px;
-    font-size:15px;
-    
-}
+
+
+
 
 .profile_tabs{
     position: fixed;
@@ -82,10 +175,7 @@
     left:135px;
 }
 
-.goToPolls:hover, .goToLikes:hover, .goToFollowers:hover, .goToFollowing:hover{
-    cursor: pointer;
-    color: rgb(126, 173, 204);
-}
+
 
 .editProfile {
    position: relative;
@@ -94,7 +184,6 @@
    border-radius: 25px;
    border: 2px #9fc7df;
    border-style: solid; 
-   /* make font color white */
    background-image: linear-gradient(to right, #9fc7df 0%, #9fc7dfd5 51%, #9fc7dfb4 100%);
    color: white;
    
@@ -107,7 +196,6 @@
     border-radius: 25px;
     border: 2px #9fc7df;
     border-style: solid; 
-    /* make font color white */
     background-image: linear-gradient(to right, #9fc7df 0%, #9fc7dfd5 51%, #9fc7dfb4 100%);
     color: white;
     width: 70px;
@@ -190,5 +278,5 @@
 .poll_link:hover {
     cursor: pointer;
     color: rgb(126, 173, 204);
-}
+} */
 

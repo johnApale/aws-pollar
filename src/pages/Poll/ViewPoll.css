@@ -37,6 +37,11 @@
     margin-left: 10px;
 }
 
+.poll__username:hover{
+    cursor: pointer;
+}
+
+
 .answer__button{
     position: relative;
     width: 200px;

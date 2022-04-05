@@ -4,7 +4,8 @@ import {
   createSearchParams,
   useNavigate,
 } from "react-router-dom";
-import { DataStore } from "aws-amplify";
+import { DataStore, API } from "aws-amplify";
+import { getUserPolls } from "../../graphql/queries";
 import { Poll } from "../../models";
 import "./ViewPoll.css";
 
@@ -31,14 +32,33 @@ function ViewPoll() {
     });
   }
 
+  function goToUser(username) {
+    navigate(`/profile/${username}`);
+  }
+
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    const updatedDate = date.toLocaleDateString("default", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+    return updatedDate;
+  };
+
   return (
     <div className="view__poll">
       {poll.map((val, key) => {
         return (
           <div className="poll__details">
             <div className="poll__top">
-              <p className="poll__username">{val.UserInformation.username}</p>
-              <p className="poll__created">{val.createdAt}</p>
+              <p
+                className="poll__username"
+                onClick={() => goToUser(val.UserInformation.username)}
+              >
+                {val.UserInformation.username}
+              </p>
+              <p className="poll__created">{formatDate(val.createdAt)}</p>
             </div>
             <h3 className="poll__title">{val.title}</h3>
             <p className="poll__description">{val.description}</p>
