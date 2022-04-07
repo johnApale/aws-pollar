@@ -39,7 +39,7 @@ type Poll @model{
 type Comment @model{
   id: ID! @primaryKey
   userInformationID: ID! 
-  pollID: ID! 
+  pollID: ID!
   content: String!
 }
 
@@ -49,3 +49,17 @@ type UserResponse @model{
   pollID: ID!
   content: String!
 }
+
+type SubscribedTo @model{
+  id: ID! @primaryKey
+  userInformationID: ID!
+  subscribeList: [ID!]
+}
+
+type LikedPost @model{
+  id: ID! @primaryKey
+  userInformationID: ID!
+  likedPosts: [ID]
+}
+
+

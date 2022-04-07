@@ -23,6 +23,14 @@ type UserResponseMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
+type SubscribedToMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+type LikedPostMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 export declare class UserInformation {
   readonly id: string;
   readonly username: string;
@@ -84,4 +92,24 @@ export declare class UserResponse {
   readonly updatedAt?: string;
   constructor(init: ModelInit<UserResponse, UserResponseMetaData>);
   static copyOf(source: UserResponse, mutator: (draft: MutableModel<UserResponse, UserResponseMetaData>) => MutableModel<UserResponse, UserResponseMetaData> | void): UserResponse;
+}
+
+export declare class SubscribedTo {
+  readonly id: string;
+  readonly userInformationID: string;
+  readonly subscribeList?: string[];
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<SubscribedTo, SubscribedToMetaData>);
+  static copyOf(source: SubscribedTo, mutator: (draft: MutableModel<SubscribedTo, SubscribedToMetaData>) => MutableModel<SubscribedTo, SubscribedToMetaData> | void): SubscribedTo;
+}
+
+export declare class LikedPost {
+  readonly id: string;
+  readonly userInformationID: string;
+  readonly likedPosts?: (string | null)[];
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<LikedPost, LikedPostMetaData>);
+  static copyOf(source: LikedPost, mutator: (draft: MutableModel<LikedPost, LikedPostMetaData>) => MutableModel<LikedPost, LikedPostMetaData> | void): LikedPost;
 }

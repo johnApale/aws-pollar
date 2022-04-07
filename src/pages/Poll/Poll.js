@@ -6,6 +6,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 function AnswerPoll(props) {
   const nav = useNavigate();
+  const [numAnswers, setNumAnswer] = useState();
   const [postData, setPostData] = useState([]);
   const [post, setPost] = useState([]);
   const [searchParams] = useSearchParams();
@@ -37,7 +38,7 @@ function AnswerPoll(props) {
   let likeButtonState = "Like: ";
 
   async function likeButton() {
-    if (likeButtonState == "Like: ") {
+    if (likeButtonState === "Like: ") {
       likeButtonState.replace("Like:", "Unlike:");
     } else {
       likeButtonState.replace("Unlike:", "Like:");
@@ -59,16 +60,16 @@ function AnswerPoll(props) {
                 <div class="description"></div>
                 <div class="pollOptions">
                   <label class="options">
-                    <input type="radio" name="radio" id="option1" onChange={setSelectedAnswer(val.answerChoices[0])}></input>
+                    <input type="radio" name="radio" id="option1"></input>
                     <span class="selectOption">{val.answerChoices[0]}</span>
                   </label>
                   <br />
                   <label class="options">
-                    <input type="radio" name="radio" id="option2" onChange={setSelectedAnswer(val.answerChoices[1])}/>
+                    <input type="radio" name="radio" id="option2" />
                     <span class="selectOption">{val.answerChoices[1]}</span>
                   </label>
                   <br />
-                  {val.answerChoices[2] !== "" && (
+                  {val.answerChoices[2] === "" &&(
                     <>
                       <label class="options">
                         <input type="radio" name="radio" id="option3" />
@@ -77,7 +78,7 @@ function AnswerPoll(props) {
                       <br />
                     </>
                   )}
-                  {val.answerChoices[3] !== "" && (
+                  {val.answerChoices[3] === "" &&(
                     <>
                       <label class="options">
                         <input type="radio" name="radio" id="option4" />
@@ -86,7 +87,7 @@ function AnswerPoll(props) {
                       <br />
                     </>
                   )}
-                  {val.answerChoices[4] !== "" && (
+                  {val.answerChoices[4] === "" && (
                     <>
                       <label class="options">
                         <input type="radio" name="radio" id="option5" />
@@ -95,7 +96,7 @@ function AnswerPoll(props) {
                       <br />
                     </>
                   )}
-                  {val.answerChoices[5] !== "" && (
+                  {val.answerChoices[5] === "" && (
                     <>
                       <label class="options">
                         <input type="radio" name="radio" id="option6" />
@@ -104,16 +105,16 @@ function AnswerPoll(props) {
                       <br />
                     </>
                   )}
-                  {val.answerChoices[6] !== "" && (
+                  {val.answerChoices[6] === "" && (
                     <>
                       <label class="options">
-                        <input type="radio" name="radio" id="option7" />
+                        <input type="radio" name="radio" id="option7"/>
                         <span class="selectOption">{val.answerChoices[6]}</span>
                       </label>
                       <br />
                     </>
                   )}
-                  {val.answerChoices[7] !== "" && (
+                  {val.answerChoices[7] === "" && (
                     <>
                       <label class="options">
                         <input type="radio" name="radio" id="option8" />
