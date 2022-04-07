@@ -39,8 +39,27 @@ type Poll @model{
 type Comment @model{
   id: ID! @primaryKey
   userInformationID: ID! 
-  pollID: ID! 
-  UserInformation: UserInformation @belongsTo(fields: ["userInformationID"])
-  Poll: Poll @belongsTo(fields: ["pollID"])
+  pollID: ID!
   content: String!
 }
+
+type UserResponse @model{
+  id: ID! @primaryKey
+  userInformationID: ID!
+  pollID: ID!
+  content: String!
+}
+
+type SubscribedTo @model{
+  id: ID! @primaryKey
+  userInformationID: ID!
+  subscribeList: [ID!]
+}
+
+type LikedPost @model{
+  id: ID! @primaryKey
+  userInformationID: ID!
+  likedPosts: [ID]
+}
+
+
