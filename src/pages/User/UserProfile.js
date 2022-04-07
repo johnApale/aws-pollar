@@ -90,7 +90,9 @@ function UserProfile() {
 
                 <div className="user_info">
                   <p className="user_bday">Birthday: {formatDate(val.bday)} </p>
-                  <p className="user_gender">Gender: {val.sex}</p>
+                  <div className="gender_placement">
+                    <p className="user_gender">Gender: {val.sex}</p>
+                  </div>
                 </div>
                 <p className="date_joined">
                   {" "}

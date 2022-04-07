@@ -27,6 +27,8 @@ import awsExports from "./aws-exports";
 import "@aws-amplify/ui-react/styles.css";
 import SearchBar from "./components/SearchBar/SearchBar";
 import UserProfile from "./pages/User/UserProfile";
+import Settings from "./pages/Settings/Settings";
+import ProfilePicture from "./pages/Settings/ProfilePicture";
 
 Amplify.configure(awsExports);
 
@@ -323,6 +325,8 @@ export default function App() {
               ></Route>
               <Route path="results" element={<Search />}></Route>
               <Route path="profile/:username" element={<UserProfile />}></Route>
+              <Route path = "Settings" element={<Settings />}></Route>
+              <Route path = "/Settings/ProfilePicture" element={<ProfilePicture />}></Route>
             </Routes>
           </Router>
         </div>

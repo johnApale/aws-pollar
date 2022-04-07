@@ -21,14 +21,12 @@
 ul {
     list-style-type: none;
     margin: 0;
-  
     position: sticky;
     text-align: center;
     margin: auto;
     margin-left: auto;
     margin-right: auto;
     display:inline-block;
-  
   }
   
   a {
@@ -46,7 +44,6 @@ ul {
 
 /* Popup style */
 .popup-box {
-    position: fixed;
     background: #00000050;
     width: 100%;
     height: 100vh;
@@ -54,43 +51,88 @@ ul {
     left: 0;
     z-index: 10;
     border-radius: 19px;
+    display: flex;
+    position: absolute;
+    bottom:-80px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    top:180px;
+ 
   }
   
   .box {
     position: absolute;
     width: 400px;
-    margin: 0 auto;
-    height: 150px;
+    height: 300px;
     max-height: 70vh;
     margin-top: calc(100vh - 85vh - 20px);
     background: #fff;
     border-radius: 4px;
     padding: 20px;
     border: 1px solid #999;
-    overflow: auto;
+    overflow: hidden;
     z-index: 10;
-    left:500px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    top:180px;
+
+    
   }
   
-  .close-icon {
+  .close {
     content: 'x';
     cursor: pointer;
-    position: fixed;
-    right: calc(15% - 30px);
-    top: calc(100vh - 85vh - 33px);
-    background: #ededed;
+    position: relative;
+    top:-8px;
+    right:170px;
     width: 25px;
     height: 25px;
     border-radius: 50%;
     line-height: 20px;
     text-align: center;
-    border: 1px solid #999;
+    
     font-size: 20px;
     z-index: 10;
+    cursor: pointer;
   }
 
-  .close-icon:hover{
+  .close:hover{
       cursor: pointer;
+  }
+
+  .anon_title{
+      position: relative;
+      width:360px;
+      height:50px;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+  }
+
+  .mode_description{
+
+  }
+  .anonymousMode_On{
+      position:relative;
+      left:85px;
+      top:-18px;
+      
+  }
+
+  .Mode_On_Desc {
+    position:relative; 
+    right: 16px;
+    font-size: 14px;
+    font-weight: 300;
+    top:20px;
+    
+  }
+
+  .submit_anon{
+      position: relative;
+      
   }
 /* polar bear photo */
 .avatar1 {
@@ -99,8 +141,8 @@ ul {
     height: 100px;
     margin-top: 10px;
     position:relative;
-    right:110px;
-    top:-145px;
+    right:155px;
+    top:-149px;
 }
 
 .Topbar h1 {
@@ -145,7 +187,7 @@ ul {
     width: 50px;
     height: 35px;
     position: relative;
-    left:240px;
+    left:235px;
     top:-215px;
 
 }
@@ -155,7 +197,7 @@ ul {
     height: 34px;
     margin-left: 40px;
     position: relative;
-    left:220px;
+    left:230px;
     top:-218px;
 
     /* width: 40px;
@@ -180,24 +222,24 @@ ul {
     margin:0px;
     font-size: 30px;
     position:relative;
-    right:225px;
+    right:270px;
     top:-65px;
     
 } 
 
 .trending{
     position:relative; 
-    left:-30px;
+    right:105px;
 }
 
 .create{
     position: relative;
-    left:10px;
+    right:3px;
 }
 
 .random{
     position:relative;
-    left:50px;
+    left:95px;
 }
 
 .secMenu{
@@ -205,6 +247,3 @@ ul {
     top:-210px;
     text-align: center;
 }
-
-
-  

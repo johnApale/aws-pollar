@@ -1,0 +1,128 @@
+.settings_pg{
+    width:900px;
+    height:600px;
+    background-color: white;
+    border:2px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: absolute;
+    bottom:-80px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px; 
+}
+
+.settings_navbar{
+    position: relative;
+    right:140px;
+    text-align: left;
+}
+
+.separation_bar{
+    position: relative;
+    border-left: none;
+    border-style: solid;
+    border-top:none;
+    border-bottom:none;
+    border-right:1px black;
+    height:520px;
+    right:70px;
+}
+
+ul{
+    text-align: left;
+}
+
+.page_title{
+    font-size: 30px;
+    position: relative;
+    top:-200px;
+}
+
+.UserDetails{
+    font-size: 18px;
+    position: relative;
+    top:-170px;
+}
+
+.profile_pictures{
+    font-size: 18px;
+    position:relative;
+    top:-150px;
+}
+
+.fN, .lN, .bday, .sx {
+    font-weight: 200;
+    position: relative;
+    right:38px;
+    top:35px;
+
+}
+.fN, .lN {
+    position: relative;
+    margin: 5px;
+    top:-50px;
+    left:-100px;
+}
+.bday{
+    position: relative;
+    left: -108px;
+    margin-top: 10px;
+    margin-bottom: 1px;
+    top:-40px;
+}
+.sx {
+    position: relative;
+    right:61px;
+    top:-5px;
+    left:-120px;
+    margin-top: 5px;
+}
+
+.userSex {
+    position: relative;
+    right:42px;
+    top:0px;
+    left:-97px;
+}
+
+.userBirthday {
+    position: relative;
+    top:-19px;
+    left:-53px;
+}
+
+.firstN, .lastN {
+    border-top:1px;
+    border-color:#a4d9f8;
+    border-left: none;
+    border-right:none;
+    position: relative;
+    left:25px;
+    width:330px; 
+    top:-55px;
+}
+
+.title{
+    position: relative;
+    left:75px;
+    font-weight:light;
+    margin-top: 20px;
+    margin-bottom: -10px;
+    top:-100px;
+    
+}
+
+.submit_Info{
+    border-radius: 25px;
+    border:none; 
+    background-color: white;
+    color: #a4d9f8;
+    font-weight: 800;
+    position: relative;
+    bottom:-80px;
+    left:70px;
+}
