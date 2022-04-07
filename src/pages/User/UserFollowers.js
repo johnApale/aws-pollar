@@ -8,7 +8,6 @@ function Followers() {
     <div className="user_followers">
         <div className = "useraccount">
             <img src="/profilepic1.png" className="poll_avatar" />
-            
             <a className = "user_link"> username</a>
         </div>
     

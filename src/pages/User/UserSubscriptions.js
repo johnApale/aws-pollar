@@ -8,7 +8,6 @@ function UserSubscriptions() {
     <div className="user_subscriptions">
         <div className = "useraccount">
             <img src="/profilepic1.png" className="user_avatar" />
-            
             <a className = "user_link"> username</a>
         </div>
     
