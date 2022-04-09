@@ -12,6 +12,8 @@ import Notification from "./pages/Notifications/Notifications";
 import UserDetails from "./pages/UserDetails/UserDetails";
 import { Amplify } from "aws-amplify";
 import awsconfig from "./aws-exports";
+import Settings from "./pages/Settings/Settings";
+import ProfilePicture from "./pages/Settings/ProfilePicture";
 
 import {
   Authenticator,
@@ -323,11 +325,11 @@ export default function App() {
               ></Route>
               <Route path="results" element={<Search />}></Route>
               <Route path="profile/:username" element={<UserProfile />}></Route>
-              <Route path="Settings" element={<Settings />}></Route>
+              {/* <Route path="Settings" element={<Settings />}></Route>
               <Route
                 path="/Settings/ProfilePicture"
                 element={<ProfilePicture />}
-              ></Route>
+              ></Route> */}
             </Routes>
           </Router>
         </div>

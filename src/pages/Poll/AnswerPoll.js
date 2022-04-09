@@ -53,7 +53,7 @@ function AnswerPoll(props) {
     <body>
       <div class="form">
         <form class="answerPoll">
-          <span class="username">
+          <span class="answer__username">
             <p1> Creator: {poll.userID}</p1>
           </span>
           <br />
