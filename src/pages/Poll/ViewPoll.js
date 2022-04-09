@@ -4,30 +4,39 @@ import {
   createSearchParams,
   useNavigate,
 } from "react-router-dom";
-import { DataStore, API } from "aws-amplify";
-import { getUserPolls } from "../../graphql/queries";
-import { Poll } from "../../models";
+import { API, graphqlOperation } from "aws-amplify";
+import { getPoll } from "../../graphql/queries";
 import "./ViewPoll.css";
 
 function ViewPoll() {
   const [poll, setPoll] = useState([]);
   const [searchParams] = useSearchParams();
-  const id = searchParams.get("id");
+  const queryID = searchParams.get("id");
   const navigate = useNavigate();
 
-  useEffect(async () => {
-    try {
-      const model = await DataStore.query(Poll, (p) => p.id("eq", id));
-      setPoll(model);
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const pollData = await API.graphql(
+          graphqlOperation(getPoll, { id: queryID })
+        );
+        const newPoll = pollData.data.getPoll;
+        newPoll.categoryLength = newPoll.categories.length;
+        newPoll.likeCount = newPoll.likes.items.length;
+        setPoll(newPoll);
+        console.log(newPoll);
+        console.log(newPoll.categoryLength);
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }, []);
+    fetchData();
+  }, [queryID]);
 
   function goToAnswer() {
     navigate({
       pathname: "/poll/answer",
-      search: `?${createSearchParams({ id: id })}`,
+      search: `?${createSearchParams({ id: queryID })}`,
       replace: true,
     });
   }
@@ -48,36 +57,27 @@ function ViewPoll() {
 
   return (
     <div className="view__poll">
-      {poll.map((val, key) => {
-        return (
-          <div className="poll__details">
-            <div className="poll__top">
-              <p
-                className="poll__username"
-                onClick={() => goToUser(val.UserInformation.username)}
-              >
-                {val.UserInformation.username}
-              </p>
-              <p className="poll__created">{formatDate(val.createdAt)}</p>
-            </div>
-            <h3 className="poll__title">{val.title}</h3>
-            <p className="poll__description">{val.description}</p>
+      <div className="poll__details">
+        <div className="poll__top">
+          <p className="poll__username" onClick={() => goToUser(poll.userID)}>
+            {poll.userID}
+          </p>
+          <p className="poll__created">{formatDate(poll.createdAt)}</p>
+        </div>
+        <h3 className="poll__title">{poll.title}</h3>
+        <p className="poll__description">{poll.description}</p>
 
-            <p className="poll__categories">
-              {val.categories.length > 0 && (
-                <p> Categories: {val.categories}</p>
-              )}
-            </p>
-            <div className="poll__bottom">
-              <p className="poll__likes">Likes: {val.likes}</p>
-              <p className="poll__views">Views: {val.views}</p>
-            </div>
-            <button className="answer__button" onClick={goToAnswer}>
-              Answer Poll
-            </button>
-          </div>
-        );
-      })}
+        <p className="poll__categories">
+          {poll.categoryLength > 0 && <p> Categories: {poll.categories}</p>}
+        </p>
+        <div className="poll__bottom">
+          <p className="poll__likes">Likes: {poll.likeCount}</p>
+          <p className="poll__views">Views: {poll.views}</p>
+        </div>
+        <button className="answer__button" onClick={goToAnswer}>
+          Answer Poll
+        </button>
+      </div>
     </div>
   );
 }

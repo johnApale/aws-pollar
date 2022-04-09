@@ -85,11 +85,11 @@ function NavBar(props) {
               Trending Polls
             </a>
 
-            <a href="/Poll/Create" className="create">
+            <a href="/poll/create" className="create">
               Create Poll
             </a>
 
-            <a href="/Random" className="random">
+            <a href="/random" className="random">
               Random Polls
             </a>
           </ul>
