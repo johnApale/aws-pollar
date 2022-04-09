@@ -88,8 +88,13 @@ export declare class UserResponse {
   readonly userInformationID: string;
   readonly pollID: string;
   readonly content: string;
+<<<<<<< HEAD
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+=======
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+>>>>>>> f3ef4bc1c49e459195c2bec24796757f9203ef8d
   constructor(init: ModelInit<UserResponse, UserResponseMetaData>);
   static copyOf(source: UserResponse, mutator: (draft: MutableModel<UserResponse, UserResponseMetaData>) => MutableModel<UserResponse, UserResponseMetaData> | void): UserResponse;
 }
@@ -97,9 +102,15 @@ export declare class UserResponse {
 export declare class SubscribedTo {
   readonly id: string;
   readonly userInformationID: string;
+<<<<<<< HEAD
   readonly subscribeList?: string[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+=======
+  readonly subscribeList?: string[];
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+>>>>>>> f3ef4bc1c49e459195c2bec24796757f9203ef8d
   constructor(init: ModelInit<SubscribedTo, SubscribedToMetaData>);
   static copyOf(source: SubscribedTo, mutator: (draft: MutableModel<SubscribedTo, SubscribedToMetaData>) => MutableModel<SubscribedTo, SubscribedToMetaData> | void): SubscribedTo;
 }
@@ -107,9 +118,15 @@ export declare class SubscribedTo {
 export declare class LikedPost {
   readonly id: string;
   readonly userInformationID: string;
+<<<<<<< HEAD
   readonly likedPosts?: (string | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+=======
+  readonly likedPosts?: (string | null)[];
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+>>>>>>> f3ef4bc1c49e459195c2bec24796757f9203ef8d
   constructor(init: ModelInit<LikedPost, LikedPostMetaData>);
   static copyOf(source: LikedPost, mutator: (draft: MutableModel<LikedPost, LikedPostMetaData>) => MutableModel<LikedPost, LikedPostMetaData> | void): LikedPost;
 }

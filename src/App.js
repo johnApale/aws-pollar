@@ -323,6 +323,11 @@ export default function App() {
               ></Route>
               <Route path="results" element={<Search />}></Route>
               <Route path="profile/:username" element={<UserProfile />}></Route>
+              <Route path="Settings" element={<Settings />}></Route>
+              <Route
+                path="/Settings/ProfilePicture"
+                element={<ProfilePicture />}
+              ></Route>
             </Routes>
           </Router>
         </div>
