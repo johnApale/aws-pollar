@@ -3,13 +3,17 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./pages/Home/Home";
-import Test from "./pages/Test/Test";
 import CommentTest from "./pages/Test/CommentTest";
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
-import AnswerPoll from "./pages/Poll/Poll";
+import AnswerPoll from "./pages/Poll/AnswerPoll";
 import ViewPoll from "./pages/Poll/ViewPoll";
 import Notification from "./pages/Notifications/Notifications";
+import UserDetails from "./pages/UserDetails/UserDetails";
+import { Amplify } from "aws-amplify";
+import awsconfig from "./aws-exports";
+import Settings from "./pages/Settings/Settings";
+import ProfilePicture from "./pages/Settings/ProfilePicture";
 
 import {
   Authenticator,
@@ -21,14 +25,9 @@ import {
   Button,
   Image,
 } from "@aws-amplify/ui-react";
-import { Amplify } from "aws-amplify";
-
-import awsExports from "./aws-exports";
 import "@aws-amplify/ui-react/styles.css";
-import SearchBar from "./components/SearchBar/SearchBar";
 import UserProfile from "./pages/User/UserProfile";
-
-Amplify.configure(awsExports);
+Amplify.configure(awsconfig);
 
 const components = {
   Header() {
@@ -312,7 +311,10 @@ export default function App() {
                 path="poll/view"
                 element={<ViewPoll user={user} />}
               ></Route>
-              <Route path="test" element={<Test user={user} />}></Route>
+              <Route
+                path="test"
+                element={<UserDetails trigger={true} user={user} />}
+              ></Route>
               <Route
                 path="comment_test"
                 element={<CommentTest user={user} />}
@@ -323,6 +325,11 @@ export default function App() {
               ></Route>
               <Route path="results" element={<Search />}></Route>
               <Route path="profile/:username" element={<UserProfile />}></Route>
+              {/* <Route path="Settings" element={<Settings />}></Route>
+              <Route
+                path="/Settings/ProfilePicture"
+                element={<ProfilePicture />}
+              ></Route> */}
             </Routes>
           </Router>
         </div>

@@ -4,17 +4,26 @@
 export const onCreateUserInformation = /* GraphQL */ `
   subscription OnCreateUserInformation {
     onCreateUserInformation {
-      id
-      username
+      usernameID
       firstName
       lastName
       email
       bday
       anon
       sex
+      subscribedTo {
+        items {
+          id
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       polls {
         items {
           id
+          userID
           title
           publicity
           disclaimer
@@ -22,57 +31,74 @@ export const onCreateUserInformation = /* GraphQL */ `
           answerChoices
           categories
           tags
-          likes
           views
           timeStart
           timeEnd
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userInformationPollsId
         }
         nextToken
-        startedAt
+      }
+      pollAnswers {
+        items {
+          id
+          pollID
+          userID
+          answer
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       comments {
         items {
           id
           content
+          pollID
+          userID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userInformationCommentsId
-          pollCommentsId
         }
         nextToken
-        startedAt
+      }
+      likedPolls {
+        items {
+          id
+          pollID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
 export const onUpdateUserInformation = /* GraphQL */ `
   subscription OnUpdateUserInformation {
     onUpdateUserInformation {
-      id
-      username
+      usernameID
       firstName
       lastName
       email
       bday
       anon
       sex
+      subscribedTo {
+        items {
+          id
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       polls {
         items {
           id
+          userID
           title
           publicity
           disclaimer
@@ -80,57 +106,74 @@ export const onUpdateUserInformation = /* GraphQL */ `
           answerChoices
           categories
           tags
-          likes
           views
           timeStart
           timeEnd
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userInformationPollsId
         }
         nextToken
-        startedAt
+      }
+      pollAnswers {
+        items {
+          id
+          pollID
+          userID
+          answer
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       comments {
         items {
           id
           content
+          pollID
+          userID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userInformationCommentsId
-          pollCommentsId
         }
         nextToken
-        startedAt
+      }
+      likedPolls {
+        items {
+          id
+          pollID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
 export const onDeleteUserInformation = /* GraphQL */ `
   subscription OnDeleteUserInformation {
     onDeleteUserInformation {
-      id
-      username
+      usernameID
       firstName
       lastName
       email
       bday
       anon
       sex
+      subscribedTo {
+        items {
+          id
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       polls {
         items {
           id
+          userID
           title
           publicity
           disclaimer
@@ -138,40 +181,48 @@ export const onDeleteUserInformation = /* GraphQL */ `
           answerChoices
           categories
           tags
-          likes
           views
           timeStart
           timeEnd
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userInformationPollsId
         }
         nextToken
-        startedAt
+      }
+      pollAnswers {
+        items {
+          id
+          pollID
+          userID
+          answer
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       comments {
         items {
           id
           content
+          pollID
+          userID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userInformationCommentsId
-          pollCommentsId
         }
         nextToken
-        startedAt
+      }
+      likedPolls {
+        items {
+          id
+          pollID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -179,37 +230,50 @@ export const onCreatePoll = /* GraphQL */ `
   subscription OnCreatePoll {
     onCreatePoll {
       id
-      title
+      userID
       UserInformation {
-        id
-        username
+        usernameID
         firstName
         lastName
         email
         bday
         anon
         sex
+        subscribedTo {
+          nextToken
+        }
         polls {
           nextToken
-          startedAt
+        }
+        pollAnswers {
+          nextToken
         }
         comments {
           nextToken
-          startedAt
+        }
+        likedPolls {
+          nextToken
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
+      title
       publicity
       disclaimer
       description
       answerChoices
       categories
       tags
-      likes
+      likes {
+        items {
+          id
+          pollID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       views
       timeStart
       timeEnd
@@ -217,23 +281,26 @@ export const onCreatePoll = /* GraphQL */ `
         items {
           id
           content
+          pollID
+          userID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userInformationCommentsId
-          pollCommentsId
         }
         nextToken
-        startedAt
+      }
+      userAnswers {
+        items {
+          id
+          pollID
+          userID
+          answer
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      userInformationPollsId
     }
   }
 `;
@@ -241,37 +308,50 @@ export const onUpdatePoll = /* GraphQL */ `
   subscription OnUpdatePoll {
     onUpdatePoll {
       id
-      title
+      userID
       UserInformation {
-        id
-        username
+        usernameID
         firstName
         lastName
         email
         bday
         anon
         sex
+        subscribedTo {
+          nextToken
+        }
         polls {
           nextToken
-          startedAt
+        }
+        pollAnswers {
+          nextToken
         }
         comments {
           nextToken
-          startedAt
+        }
+        likedPolls {
+          nextToken
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
+      title
       publicity
       disclaimer
       description
       answerChoices
       categories
       tags
-      likes
+      likes {
+        items {
+          id
+          pollID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       views
       timeStart
       timeEnd
@@ -279,23 +359,26 @@ export const onUpdatePoll = /* GraphQL */ `
         items {
           id
           content
+          pollID
+          userID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userInformationCommentsId
-          pollCommentsId
         }
         nextToken
-        startedAt
+      }
+      userAnswers {
+        items {
+          id
+          pollID
+          userID
+          answer
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      userInformationPollsId
     }
   }
 `;
@@ -303,37 +386,50 @@ export const onDeletePoll = /* GraphQL */ `
   subscription OnDeletePoll {
     onDeletePoll {
       id
-      title
+      userID
       UserInformation {
-        id
-        username
+        usernameID
         firstName
         lastName
         email
         bday
         anon
         sex
+        subscribedTo {
+          nextToken
+        }
         polls {
           nextToken
-          startedAt
+        }
+        pollAnswers {
+          nextToken
         }
         comments {
           nextToken
-          startedAt
+        }
+        likedPolls {
+          nextToken
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
+      title
       publicity
       disclaimer
       description
       answerChoices
       categories
       tags
-      likes
+      likes {
+        items {
+          id
+          pollID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       views
       timeStart
       timeEnd
@@ -341,23 +437,26 @@ export const onDeletePoll = /* GraphQL */ `
         items {
           id
           content
+          pollID
+          userID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userInformationCommentsId
-          pollCommentsId
         }
         nextToken
-        startedAt
+      }
+      userAnswers {
+        items {
+          id
+          pollID
+          userID
+          answer
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      userInformationPollsId
     }
   }
 `;
@@ -365,35 +464,13 @@ export const onCreateComment = /* GraphQL */ `
   subscription OnCreateComment {
     onCreateComment {
       id
-      UserInformation {
-        id
-        username
-        firstName
-        lastName
-        email
-        bday
-        anon
-        sex
-        polls {
-          nextToken
-          startedAt
-        }
-        comments {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
+      content
+      pollID
       Poll {
         id
-        title
+        userID
         UserInformation {
-          id
-          username
+          usernameID
           firstName
           lastName
           email
@@ -402,39 +479,58 @@ export const onCreateComment = /* GraphQL */ `
           sex
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
+        title
         publicity
         disclaimer
         description
         answerChoices
         categories
         tags
-        likes
+        likes {
+          nextToken
+        }
         views
         timeStart
         timeEnd
         comments {
           nextToken
-          startedAt
+        }
+        userAnswers {
+          nextToken
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        userInformationPollsId
       }
-      content
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        subscribedTo {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      userInformationCommentsId
-      pollCommentsId
     }
   }
 `;
@@ -442,35 +538,13 @@ export const onUpdateComment = /* GraphQL */ `
   subscription OnUpdateComment {
     onUpdateComment {
       id
-      UserInformation {
-        id
-        username
-        firstName
-        lastName
-        email
-        bday
-        anon
-        sex
-        polls {
-          nextToken
-          startedAt
-        }
-        comments {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
+      content
+      pollID
       Poll {
         id
-        title
+        userID
         UserInformation {
-          id
-          username
+          usernameID
           firstName
           lastName
           email
@@ -479,39 +553,58 @@ export const onUpdateComment = /* GraphQL */ `
           sex
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
+        title
         publicity
         disclaimer
         description
         answerChoices
         categories
         tags
-        likes
+        likes {
+          nextToken
+        }
         views
         timeStart
         timeEnd
         comments {
           nextToken
-          startedAt
+        }
+        userAnswers {
+          nextToken
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        userInformationPollsId
       }
-      content
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        subscribedTo {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      userInformationCommentsId
-      pollCommentsId
     }
   }
 `;
@@ -519,35 +612,13 @@ export const onDeleteComment = /* GraphQL */ `
   subscription OnDeleteComment {
     onDeleteComment {
       id
-      UserInformation {
-        id
-        username
-        firstName
-        lastName
-        email
-        bday
-        anon
-        sex
-        polls {
-          nextToken
-          startedAt
-        }
-        comments {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
+      content
+      pollID
       Poll {
         id
-        title
+        userID
         UserInformation {
-          id
-          username
+          usernameID
           firstName
           lastName
           email
@@ -556,39 +627,607 @@ export const onDeleteComment = /* GraphQL */ `
           sex
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
         }
+        title
         publicity
         disclaimer
         description
         answerChoices
         categories
         tags
-        likes
+        likes {
+          nextToken
+        }
         views
         timeStart
         timeEnd
         comments {
           nextToken
-          startedAt
+        }
+        userAnswers {
+          nextToken
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        userInformationPollsId
       }
-      content
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        subscribedTo {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      userInformationCommentsId
-      pollCommentsId
+    }
+  }
+`;
+export const onCreateUserAnswer = /* GraphQL */ `
+  subscription OnCreateUserAnswer {
+    onCreateUserAnswer {
+      id
+      pollID
+      Poll {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        title
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        likes {
+          nextToken
+        }
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+        }
+        userAnswers {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        subscribedTo {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      answer
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserAnswer = /* GraphQL */ `
+  subscription OnUpdateUserAnswer {
+    onUpdateUserAnswer {
+      id
+      pollID
+      Poll {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        title
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        likes {
+          nextToken
+        }
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+        }
+        userAnswers {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        subscribedTo {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      answer
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserAnswer = /* GraphQL */ `
+  subscription OnDeleteUserAnswer {
+    onDeleteUserAnswer {
+      id
+      pollID
+      Poll {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        title
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        likes {
+          nextToken
+        }
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+        }
+        userAnswers {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        subscribedTo {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      answer
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateLikes = /* GraphQL */ `
+  subscription OnCreateLikes {
+    onCreateLikes {
+      id
+      pollID
+      Poll {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        title
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        likes {
+          nextToken
+        }
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+        }
+        userAnswers {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        subscribedTo {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateLikes = /* GraphQL */ `
+  subscription OnUpdateLikes {
+    onUpdateLikes {
+      id
+      pollID
+      Poll {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        title
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        likes {
+          nextToken
+        }
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+        }
+        userAnswers {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        subscribedTo {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteLikes = /* GraphQL */ `
+  subscription OnDeleteLikes {
+    onDeleteLikes {
+      id
+      pollID
+      Poll {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        title
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        likes {
+          nextToken
+        }
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+        }
+        userAnswers {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        subscribedTo {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateSubscribed = /* GraphQL */ `
+  subscription OnCreateSubscribed {
+    onCreateSubscribed {
+      id
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        subscribedTo {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateSubscribed = /* GraphQL */ `
+  subscription OnUpdateSubscribed {
+    onUpdateSubscribed {
+      id
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        subscribedTo {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteSubscribed = /* GraphQL */ `
+  subscription OnDeleteSubscribed {
+    onDeleteSubscribed {
+      id
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        subscribedTo {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
     }
   }
 `;

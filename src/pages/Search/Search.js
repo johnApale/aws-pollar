@@ -1,29 +1,34 @@
+import { API, graphqlOperation } from "aws-amplify";
 import React, { useState, useEffect } from "react";
 import {
   useSearchParams,
   createSearchParams,
   useNavigate,
 } from "react-router-dom";
-import { DataStore } from "aws-amplify";
-import { Poll } from "../../models";
+import { searchPolls } from "../../graphql/queries";
 import "./Search.css";
+
+// Still need to figure out like counter
 
 function Search(props) {
   const [searchList, setSearchList] = useState([]);
-  const [poll, setPoll] = useState();
   const [searchParams] = useSearchParams();
   const query = searchParams.get("query");
   const navigate = useNavigate();
 
-  useEffect(async () => {
-    try {
-      const models = await DataStore.query(Poll, (p) =>
-        p.title("contains", query)
-      );
-      setSearchList(models);
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const models = await API.graphql(
+          graphqlOperation(searchPolls, { filter: { title: { match: query } } })
+        );
+        console.log(models.data.searchPolls.items);
+        setSearchList(models.data.searchPolls.items);
+      } catch (error) {
+        console.log(error);
+      }
     }
+    fetchData();
   }, [query]);
 
   function goToPoll(pollID) {
@@ -45,19 +50,16 @@ function Search(props) {
       <div className="search__results">
         {searchList.map((val, key) => {
           return (
-            <div className="poll_results" key={val.id}>
+            <div className="poll_results">
               <h3 className="poll_title" onClick={() => goToPoll(val.id)}>
                 {val.title}
               </h3>
-              <h4>Category: {val.category}</h4>
-              <p
-                className="created"
-                onClick={() => goToUser(val.UserInformation.username)}
-              >
-                Created by: {val.UserInformation.username}
+              <h4>Category: {val.categories}</h4>
+              <p className="created" onClick={() => goToUser(val.userID)}>
+                Created by: {val.userID}
               </p>
               <p className="views">Views: {val.views}</p>
-              <p className="likes">Likes: {val.likes}</p>
+              {/* <p className="likes">Likes: {val.likes.items.length}</p> */}
             </div>
           );
         })}

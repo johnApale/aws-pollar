@@ -1,6 +1,6 @@
 {
   "api": {
-    "awspollar": {
+    "pollarAPI": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {

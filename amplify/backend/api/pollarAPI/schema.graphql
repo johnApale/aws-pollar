@@ -1,0 +1,67 @@
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type UserInformation @model @searchable{
+  usernameID: String! @primaryKey
+  firstName: String!
+  lastName: String!
+  email: AWSEmail!
+  bday: AWSDate!
+  anon: Boolean!
+  sex: String!
+  subscribedTo: [Subscribed] @hasMany(indexName: "bySubscribed", fields: ["usernameID"])
+  polls: [Poll] @hasMany (indexName: "byUser", fields: ["usernameID"])
+  pollAnswers: [UserAnswer] @hasMany (indexName: "byUserAnswers", fields: ["usernameID"])
+  comments: [Comment] @hasMany (indexName: "byUserComments", fields:["usernameID"])
+  likedPolls: [Likes] @hasMany (indexName: "byUserLikes", fields: ["usernameID"])
+}
+
+type Poll @model @searchable{
+  id: ID!
+  userID: String!  @index(name: "byUser", queryField: "pollByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["userID"])
+  title: String!
+  publicity: Boolean!
+  disclaimer: Boolean!
+  description: String!
+  answerChoices: [String]!
+  categories: [String]
+  tags: [String]
+  likes: [Likes] @hasMany (indexName: "byLikes", fields: ["id"])
+  views: Int!
+  timeStart: AWSDateTime!
+  timeEnd: AWSDateTime!
+  comments: [Comment] @hasMany (indexName: "byPoll", fields: ["id"])
+  userAnswers: [UserAnswer] @hasMany (indexName: "byAnsweredPolls", fields:["id"])
+}
+
+type Comment @model {
+  id: ID!
+  content: String!
+  pollID: ID! @index(name: "byPoll", queryField: "commentsByPoll")
+  Poll: Poll @belongsTo(fields:["pollID"])
+  userID: String! @index(name: "byUserComments", queryField: "commentsByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["userID"])
+}
+
+type UserAnswer @model {
+  id: ID!
+  pollID: ID! @index(name: "byAnsweredPolls", queryField: "answerByPoll")
+  Poll: Poll @belongsTo(fields:["pollID"])
+  userID: String! @index(name: "byUserAnswers", queryField: "answersByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["userID"])
+  answer: String!
+}
+
+type Likes @model {
+  id: ID!
+  pollID: ID! @index(name: "byLikes", queryField: "likesByPoll")
+  Poll: Poll @belongsTo(fields:["pollID"])
+  userID: String! @index(name: "byUserLikes", queryField: "likesByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["userID"])
+}
+
+type Subscribed @model {
+  id: ID!
+  userID: String! @index(name: "bySubscribed", queryField: "subscribedByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["userID"])
+}

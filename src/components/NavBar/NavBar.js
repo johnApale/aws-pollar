@@ -18,6 +18,10 @@ function NavBar(props) {
     navigate(`/profile/${props.user.username}`);
   };
 
+  const goToSettings = () => {
+    navigate('/Settings');
+  };
+
   return (
     <div className="NavBar">
       <div className="Center">
@@ -42,7 +46,7 @@ function NavBar(props) {
               <Dropdown.Item href="#" onClick={goToProfile}>
                 User Profile
               </Dropdown.Item>
-              <Dropdown.Item href="#">Settings</Dropdown.Item>
+              <Dropdown.Item href="/Settings" onClick={goToSettings}>Settings</Dropdown.Item>
               <Dropdown.Item href="#" onClick={props.signOut}>
                 Sign Out
               </Dropdown.Item>
@@ -85,11 +89,11 @@ function NavBar(props) {
               Trending Polls
             </a>
 
-            <a href="/Poll/Create" className="create">
+            <a href="/poll/create" className="create">
               Create Poll
             </a>
 
-            <a href="/Random" className="random">
+            <a href="/random" className="random">
               Random Polls
             </a>
           </ul>
@@ -99,13 +103,20 @@ function NavBar(props) {
           <Popup
             content={
               <>
-                <p>Anonymous Mode</p>
+                <p className="anon_title">Anonymous Mode</p>
+                <div className = "mode_description">
                 <p>
                   What you do on Pollar is private, your activity won't affect
                   your account.{" "}
                 </p>
-                <p> Turn On Anonymous Mode</p>
+                </div>
+                <p className = "Mode_On_Desc"> Turn On Anonymous Mode</p>
+                <form>
+                <input type = "checkbox" id = "anonymous_on" value = "anonymous" className="anonymousMode_On"></input>
+                <input type = "submit" id = "submit_mode" className = "submit_anon"></input>
+                </form>
               </>
+
             }
             handleClose={togglePopup}
           />
@@ -115,3 +126,4 @@ function NavBar(props) {
   );
 }
 export default NavBar;
+

@@ -1,27 +1,36 @@
 import React, { useState, useEffect } from "react";
 import "./Home.css";
-import { UserInformation } from "../../models";
 import UserDetails from "../UserDetails/UserDetails";
-import { DataStore } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
+import { getUserInformation } from "../../graphql/queries";
 
 function Home(props) {
   const [popupTrigger, setPopupTrigger] = useState(false);
-  const [userData, setUserData] = useState([]);
 
-  useEffect(async () => {
-    try {
-      await DataStore.query(UserInformation, (u) =>
-        u.username("eq", props.user.username)
-      );
-    } catch (error) {
-      console.log("Error fetching user information, ", error);
-      setPopupTrigger(true);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const userInfoArray = await API.graphql(
+          graphqlOperation(getUserInformation, {
+            usernameID: props.user.username,
+          })
+        );
+
+        const userInfo = userInfoArray.data.getUserInformation;
+        console.log(userInfo);
+        if (!userInfo) {
+          setPopupTrigger(true);
+        }
+      } catch (error) {
+        console.log("Error fetching user information, ", error);
+      }
     }
-  });
+    fetchData();
+  }, [props.user.username]);
   return (
     <div className="welcome">
       Hello, {props.user.username}!{" "}
-      <UserDetails trigger={popupTrigger}></UserDetails>
+      <UserDetails trigger={popupTrigger} user={props.user}></UserDetails>
     </div>
   );
 }

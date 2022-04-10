@@ -1,35 +1,37 @@
 import React, { useState } from "react";
-import { Sex, UserInformation } from "../../models";
-import { DataStore } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
+import { createUserInformation } from "../../graphql/mutations";
 import "./UserDetails.css";
 
 function UserDetails(props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [birthday, setBirthday] = useState("");
-  const [userSex] = useState([
-    { label: "Male", value: Sex.MALE },
-    { label: "Female", value: Sex.FEMALE },
-    { label: "Other", value: Sex.OTHER },
-  ]);
+  const options = [
+    { label: "Male", value: "Male" },
+    { label: "Female", value: "Female" },
+    { label: "Other", value: "Other" },
+  ];
+  const [userSex, setUserSex] = useState("Male");
 
   const saveInformation = async () => {
+    const userInfo = {
+      usernameID: props.user.username,
+      firstName: firstName,
+      lastName: lastName,
+      email: props.user.attributes.email,
+      bday: birthday,
+      anon: false,
+      sex: userSex,
+    };
     try {
-      await DataStore.save(
-        new UserInformation({
-          username: props.user.username,
-          firstName: firstName,
-          lastName: lastName,
-          email: props.user.email,
-          bday: birthday,
-          anon: true,
-          sex: userSex,
-          polls: [],
-          comments: [],
-        })
+      const newUser = await API.graphql(
+        graphqlOperation(createUserInformation, { input: userInfo })
       );
+      console.log("User saved.", newUser);
+      window.location.reload(false);
     } catch (error) {
-      console.log("Error in saving user details, ", error);
+      console.log(error);
     }
   };
 
@@ -63,21 +65,28 @@ function UserDetails(props) {
             }}
           ></input>
           <p className="sx"> Sex </p>
-          <select name="sex" id="userSex" className="userSex">
-            {userSex.map((item) => (
-              <option key={item.value} value={item.value}>
-                {item.label}
-              </option>
+          <select
+            className="userSex"
+            value={userSex}
+            onChange={(event) => {
+              setUserSex(event.target.value);
+            }}
+          >
+            {options.map((option) => (
+              <option value={option.value}>{option.label}</option>
             ))}
           </select>
 
           <br></br>
-          <input
-            onClick={saveInformation}
-            type="submit"
+          <button
             className="submitInfo"
-            value="Save Information"
-          />
+            onClick={saveInformation}
+            type="button"
+            id="saveButton"
+          >
+            {" "}
+            Save Information{" "}
+          </button>
         </form>
       </div>
     </div>

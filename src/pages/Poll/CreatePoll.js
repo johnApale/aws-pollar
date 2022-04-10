@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"
+import React, { useState } from "react";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import "./CreatePoll.css";
-import { DataStore } from "aws-amplify";
-import { Poll, UserInformation } from "../../models";
-//import {API, graphqlOperation} from 'aws-amplify';
+import { API, graphqlOperation } from "aws-amplify";
+import { createPoll } from "../../graphql/mutations";
 //import {createPoll, updatePoll, deletePoll, createPollAnswers, updatePollAnswers, deletePollAnswers} from './graphql/mutations';
 
 function CreatePoll(props) {
-  const nav = useNavigate();
-  const [userData, setUserData] = useState([]);
-  const [user, setUser] = useState([]);
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [summary, setSummary] = useState("");
@@ -26,6 +23,7 @@ function CreatePoll(props) {
   const [answer8, setAnswer8] = useState("");
   const answers = [];
 
+<<<<<<< HEAD
   //makePub = false;
   //disclaimer, createPoll date, Answers as an array of strings
 
@@ -52,48 +50,69 @@ function CreatePoll(props) {
     }
   }, [user]);
 
+=======
+>>>>>>> 3a7f26595e397a4065a17473058d0b31a2f2898a
   const createPollFe = async (event) => {
+    // gets current data
+    let date = new Date();
     event.preventDefault();
     addAnswer();
     console.log(makePub);
     console.log(disclaimer);
-    try {
-      await DataStore.save(
-        new Poll({
-          userInformationID: user.id,
-          title: title,
-          UserInformation: user,
-          publicity: makePub,
-          disclaimer: disclaimer,
-          description: summary,
-          answerChoices: answers,
-          categories: [category],
-          tags: [],
-          likes: 0,
-          views: 0,
-          timeStart: "1970-01-01T12:30:23.999Z", //need to look into how to get current date time in amazon date time format
-          timeEnd: "1970-01-01T12:30:23.999Z",
-          comments: [],
-        })
-      );
-      console.log("Post saved successfully!");
-      nav("/");
 
+    // create object for poll
+    const pollInfo = {
+      userID: props.user.username,
+      title: title,
+      publicity: makePub,
+      disclaimer: disclaimer,
+      description: summary,
+      answerChoices: answers,
+      categories: [category],
+      views: 0,
+      // iso 8601 date time format
+      timeStart: date.toISOString(),
+      timeEnd: date.toISOString(),
+    };
+    try {
+      const newPoll = await API.graphql(
+        graphqlOperation(createPoll, { input: pollInfo })
+      );
+      navigate({
+        pathname: "/poll/view",
+        search: `?${createSearchParams({ id: newPoll.data.createPoll.id })}`,
+        replace: true,
+      });
     } catch (error) {
-      console.log("Error in saving ", error);
+      console.log(error);
     }
   };
 
   const addAnswer = () => {
-    answers.push(answer1);
-    answers.push(answer2);
-    answers.push(answer3);
-    answers.push(answer4);
-    answers.push(answer5);
-    answers.push(answer6);
-    answers.push(answer7);
-    answers.push(answer8);
-
+    if (answer1.length > 0) {
+      answers.push(answer1);
+    }
+    if (answer2.length > 0) {
+      answers.push(answer2);
+    }
+    if (answer3.length > 0) {
+      answers.push(answer3);
+    }
+    if (answer4.length > 0) {
+      answers.push(answer4);
+    }
+    if (answer5.length > 0) {
+      answers.push(answer5);
+    }
+    if (answer6.length > 0) {
+      answers.push(answer6);
+    }
+    if (answer7.length > 0) {
+      answers.push(answer7);
+    }
+    if (answer8.length > 0) {
+      answers.push(answer8);
+    }
   };
 
   return (
@@ -232,11 +251,9 @@ function CreatePoll(props) {
         />
         Disclaimer
         <br></br>
-        <button
-          type="submit"
-          className="submit"
-          value="Create Poll"
-          >Submit</button>
+        <button type="submit" className="submit" value="Create Poll">
+          Submit
+        </button>
       </form>
     </div>
   );
