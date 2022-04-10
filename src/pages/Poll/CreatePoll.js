@@ -23,35 +23,6 @@ function CreatePoll(props) {
   const [answer8, setAnswer8] = useState("");
   const answers = [];
 
-<<<<<<< HEAD
-  //makePub = false;
-  //disclaimer, createPoll date, Answers as an array of strings
-
-  useEffect(async () => {
-    setUserData(
-      await DataStore.query(UserInformation, (u) =>
-        u.username("eq", props.user.username)
-      )
-    );
-    userData.map((val, key) => {
-      setUser({
-        id: val.id,
-        username: val.username,
-        firstName: val.firstName,
-        lastName: val.lastName,
-        email: val.email,
-        bday: val.bday,
-        anon: val.anon,
-        sex: val.sex,
-      });
-    });
-    return () => {
-      setUser([]);
-    }
-  }, [user]);
-
-=======
->>>>>>> 3a7f26595e397a4065a17473058d0b31a2f2898a
   const createPollFe = async (event) => {
     // gets current data
     let date = new Date();
