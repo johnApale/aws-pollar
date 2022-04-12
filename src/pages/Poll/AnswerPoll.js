@@ -1,13 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./AnswerPoll.css";
 import { API, graphqlOperation } from "aws-amplify";
-import { getPoll } from "../../graphql/queries";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { getLikes, getPoll, getUserAnswer } from "../../graphql/queries";
+import {
+  useNavigate,
+  useSearchParams,
+  createSearchParams,
+} from "react-router-dom";
+import {
+  createLikes,
+  deleteLikes,
+  createUserAnswer,
+  deleteUserAnswer,
+  updateUserAnswer,
+} from "../../graphql/mutations";
 
 function AnswerPoll(props) {
-  const nav = useNavigate();
+  const navigate = useNavigate();
   const [poll, setPoll] = useState({});
   const [searchParams] = useSearchParams();
+  const [answer, setAnswer] = useState();
+  const [currentAnswer, setCurrentAnswer] = useState();
+  const [like, setLike] = useState("Like");
   const id = searchParams.get("id");
   //const timer = setTimeout(() => console.log('Initial timeout!'), 10000);
 
@@ -23,8 +37,135 @@ function AnswerPoll(props) {
         console.log(error);
       }
     }
+
+    async function fetchAnswer() {
+      try {
+        const answerData = await API.graphql(
+          graphqlOperation(getUserAnswer, {
+            pollID: id,
+            userID: props.user.username,
+          })
+        );
+        setCurrentAnswer(answerData.data.getUserAnswer);
+        console.log(answerData.data.getUserAnswer);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function fetchLike() {
+      try {
+        const likeData = await API.graphql(
+          graphqlOperation(getLikes, {
+            pollID: id,
+            userID: props.user.username,
+          })
+        );
+        if (likeData.data.getLikes) {
+          setLike("Unlike");
+        }
+      } catch (error) {
+        console.log("Error fetching likes, ", error);
+      }
+    }
     fetchData();
+    fetchAnswer();
+    fetchLike();
   }, [id]);
+
+  const handleAnswer = async (event) => {
+    event.preventDefault();
+    const answerData = {
+      pollID: id,
+      userID: props.user.username,
+      answer: answer,
+    };
+    console.log(answerData);
+    try {
+      const newAnswer = await API.graphql(
+        graphqlOperation(createUserAnswer, { input: answerData })
+      );
+      console.log(newAnswer);
+      navigate({
+        pathname: "/poll/view",
+        search: `?${createSearchParams({ id: id })}`,
+        replace: true,
+      });
+    } catch (error) {
+      console.log("Error submitting answer, ", error);
+    }
+  };
+
+  const updateAnswer = async (event) => {
+    event.preventDefault();
+    const answerData = {
+      pollID: id,
+      userID: props.user.username,
+      answer: answer,
+    };
+    console.log(answerData);
+    try {
+      const updatedAnswer = await API.graphql(
+        graphqlOperation(updateUserAnswer, { input: answerData })
+      );
+      navigate({
+        pathname: "/poll/view",
+        search: `?${createSearchParams({ id: id })}`,
+        replace: true,
+      });
+    } catch (error) {
+      console.log("Update error, ", error);
+    }
+  };
+
+  const removeAnswer = async (event) => {
+    event.preventDefault();
+    const answerData = {
+      pollID: id,
+      userID: props.user.username,
+      answer: answer,
+    };
+    try {
+      const removeAnswer = await API.graphql(
+        graphqlOperation(deleteUserAnswer, { input: answerData })
+      );
+      alert("Your answer has been removed.");
+      navigate({
+        pathname: "/poll/view",
+        search: `?${createSearchParams({ id: id })}`,
+        replace: true,
+      });
+    } catch (error) {
+      console.log("Delete error, ", error);
+    }
+  };
+
+  const handleLike = async (event) => {
+    event.preventDefault();
+    const answerData = {
+      pollID: id,
+      userID: props.user.username,
+    };
+    if (like === "Like") {
+      try {
+        const addLike = await API.graphql(
+          graphqlOperation(createLikes, { input: answerData })
+        );
+        setLike("Unlike");
+      } catch (error) {
+        console.log("Delete error, ", error);
+      }
+    } else {
+      try {
+        const removeLike = await API.graphql(
+          graphqlOperation(deleteLikes, { input: answerData })
+        );
+        setLike("Like");
+      } catch (error) {
+        console.log("Delete error, ", error);
+      }
+    }
+  };
 
   const [copySuccess, setCopySuccess] = useState("");
   const textAreaRef = useRef(null);
@@ -35,131 +176,57 @@ function AnswerPoll(props) {
     alert("URL copied!");
   }
 
-  async function removeAlert() {
-    alert("Your answer has been removed.");
-  }
-
-  let likeButtonState = "Like: ";
-
-  async function likeButton() {
-    if (likeButtonState === "Like: ") {
-      likeButtonState.replace("Like:", "Unlike:");
-    } else {
-      likeButtonState.replace("Unlike:", "Like:");
-    }
-  }
-
   return (
-    <body>
-      <div class="form">
-        <form class="answerPoll">
-          <span class="answer__username">
-            <p1> Creator: {poll.userID}</p1>
+    <div className="answer__poll">
+      <div className="form">
+        <form className="answerPoll">
+          <span className="answer__username">
+            <p> Creator: {poll?.userID}</p>
           </span>
           <br />
           <h1>{poll.title}</h1>
-          <div class="description"></div>
+          <div className="description"></div>
           <div className="pollOptions">
-            {poll.answerChoices?.map((option) => {
+            {poll.answerChoices?.map((option, key) => {
               return (
-                <div className="pollOption">
-                  <input type="radio" name="radio" id={option}></input>
+                <div className="pollOption" key={key}>
+                  <input
+                    type="radio"
+                    name="options"
+                    value={option}
+                    onChange={(event) => {
+                      setAnswer(event.target.value);
+                    }}
+                  ></input>
                   <li key={option}> {option}</li>
                 </div>
               );
             })}
           </div>
-
-          {/* <div class="pollOptions">
-            <label class="options">
-              <input type="radio" name="radio" id="option1"></input>
-              <span class="selectOption">{poll.answerChoices[0]}</span>
-            </label>
+          <div className="pollVote">
             <br />
-            <label class="options">
-              <input type="radio" name="radio" id="option2" />
-              <span class="selectOption">{poll.answerChoices[1]}</span>
-            </label>
+            {currentAnswer ? (
+              <p>Current Answer: {currentAnswer.answer}</p>
+            ) : null}
             <br />
-            {poll.answerChoices[2] === "" && (
-              <>
-                <label class="options">
-                  <input type="radio" name="radio" id="option3" />
-                  <span class="selectOption">{poll.answerChoices[2]}</span>
-                </label>
-                <br />
-              </>
+            {currentAnswer ? (
+              <button className="submitAns" onClick={updateAnswer}>
+                Change Answer
+              </button>
+            ) : (
+              <button className="submitAns" onClick={handleAnswer}>
+                Vote
+              </button>
             )}
-            {poll.answerChoices[3] === "" && (
-              <>
-                <label class="options">
-                  <input type="radio" name="radio" id="option4" />
-                  <span class="selectOption">{poll.answerChoices[3]}</span>
-                </label>
-                <br />
-              </>
-            )}
-            {poll.answerChoices[4] === "" && (
-              <>
-                <label class="options">
-                  <input type="radio" name="radio" id="option5" />
-                  <span class="selectOption">{poll.answerChoices[4]}</span>
-                </label>
-                <br />
-              </>
-            )}
-            {poll.answerChoices[5] === "" && (
-              <>
-                <label class="options">
-                  <input type="radio" name="radio" id="option6" />
-                  <span class="selectOption">{poll.answerChoices[5]}</span>
-                </label>
-                <br />
-              </>
-            )}
-            {poll.answerChoices[6] === "" && (
-              <>
-                <label class="options">
-                  <input type="radio" name="radio" id="option7" />
-                  <span class="selectOption">{poll.answerChoices[6]}</span>
-                </label>
-                <br />
-              </>
-            )}
-            {poll.answerChoices[7] === "" && (
-              <>
-                <label class="options">
-                  <input type="radio" name="radio" id="option8" />
-                  <span class="selectOption">{poll.answerChoices[7]}</span>
-                </label>
-                <br />
-              </>
-            )}
-          </div> */}
-          <div class="pollVote">
-            <br />
-            <input
-              type="submit"
-              id="submitAns"
-              value="Vote"
-              onClick={(event) => {
-                nav("/");
-              }}
-            />
           </div>
         </form>
       </div>
       <br />
-      <div class="userOptions">
-        <button onClick={likeButton} type="button" id="likeBttn">
-          {" "}
-          {/* {likeButtonState} {poll.likes}{" "} */}
+      <div className="userOptions">
+        <button className="likeButton" onClick={handleLike}>
+          {like}
         </button>
-        <button type="button" id="changeAns">
-          {" "}
-          Change Answer{" "}
-        </button>
-        <button onClick={removeAlert} type="button" id="removeAns">
+        <button onClick={removeAnswer} type="button" id="removeAns">
           {" "}
           Remove Answer{" "}
         </button>
@@ -168,7 +235,7 @@ function AnswerPoll(props) {
           Share{" "}
         </button>
       </div>
-    </body>
+    </div>
   );
 }
 

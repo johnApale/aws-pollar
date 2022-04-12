@@ -102,6 +102,13 @@ export const searchPolls = /* GraphQL */ `
         categories
         tags
         likes {
+          items {
+            id
+            pollID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         views
@@ -381,8 +388,8 @@ export const listPolls = /* GraphQL */ `
   }
 `;
 export const getComment = /* GraphQL */ `
-  query GetComment($id: ID!) {
-    getComment(id: $id) {
+  query GetComment($id: ID!, $userID: String!, $pollID: ID!) {
+    getComment(id: $id, userID: $userID, pollID: $pollID) {
       id
       content
       pollID
@@ -456,11 +463,21 @@ export const getComment = /* GraphQL */ `
 `;
 export const listComments = /* GraphQL */ `
   query ListComments(
+    $id: ID
+    $userIDPollID: ModelCommentPrimaryCompositeKeyConditionInput
     $filter: ModelCommentFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listComments(
+      id: $id
+      userIDPollID: $userIDPollID
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
         content
@@ -501,8 +518,8 @@ export const listComments = /* GraphQL */ `
   }
 `;
 export const getUserAnswer = /* GraphQL */ `
-  query GetUserAnswer($id: ID!) {
-    getUserAnswer(id: $id) {
+  query GetUserAnswer($pollID: ID!, $userID: String!) {
+    getUserAnswer(pollID: $pollID, userID: $userID) {
       id
       pollID
       Poll {
@@ -576,11 +593,21 @@ export const getUserAnswer = /* GraphQL */ `
 `;
 export const listUserAnswers = /* GraphQL */ `
   query ListUserAnswers(
+    $pollID: ID
+    $userID: ModelStringKeyConditionInput
     $filter: ModelUserAnswerFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listUserAnswers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listUserAnswers(
+      pollID: $pollID
+      userID: $userID
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
         pollID
@@ -621,8 +648,8 @@ export const listUserAnswers = /* GraphQL */ `
   }
 `;
 export const getLikes = /* GraphQL */ `
-  query GetLikes($id: ID!) {
-    getLikes(id: $id) {
+  query GetLikes($pollID: ID!, $userID: String!) {
+    getLikes(pollID: $pollID, userID: $userID) {
       id
       pollID
       Poll {
@@ -695,11 +722,21 @@ export const getLikes = /* GraphQL */ `
 `;
 export const listLikes = /* GraphQL */ `
   query ListLikes(
+    $pollID: ID
+    $userID: ModelStringKeyConditionInput
     $filter: ModelLikesFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listLikes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listLikes(
+      pollID: $pollID
+      userID: $userID
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
         pollID
