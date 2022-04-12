@@ -3,6 +3,10 @@ import "./AnswerPoll.css";
 import { API, graphqlOperation } from "aws-amplify";
 import { getPoll } from "../../graphql/queries";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Notification from "../Notifications/Notifications";
+import {createNotification} from "../Notifications/Notifications";
+import {NotificationContainer, NotificationManager} from "react-notifications";
+import {myNotif} from "../../App";
 
 function AnswerPoll(props) {
   const nav = useNavigate();
@@ -28,6 +32,7 @@ function AnswerPoll(props) {
 
   const [copySuccess, setCopySuccess] = useState("");
   const textAreaRef = useRef(null);
+  const [like, setLike] = useState(true);
 
   async function copyToClip() {
     await navigator.clipboard.writeText(window.location.href);
@@ -40,12 +45,20 @@ function AnswerPoll(props) {
   }
 
   let likeButtonState = "Like: ";
+  poll.likes = 0;
 
   async function likeButton() {
-    if (likeButtonState === "Like: ") {
-      likeButtonState.replace("Like:", "Unlike:");
-    } else {
-      likeButtonState.replace("Unlike:", "Like:");
+    setLike(!like)
+
+    if (!like) {
+      likeButtonState.replace("Like: 0", "Unlike: 1");
+      poll.likes += 1;
+    } 
+    
+    else {
+      NotificationManager.success('A user liked your post.', 'Liked');
+      likeButtonState.replace("Unlike: 1", "Like: 0");
+      poll.likes -= 1;
     }
   }
 
@@ -153,7 +166,7 @@ function AnswerPoll(props) {
       <div class="userOptions">
         <button onClick={likeButton} type="button" id="likeBttn">
           {" "}
-          {/* {likeButtonState} {poll.likes}{" "} */}
+           {like && "Like: 0"} {!like && "Unlike: 1"} {" "}
         </button>
         <button type="button" id="changeAns">
           {" "}
