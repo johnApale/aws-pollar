@@ -112,10 +112,14 @@
   /* for the title section heading */
   .CreatePoll p {
     color: black;
-    font-size: 19px;
+    font-size: 19px;  
     display: flex;
     margin-left: 80px;
     font-style: italic;
   
     margin-bottom: 15px;
+  }
+
+  .create__options{
+    margin-top: 20px;
   }

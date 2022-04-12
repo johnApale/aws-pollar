@@ -27,7 +27,7 @@ type Poll @model @searchable{
   categories: [String]
   tags: [String]
   likes: [Likes] @hasMany (indexName: "byLikes", fields: ["id"])
-  views: Int!
+  views: Int! 
   timeStart: AWSDateTime!
   timeEnd: AWSDateTime!
   comments: [Comment] @hasMany (indexName: "byPoll", fields: ["id"])
@@ -35,7 +35,7 @@ type Poll @model @searchable{
 }
 
 type Comment @model {
-  id: ID!
+  id: ID! @primaryKey(sortKeyFields: ["userID", "pollID"])
   content: String!
   pollID: ID! @index(name: "byPoll", queryField: "commentsByPoll")
   Poll: Poll @belongsTo(fields:["pollID"])
@@ -45,7 +45,7 @@ type Comment @model {
 
 type UserAnswer @model {
   id: ID!
-  pollID: ID! @index(name: "byAnsweredPolls", queryField: "answerByPoll")
+  pollID: ID! @primaryKey(sortKeyFields: ["userID"]) @index(name: "byAnsweredPolls", queryField: "answerByPoll")
   Poll: Poll @belongsTo(fields:["pollID"])
   userID: String! @index(name: "byUserAnswers", queryField: "answersByUser")
   UserInformation: UserInformation @belongsTo( fields: ["userID"])
@@ -54,7 +54,7 @@ type UserAnswer @model {
 
 type Likes @model {
   id: ID!
-  pollID: ID! @index(name: "byLikes", queryField: "likesByPoll")
+  pollID: ID! @primaryKey(sortKeyFields: ["userID"]) @index(name: "byLikes", queryField: "likesByPoll")
   Poll: Poll @belongsTo(fields:["pollID"])
   userID: String! @index(name: "byUserLikes", queryField: "likesByUser")
   UserInformation: UserInformation @belongsTo( fields: ["userID"])

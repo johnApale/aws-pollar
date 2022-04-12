@@ -1,6 +1,6 @@
 {
   "api": {
-    "pollarAPI": {
+    "awsAPI": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -8,7 +8,9 @@
           "defaultAuthentication": {
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 7
+              "apiKeyExpirationDays": 365,
+              "apiKeyExpirationDate": "2023-04-12T04:59:43.203Z",
+              "description": ""
             }
           },
           "additionalAuthenticationProviders": []
