@@ -1,3 +1,7 @@
+.result__query{
+    position:relative; 
+    top:-180px;
+}
 
 .search__results {
     display: flex;
@@ -8,49 +12,74 @@
     top:-190px;
 }
 
-.poll_results {
+.poll__results {
     background-color: whitesmoke;
     margin: 30px;
-    padding-top: 1px;
-    padding-left: 15px;
+    padding: 15px;
     width: 510px;
-    height: 150px;
     border: 1px #ecebeb;
     border-radius: 5px;
     box-shadow: 5px 5px 15px 6px hsl(196, 23%, 78%);
 }
 
-.poll_results p{
+.result__bottom{
+    display: flex;
+    font-size: small;
+    margin-top: 10px;
+    margin-bottom: -20px;
+}
+
+.result__left{
+    display: flex;
+    width: 120px;
+    justify-content: space-between;
+}
+
+.result__created{
+    display: flex;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.result__title:hover{
+    cursor: pointer;
+}
+.result__created:hover {
+    cursor: pointer;
+}
+
+/* .poll_results p{
     font-size: 9pt;
     display: inline-block;
 }
 
-.views, .likes{
+.result__views, .result__likes{
     padding-right: 20px;
     position: relative;
     top:35px;
 }
 
-.created {
+.result__created {
     float: right;
     padding-right: 20px;
     position: relative;
     top:40px;
 }
 
-.result_title{
+.result__query{
     position:relative; 
     top:-180px;
 }
 
-h4 {
+.result__categories {
     position:relative; 
     top:20px;
-    font-size: 20px;
+    font-size: 15px;
 }
-h3 {
+.result__title {
     position:relative; 
     top:5px;
+    font-size: 24px;
 }
 
 .poll_title:hover {
@@ -59,4 +88,7 @@ h3 {
 
 .created:hover{
     cursor: pointer;
-}
+} */
+/* .result__bottom{
+    margin-bottom: 5px;
+} */
