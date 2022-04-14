@@ -199,31 +199,6 @@ function CreatePoll(props) {
             }}
           />
         </div>
-<<<<<<< HEAD
-        <p>Poll Options</p>
-        <input
-          type="checkbox"
-          className="makePublic"
-          onChange={(event) => {
-            setMakePub(!makePub);
-          }}
-        />
-        Make Public
-        <input
-          type="checkbox"
-          className="disclaimer"
-          onChange={(event) => {
-            setDisclaimer(!disclaimer);
-            if (disclaimer) {
-              alert(
-                "We take precautions to protect your information when engaging in activity within our site. By providing us with your information, you consent to our collection, use, and disclosure of that information that you voluntarily give us through Pollar. By agreeing to these terms, your information will be collected for the analytics of this poll."
-              );
-            }
-          }}
-        />
-        Disclaimer
-        <br></br>
-=======
         <div className="create__options">
           {" "}
           <p>Poll Options</p>
@@ -251,7 +226,6 @@ function CreatePoll(props) {
           <br></br>
         </div>
 
->>>>>>> 3a3e467210aa2dc5b9f02e48f1c9acbfafd458e2
         <button type="submit" className="submit" value="Create Poll">
           Submit
         </button>
