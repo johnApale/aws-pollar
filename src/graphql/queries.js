@@ -26,10 +26,62 @@ export const searchUserInformations = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
+          items {
+            userID
+          }
           nextToken
         }
         polls {
+          items {
+            id
+            userID
+            UserInformation {
+              usernameID
+              firstName
+              lastName
+              email
+              bday
+              anon
+              sex
+              createdAt
+              updatedAt
+            }
+            title
+            publicity
+            disclaimer
+            description
+            answerChoices
+            categories
+            tags
+            like {
+              items {
+                id
+                pollID
+                userID
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            views
+            timeStart
+            timeEnd
+            comments {
+              nextToken
+            }
+            userAnswers {
+              nextToken
+            }
+            activity {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         pollAnswers {
@@ -39,6 +91,18 @@ export const searchUserInformations = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -101,7 +165,7 @@ export const searchPolls = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           items {
             id
             pollID
@@ -120,6 +184,65 @@ export const searchPolls = /* GraphQL */ `
         userAnswers {
           nextToken
         }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+      total
+      aggregateItems {
+        name
+        result {
+          ... on SearchableAggregateScalarResult {
+            value
+          }
+          ... on SearchableAggregateBucketResult {
+            buckets {
+              key
+              doc_count
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+export const searchConversations = /* GraphQL */ `
+  query SearchConversations(
+    $filter: SearchableConversationFilterInput
+    $sort: [SearchableConversationSortInput]
+    $limit: Int
+    $nextToken: String
+    $from: Int
+    $aggregates: [SearchableConversationAggregationInput]
+  ) {
+    searchConversations(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+      aggregates: $aggregates
+    ) {
+      items {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
         createdAt
         updatedAt
       }
@@ -152,7 +275,16 @@ export const getUserInformation = /* GraphQL */ `
       bday
       anon
       sex
-      subscribedTo {
+      following {
+        items {
+          id
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      followers {
         items {
           id
           userID
@@ -212,6 +344,51 @@ export const getUserInformation = /* GraphQL */ `
         }
         nextToken
       }
+      conversations {
+        items {
+          id
+          userInformationID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      notifications {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      activity {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -240,7 +417,10 @@ export const listUserInformations = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -253,6 +433,18 @@ export const listUserInformations = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -275,7 +467,10 @@ export const getPoll = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -290,6 +485,18 @@ export const getPoll = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -300,7 +507,7 @@ export const getPoll = /* GraphQL */ `
       answerChoices
       categories
       tags
-      likes {
+      like {
         items {
           id
           pollID
@@ -330,6 +537,18 @@ export const getPoll = /* GraphQL */ `
           pollID
           userID
           answer
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      activity {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
           createdAt
           updatedAt
         }
@@ -368,7 +587,7 @@ export const listPolls = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -378,6 +597,9 @@ export const listPolls = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -414,7 +636,7 @@ export const getComment = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -424,6 +646,9 @@ export const getComment = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -438,7 +663,10 @@ export const getComment = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -451,6 +679,18 @@ export const getComment = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -543,7 +783,7 @@ export const getUserAnswer = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -553,6 +793,9 @@ export const getUserAnswer = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -567,7 +810,10 @@ export const getUserAnswer = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -580,6 +826,18 @@ export const getUserAnswer = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -647,9 +905,9 @@ export const listUserAnswers = /* GraphQL */ `
     }
   }
 `;
-export const getLikes = /* GraphQL */ `
-  query GetLikes($pollID: ID!, $userID: String!) {
-    getLikes(pollID: $pollID, userID: $userID) {
+export const getLike = /* GraphQL */ `
+  query GetLike($pollID: ID!, $userID: String!) {
+    getLike(pollID: $pollID, userID: $userID) {
       id
       pollID
       Poll {
@@ -673,7 +931,7 @@ export const getLikes = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -683,6 +941,9 @@ export const getLikes = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -697,7 +958,10 @@ export const getLikes = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -712,6 +976,18 @@ export const getLikes = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -724,7 +1000,7 @@ export const listLikes = /* GraphQL */ `
   query ListLikes(
     $pollID: ID
     $userID: ModelStringKeyConditionInput
-    $filter: ModelLikesFilterInput
+    $filter: ModelLikeFilterInput
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
@@ -775,9 +1051,9 @@ export const listLikes = /* GraphQL */ `
     }
   }
 `;
-export const getSubscribed = /* GraphQL */ `
-  query GetSubscribed($id: ID!) {
-    getSubscribed(id: $id) {
+export const getFollowing = /* GraphQL */ `
+  query GetFollowing($id: ID!) {
+    getFollowing(id: $id) {
       id
       userID
       UserInformation {
@@ -788,7 +1064,10 @@ export const getSubscribed = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -803,6 +1082,18 @@ export const getSubscribed = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -811,13 +1102,13 @@ export const getSubscribed = /* GraphQL */ `
     }
   }
 `;
-export const listSubscribeds = /* GraphQL */ `
-  query ListSubscribeds(
-    $filter: ModelSubscribedFilterInput
+export const listFollowings = /* GraphQL */ `
+  query ListFollowings(
+    $filter: ModelFollowingFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listSubscribeds(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listFollowings(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         userID
@@ -829,6 +1120,480 @@ export const listSubscribeds = /* GraphQL */ `
           bday
           anon
           sex
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getFollower = /* GraphQL */ `
+  query GetFollower($id: ID!) {
+    getFollower(id: $id) {
+      id
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listFollowers = /* GraphQL */ `
+  query ListFollowers(
+    $filter: ModelFollowerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listFollowers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getConversation = /* GraphQL */ `
+  query GetConversation($id: ID!) {
+    getConversation(id: $id) {
+      id
+      users {
+        items {
+          id
+          userInformationID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      recentMessage {
+        id
+        conversationID
+        Conversation {
+          id
+          viewed
+          createdAt
+          updatedAt
+        }
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        message
+        createdAt
+        updatedAt
+      }
+      viewed
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listConversations = /* GraphQL */ `
+  query ListConversations(
+    $filter: ModelConversationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listConversations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getMessage = /* GraphQL */ `
+  query GetMessage($id: ID!) {
+    getMessage(id: $id) {
+      id
+      conversationID
+      Conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
+        createdAt
+        updatedAt
+      }
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listMessages = /* GraphQL */ `
+  query ListMessages(
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        conversationID
+        Conversation {
+          id
+          viewed
+          createdAt
+          updatedAt
+        }
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        message
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getNotification = /* GraphQL */ `
+  query GetNotification($id: ID!) {
+    getNotification(id: $id) {
+      id
+      toUser
+      fromUser
+      notificationType
+      pollID
+      Poll {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        title
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        like {
+          nextToken
+        }
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+        }
+        userAnswers {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listNotifications = /* GraphQL */ `
+  query ListNotifications(
+    $filter: ModelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listNotifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        toUser
+        fromUser
+        notificationType
+        pollID
+        Poll {
+          id
+          userID
+          title
+          publicity
+          disclaimer
+          description
+          answerChoices
+          categories
+          tags
+          views
+          timeStart
+          timeEnd
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserConversations = /* GraphQL */ `
+  query GetUserConversations($id: ID!) {
+    getUserConversations(id: $id) {
+      id
+      userInformationID
+      conversationID
+      userInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUserConversations = /* GraphQL */ `
+  query ListUserConversations(
+    $filter: ModelUserConversationsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserConversations(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userInformationID
+        conversationID
+        userInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        conversation {
+          id
+          viewed
           createdAt
           updatedAt
         }
@@ -875,7 +1640,14 @@ export const pollByUser = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
+          items {
+            id
+            pollID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         views
@@ -885,6 +1657,9 @@ export const pollByUser = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -1110,15 +1885,15 @@ export const answersByUser = /* GraphQL */ `
     }
   }
 `;
-export const likesByPoll = /* GraphQL */ `
-  query LikesByPoll(
+export const likeByPoll = /* GraphQL */ `
+  query LikeByPoll(
     $pollID: ID!
     $sortDirection: ModelSortDirection
-    $filter: ModelLikesFilterInput
+    $filter: ModelLikeFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    likesByPoll(
+    likeByPoll(
       pollID: $pollID
       sortDirection: $sortDirection
       filter: $filter
@@ -1163,15 +1938,15 @@ export const likesByPoll = /* GraphQL */ `
     }
   }
 `;
-export const likesByUser = /* GraphQL */ `
-  query LikesByUser(
+export const likeByUser = /* GraphQL */ `
+  query LikeByUser(
     $userID: String!
     $sortDirection: ModelSortDirection
-    $filter: ModelLikesFilterInput
+    $filter: ModelLikeFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    likesByUser(
+    likeByUser(
       userID: $userID
       sortDirection: $sortDirection
       filter: $filter
@@ -1216,15 +1991,15 @@ export const likesByUser = /* GraphQL */ `
     }
   }
 `;
-export const subscribedByUser = /* GraphQL */ `
-  query SubscribedByUser(
+export const followingByUser = /* GraphQL */ `
+  query FollowingByUser(
     $userID: String!
     $sortDirection: ModelSortDirection
-    $filter: ModelSubscribedFilterInput
+    $filter: ModelFollowingFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    subscribedByUser(
+    followingByUser(
       userID: $userID
       sortDirection: $sortDirection
       filter: $filter
@@ -1242,6 +2017,262 @@ export const subscribedByUser = /* GraphQL */ `
           bday
           anon
           sex
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const followersByUser = /* GraphQL */ `
+  query FollowersByUser(
+    $userID: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelFollowerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    followersByUser(
+      userID: $userID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const messagesByConversation = /* GraphQL */ `
+  query MessagesByConversation(
+    $conversationID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    messagesByConversation(
+      conversationID: $conversationID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        conversationID
+        Conversation {
+          id
+          viewed
+          createdAt
+          updatedAt
+        }
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        message
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const messagesByUser = /* GraphQL */ `
+  query MessagesByUser(
+    $userID: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    messagesByUser(
+      userID: $userID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        conversationID
+        Conversation {
+          id
+          viewed
+          createdAt
+          updatedAt
+        }
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        message
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const notificationsByUser = /* GraphQL */ `
+  query NotificationsByUser(
+    $toUser: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    notificationsByUser(
+      toUser: $toUser
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        toUser
+        fromUser
+        notificationType
+        pollID
+        Poll {
+          id
+          userID
+          title
+          publicity
+          disclaimer
+          description
+          answerChoices
+          categories
+          tags
+          views
+          timeStart
+          timeEnd
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const activityByUser = /* GraphQL */ `
+  query ActivityByUser(
+    $fromUser: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    activityByUser(
+      fromUser: $fromUser
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        toUser
+        fromUser
+        notificationType
+        pollID
+        Poll {
+          id
+          userID
+          title
+          publicity
+          disclaimer
+          description
+          answerChoices
+          categories
+          tags
+          views
+          timeStart
+          timeEnd
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const activityByPoll = /* GraphQL */ `
+  query ActivityByPoll(
+    $pollID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    activityByPoll(
+      pollID: $pollID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        toUser
+        fromUser
+        notificationType
+        pollID
+        Poll {
+          id
+          userID
+          title
+          publicity
+          disclaimer
+          description
+          answerChoices
+          categories
+          tags
+          views
+          timeStart
+          timeEnd
           createdAt
           updatedAt
         }

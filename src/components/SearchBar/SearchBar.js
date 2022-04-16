@@ -25,25 +25,23 @@ function SearchBar({ placeholder }) {
         search: `?${createSearchParams(search)}`,
         replace: true,
       });
+      refreshPage();
     }
   };
 
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
   return (
-    <div className="search">
-      <div className="searchInput">
+    <div className="Searchbar">
+      <div className="search__input">
         <input
           type="text"
           placeholder={placeholder}
           onChange={handleSearch}
           onKeyPress={handleKeyPress}
         />
-        <div className="searchButton">
-          <img
-            src={process.env.PUBLIC_URL + "/search-icon.png"}
-            className="searchIcon"
-            onClick={goToResults}
-          />
-        </div>
       </div>
     </div>
   );

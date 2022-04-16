@@ -1,25 +1,30 @@
+.Search{
+    display: flex;
+    flex-direction: column;
+}
+
 .result__query{
     position:relative; 
-    top:-180px;
+    border-bottom: 1px solid black;
+    font-size: 20px;
+    width: 700px;
+    padding-bottom: 10px;
 }
 
 .search__results {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     position:relative; 
-    top:-190px;
 }
 
 .poll__results {
     background-color: whitesmoke;
     margin: 30px;
     padding: 15px;
-    width: 510px;
+    width: 700px;
     border: 1px #ecebeb;
     border-radius: 5px;
-    box-shadow: 5px 5px 15px 6px hsl(196, 23%, 78%);
 }
 
 .result__bottom{

@@ -14,7 +14,16 @@ export const createUserInformation = /* GraphQL */ `
       bday
       anon
       sex
-      subscribedTo {
+      following {
+        items {
+          id
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      followers {
         items {
           id
           userID
@@ -69,6 +78,51 @@ export const createUserInformation = /* GraphQL */ `
           id
           pollID
           userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      conversations {
+        items {
+          id
+          userInformationID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      notifications {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      activity {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
           createdAt
           updatedAt
         }
@@ -92,7 +146,16 @@ export const updateUserInformation = /* GraphQL */ `
       bday
       anon
       sex
-      subscribedTo {
+      following {
+        items {
+          id
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      followers {
         items {
           id
           userID
@@ -147,6 +210,51 @@ export const updateUserInformation = /* GraphQL */ `
           id
           pollID
           userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      conversations {
+        items {
+          id
+          userInformationID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      notifications {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      activity {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
           createdAt
           updatedAt
         }
@@ -170,7 +278,16 @@ export const deleteUserInformation = /* GraphQL */ `
       bday
       anon
       sex
-      subscribedTo {
+      following {
+        items {
+          id
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      followers {
         items {
           id
           userID
@@ -225,6 +342,51 @@ export const deleteUserInformation = /* GraphQL */ `
           id
           pollID
           userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      conversations {
+        items {
+          id
+          userInformationID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      notifications {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      activity {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
           createdAt
           updatedAt
         }
@@ -251,7 +413,10 @@ export const createPoll = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -266,6 +431,18 @@ export const createPoll = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -276,7 +453,7 @@ export const createPoll = /* GraphQL */ `
       answerChoices
       categories
       tags
-      likes {
+      like {
         items {
           id
           pollID
@@ -306,6 +483,18 @@ export const createPoll = /* GraphQL */ `
           pollID
           userID
           answer
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      activity {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
           createdAt
           updatedAt
         }
@@ -332,7 +521,10 @@ export const updatePoll = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -347,6 +539,18 @@ export const updatePoll = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -357,7 +561,7 @@ export const updatePoll = /* GraphQL */ `
       answerChoices
       categories
       tags
-      likes {
+      like {
         items {
           id
           pollID
@@ -387,6 +591,18 @@ export const updatePoll = /* GraphQL */ `
           pollID
           userID
           answer
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      activity {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
           createdAt
           updatedAt
         }
@@ -413,7 +629,10 @@ export const deletePoll = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -428,6 +647,18 @@ export const deletePoll = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -438,7 +669,7 @@ export const deletePoll = /* GraphQL */ `
       answerChoices
       categories
       tags
-      likes {
+      like {
         items {
           id
           pollID
@@ -468,6 +699,18 @@ export const deletePoll = /* GraphQL */ `
           pollID
           userID
           answer
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      activity {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
           createdAt
           updatedAt
         }
@@ -508,7 +751,7 @@ export const createComment = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -518,6 +761,9 @@ export const createComment = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -532,7 +778,10 @@ export const createComment = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -545,6 +794,18 @@ export const createComment = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -585,7 +846,7 @@ export const updateComment = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -595,6 +856,9 @@ export const updateComment = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -609,7 +873,10 @@ export const updateComment = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -622,6 +889,18 @@ export const updateComment = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -662,7 +941,7 @@ export const deleteComment = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -672,6 +951,9 @@ export const deleteComment = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -686,7 +968,10 @@ export const deleteComment = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -699,6 +984,18 @@ export const deleteComment = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -738,7 +1035,7 @@ export const createUserAnswer = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -748,6 +1045,9 @@ export const createUserAnswer = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -762,7 +1062,10 @@ export const createUserAnswer = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -775,6 +1078,18 @@ export const createUserAnswer = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -815,7 +1130,7 @@ export const updateUserAnswer = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -825,6 +1140,9 @@ export const updateUserAnswer = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -839,7 +1157,10 @@ export const updateUserAnswer = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -852,6 +1173,18 @@ export const updateUserAnswer = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -892,7 +1225,7 @@ export const deleteUserAnswer = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -902,6 +1235,9 @@ export const deleteUserAnswer = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -916,7 +1252,10 @@ export const deleteUserAnswer = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -929,6 +1268,18 @@ export const deleteUserAnswer = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -940,12 +1291,12 @@ export const deleteUserAnswer = /* GraphQL */ `
     }
   }
 `;
-export const createLikes = /* GraphQL */ `
-  mutation CreateLikes(
-    $input: CreateLikesInput!
-    $condition: ModelLikesConditionInput
+export const createLike = /* GraphQL */ `
+  mutation CreateLike(
+    $input: CreateLikeInput!
+    $condition: ModelLikeConditionInput
   ) {
-    createLikes(input: $input, condition: $condition) {
+    createLike(input: $input, condition: $condition) {
       id
       pollID
       Poll {
@@ -969,7 +1320,7 @@ export const createLikes = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -979,6 +1330,9 @@ export const createLikes = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -993,7 +1347,10 @@ export const createLikes = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -1008,6 +1365,18 @@ export const createLikes = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1016,12 +1385,12 @@ export const createLikes = /* GraphQL */ `
     }
   }
 `;
-export const updateLikes = /* GraphQL */ `
-  mutation UpdateLikes(
-    $input: UpdateLikesInput!
-    $condition: ModelLikesConditionInput
+export const updateLike = /* GraphQL */ `
+  mutation UpdateLike(
+    $input: UpdateLikeInput!
+    $condition: ModelLikeConditionInput
   ) {
-    updateLikes(input: $input, condition: $condition) {
+    updateLike(input: $input, condition: $condition) {
       id
       pollID
       Poll {
@@ -1045,7 +1414,7 @@ export const updateLikes = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -1055,6 +1424,9 @@ export const updateLikes = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -1069,7 +1441,10 @@ export const updateLikes = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -1084,6 +1459,18 @@ export const updateLikes = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1092,12 +1479,12 @@ export const updateLikes = /* GraphQL */ `
     }
   }
 `;
-export const deleteLikes = /* GraphQL */ `
-  mutation DeleteLikes(
-    $input: DeleteLikesInput!
-    $condition: ModelLikesConditionInput
+export const deleteLike = /* GraphQL */ `
+  mutation DeleteLike(
+    $input: DeleteLikeInput!
+    $condition: ModelLikeConditionInput
   ) {
-    deleteLikes(input: $input, condition: $condition) {
+    deleteLike(input: $input, condition: $condition) {
       id
       pollID
       Poll {
@@ -1121,7 +1508,7 @@ export const deleteLikes = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -1133,6 +1520,9 @@ export const deleteLikes = /* GraphQL */ `
         userAnswers {
           nextToken
         }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1145,7 +1535,10 @@ export const deleteLikes = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -1160,43 +1553,16 @@ export const deleteLikes = /* GraphQL */ `
         likedPolls {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createSubscribed = /* GraphQL */ `
-  mutation CreateSubscribed(
-    $input: CreateSubscribedInput!
-    $condition: ModelSubscribedConditionInput
-  ) {
-    createSubscribed(input: $input, condition: $condition) {
-      id
-      userID
-      UserInformation {
-        usernameID
-        firstName
-        lastName
-        email
-        bday
-        anon
-        sex
-        subscribedTo {
+        conversations {
           nextToken
         }
-        polls {
+        messages {
           nextToken
         }
-        pollAnswers {
+        notifications {
           nextToken
         }
-        comments {
-          nextToken
-        }
-        likedPolls {
+        activity {
           nextToken
         }
         createdAt
@@ -1207,12 +1573,12 @@ export const createSubscribed = /* GraphQL */ `
     }
   }
 `;
-export const updateSubscribed = /* GraphQL */ `
-  mutation UpdateSubscribed(
-    $input: UpdateSubscribedInput!
-    $condition: ModelSubscribedConditionInput
+export const createFollowing = /* GraphQL */ `
+  mutation CreateFollowing(
+    $input: CreateFollowingInput!
+    $condition: ModelFollowingConditionInput
   ) {
-    updateSubscribed(input: $input, condition: $condition) {
+    createFollowing(input: $input, condition: $condition) {
       id
       userID
       UserInformation {
@@ -1223,7 +1589,10 @@ export const updateSubscribed = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -1236,6 +1605,18 @@ export const updateSubscribed = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -1246,12 +1627,12 @@ export const updateSubscribed = /* GraphQL */ `
     }
   }
 `;
-export const deleteSubscribed = /* GraphQL */ `
-  mutation DeleteSubscribed(
-    $input: DeleteSubscribedInput!
-    $condition: ModelSubscribedConditionInput
+export const updateFollowing = /* GraphQL */ `
+  mutation UpdateFollowing(
+    $input: UpdateFollowingInput!
+    $condition: ModelFollowingConditionInput
   ) {
-    deleteSubscribed(input: $input, condition: $condition) {
+    updateFollowing(input: $input, condition: $condition) {
       id
       userID
       UserInformation {
@@ -1262,7 +1643,10 @@ export const deleteSubscribed = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -1277,6 +1661,1029 @@ export const deleteSubscribed = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFollowing = /* GraphQL */ `
+  mutation DeleteFollowing(
+    $input: DeleteFollowingInput!
+    $condition: ModelFollowingConditionInput
+  ) {
+    deleteFollowing(input: $input, condition: $condition) {
+      id
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createFollower = /* GraphQL */ `
+  mutation CreateFollower(
+    $input: CreateFollowerInput!
+    $condition: ModelFollowerConditionInput
+  ) {
+    createFollower(input: $input, condition: $condition) {
+      id
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFollower = /* GraphQL */ `
+  mutation UpdateFollower(
+    $input: UpdateFollowerInput!
+    $condition: ModelFollowerConditionInput
+  ) {
+    updateFollower(input: $input, condition: $condition) {
+      id
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFollower = /* GraphQL */ `
+  mutation DeleteFollower(
+    $input: DeleteFollowerInput!
+    $condition: ModelFollowerConditionInput
+  ) {
+    deleteFollower(input: $input, condition: $condition) {
+      id
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createConversation = /* GraphQL */ `
+  mutation CreateConversation(
+    $input: CreateConversationInput!
+    $condition: ModelConversationConditionInput
+  ) {
+    createConversation(input: $input, condition: $condition) {
+      id
+      users {
+        items {
+          id
+          userInformationID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      recentMessage {
+        id
+        conversationID
+        Conversation {
+          id
+          viewed
+          createdAt
+          updatedAt
+        }
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        message
+        createdAt
+        updatedAt
+      }
+      viewed
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateConversation = /* GraphQL */ `
+  mutation UpdateConversation(
+    $input: UpdateConversationInput!
+    $condition: ModelConversationConditionInput
+  ) {
+    updateConversation(input: $input, condition: $condition) {
+      id
+      users {
+        items {
+          id
+          userInformationID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      recentMessage {
+        id
+        conversationID
+        Conversation {
+          id
+          viewed
+          createdAt
+          updatedAt
+        }
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        message
+        createdAt
+        updatedAt
+      }
+      viewed
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteConversation = /* GraphQL */ `
+  mutation DeleteConversation(
+    $input: DeleteConversationInput!
+    $condition: ModelConversationConditionInput
+  ) {
+    deleteConversation(input: $input, condition: $condition) {
+      id
+      users {
+        items {
+          id
+          userInformationID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      recentMessage {
+        id
+        conversationID
+        Conversation {
+          id
+          viewed
+          createdAt
+          updatedAt
+        }
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        message
+        createdAt
+        updatedAt
+      }
+      viewed
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createMessage = /* GraphQL */ `
+  mutation CreateMessage(
+    $input: CreateMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    createMessage(input: $input, condition: $condition) {
+      id
+      conversationID
+      Conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
+        createdAt
+        updatedAt
+      }
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateMessage = /* GraphQL */ `
+  mutation UpdateMessage(
+    $input: UpdateMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    updateMessage(input: $input, condition: $condition) {
+      id
+      conversationID
+      Conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
+        createdAt
+        updatedAt
+      }
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteMessage = /* GraphQL */ `
+  mutation DeleteMessage(
+    $input: DeleteMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    deleteMessage(input: $input, condition: $condition) {
+      id
+      conversationID
+      Conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
+        createdAt
+        updatedAt
+      }
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createNotification = /* GraphQL */ `
+  mutation CreateNotification(
+    $input: CreateNotificationInput!
+    $condition: ModelNotificationConditionInput
+  ) {
+    createNotification(input: $input, condition: $condition) {
+      id
+      toUser
+      fromUser
+      notificationType
+      pollID
+      Poll {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        title
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        like {
+          nextToken
+        }
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+        }
+        userAnswers {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateNotification = /* GraphQL */ `
+  mutation UpdateNotification(
+    $input: UpdateNotificationInput!
+    $condition: ModelNotificationConditionInput
+  ) {
+    updateNotification(input: $input, condition: $condition) {
+      id
+      toUser
+      fromUser
+      notificationType
+      pollID
+      Poll {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        title
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        like {
+          nextToken
+        }
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+        }
+        userAnswers {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteNotification = /* GraphQL */ `
+  mutation DeleteNotification(
+    $input: DeleteNotificationInput!
+    $condition: ModelNotificationConditionInput
+  ) {
+    deleteNotification(input: $input, condition: $condition) {
+      id
+      toUser
+      fromUser
+      notificationType
+      pollID
+      Poll {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        title
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        like {
+          nextToken
+        }
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+        }
+        userAnswers {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createUserConversations = /* GraphQL */ `
+  mutation CreateUserConversations(
+    $input: CreateUserConversationsInput!
+    $condition: ModelUserConversationsConditionInput
+  ) {
+    createUserConversations(input: $input, condition: $condition) {
+      id
+      userInformationID
+      conversationID
+      userInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserConversations = /* GraphQL */ `
+  mutation UpdateUserConversations(
+    $input: UpdateUserConversationsInput!
+    $condition: ModelUserConversationsConditionInput
+  ) {
+    updateUserConversations(input: $input, condition: $condition) {
+      id
+      userInformationID
+      conversationID
+      userInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUserConversations = /* GraphQL */ `
+  mutation DeleteUserConversations(
+    $input: DeleteUserConversationsInput!
+    $condition: ModelUserConversationsConditionInput
+  ) {
+    deleteUserConversations(input: $input, condition: $condition) {
+      id
+      userInformationID
+      conversationID
+      userInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
         createdAt
         updatedAt
       }

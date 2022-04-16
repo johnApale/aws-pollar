@@ -1,0 +1,42 @@
+.CommentTest {
+    background-color: white;
+    width: 700px;
+    height: 300px;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 35px;
+}
+
+.comments{
+    overflow-y: auto;
+    height: 210px;
+}
+
+.comment_cards {
+    background-color: lightgray;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+
+.comment_user {
+    font-weight: 600;
+    font-size: 14px;
+    margin-left: 12px;
+    margin-bottom: 5px;
+    padding-top: 7px;
+
+}
+
+.comment__input {
+    width: 615px;
+    height: 40px;
+    margin-bottom: 10px;
+    padding: 7px;
+    border-radius: 7px;
+}
+
+.comment_content {
+    font-size: 13px;
+    margin-left: 12px;
+    padding-bottom: 7px;
+}

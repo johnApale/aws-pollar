@@ -1,0 +1,146 @@
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type UserInformation @model @searchable{
+  usernameID: String! @primaryKey
+  firstName: String!
+  lastName: String!
+  email: AWSEmail!
+  bday: AWSDate!
+  anon: Boolean!
+  sex: String!
+  follow: [Follow] @hasMany(indexName: "byFollowers", fields: ["usernameID"])
+  polls: [Poll] @hasMany (indexName: "byPolls", fields: ["usernameID"])
+  pollAnswers: [UserAnswer] @hasMany (indexName: "byUserAnswers", fields: ["usernameID"])
+  comments: [Comment] @hasMany (indexName: "byUserComments", fields:["usernameID"])
+  likedPolls: [Like] @hasMany (indexName: "byUserLike", fields: ["usernameID"])
+  conversations(after: String, first: Int): UserConverstationsConnection  
+  messages(after: String, first: Int): MessageConnection
+  notifications: [Notification] @hasMany (indexName: "byUserNotifications", fields:["usernameID"])
+  activity: [Notification] @hasMany (indexName: "byUserActivity", fields:["usernameID"])
+}
+
+type Poll @model @searchable{
+  id: ID!
+  userID: String!  @index(name: "byPolls", queryField: "pollByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["userID"])
+  title: String!
+  publicity: Boolean!
+  disclaimer: Boolean!
+  description: String!
+  answerChoices: [String]!
+  categories: [String]
+  tags: [String]
+  like: [Like] @hasMany (indexName: "byPollLike", fields: ["id"])
+  views: Int! 
+  timeStart: AWSDateTime!
+  timeEnd: AWSDateTime!
+  comments: [Comment] @hasMany (indexName: "byPollComments", fields: ["id"])
+  userAnswers: [UserAnswer] @hasMany (indexName: "byAnsweredPolls", fields:["id"])
+  activity: [Notification] @hasMany (indexName: "byPollActivity", fields: ["id"])
+
+}
+
+type Comment @model {
+  id: ID! @primaryKey(sortKeyFields: ["userID", "pollID"])
+  content: String!
+  pollID: ID! @index(name: "byPollComments", queryField: "commentsByPoll")
+  Poll: Poll @belongsTo(fields:["pollID"])
+  userID: String! @index(name: "byUserComments", queryField: "commentsByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["userID"])
+}
+
+type UserAnswer @model {
+  id: ID!
+  pollID: ID! @primaryKey(sortKeyFields: ["userID"]) @index(name: "byAnsweredPolls", queryField: "answerByPoll")
+  Poll: Poll @belongsTo(fields:["pollID"])
+  userID: String! @index(name: "byUserAnswers", queryField: "answersByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["userID"])
+  answer: String!
+}
+
+type Like @model {
+  id: ID!
+  pollID: ID! @primaryKey(sortKeyFields: ["userID"]) @index(name: "byPollLike", queryField: "likeByPoll")
+  Poll: Poll @belongsTo(fields:["pollID"])
+  userID: String! @index(name: "byUserLike", queryField: "likeByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["userID"])
+}
+
+type Follow @model {
+  id: ID!
+  followingID: String! @index(name: "byFollowing", queryField: "userFollowers")
+  followerID: String! @primaryKey(sortKeyFields: ["followingID"]) @index(name: "byFollowers", queryField: "followersByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["followerID"])
+}
+
+type Conversation {
+  createdAt: String
+  id: ID!
+  messages(after: String, first: Int): MessageConnection
+  name: String!
+}
+
+type UserConversations {
+  associated: [UserConversations]
+  conversation: Conversation
+  conversationId: ID!
+  user: User
+  userId: ID!
+}
+
+type UserConverstationsConnection {
+  nextToken: String
+  userConversations: [UserConversations]
+}
+
+type Message {
+  id: ID!
+  author: User
+  content: String!
+  conversationId: ID!
+  createdAt: String
+  isSent: Boolean
+  recipient: User
+  sender: String
+}
+type MessageConnection {
+  messages: [Message]
+  nextToken: String
+}
+
+type Notification @model {
+  id: ID!
+  toUser: String! @index(name: "byUserNotifications", queryField: "notificationsByUser")
+  fromUser: String! @index(name: "byUserActivity", queryField: "activityByUser")
+  notificationType: String!
+  pollID: ID @index(name: "byPollActivity", queryField: "activityByPoll")
+  Poll: Poll @belongsTo(fields: ["pollID"])
+}
+type Mutation {
+  #  Create a Conversation. Use some of the cooked in template functions for UUID and DateTime.
+  createConversation(createdAt: String, id: ID!, name: String!): Conversation
+  #  Create a message in a Conversation.
+  createMessage(content: String, conversationId: ID!, createdAt: String!, id: ID!): Message
+  #  Put a single value of type 'UserConversations'. If an item does not exist with the same key the item will be created. If there exists an item at that key already, it will be updated.
+  createUserConversations(conversationId: ID!, userId: ID!): UserConversations
+}
+
+type Query {
+  #  Scan through all values of type 'Message'. Use the 'after' and 'before' arguments with the 'nextToken' returned by the 'MessageConnection' result to fetch pages.
+  allMessage(after: String, conversationId: ID!, first: Int): [Message]
+  #  Scan through all values of type 'MessageConnection'. Use the 'after' and 'before' arguments with the 'nextToken' returned by the 'MessageConnectionConnection' result to fetch pages.
+  allMessageConnection(after: String, conversationId: ID!, first: Int): MessageConnection
+  allMessageFrom(after: String, conversationId: ID!, first: Int, sender: String!): [Message]
+  #  Get my user.
+  me: User
+}
+
+type Subscription {
+  subscribeToNewMessage(conversationId: ID!): Message
+    @aws_subscribe(mutations:["createMessage"])
+  subscribeToNewUCs(userId:ID!): UserConversations
+		@aws_subscribe(mutations: ["createUserConversations"])
+  onCreateNotificationByUserID(toUser: String!): Notification
+    @aws_subscribe(mutations: ["createNotification"])
+
+}

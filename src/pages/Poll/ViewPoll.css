@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
 }
 
 .poll__details{
@@ -79,6 +80,18 @@
 
 .poll__buttons > button {
     border-radius: 5px;
+}
+
+.poll__option {
+    display: flex;
+    align-items: center;
+}
+
+.poll__value {
+    margin-top: 5px;
+    list-style: none;
+    margin-left: 10px;
+    margin-bottom: 5px;
 }
 
 

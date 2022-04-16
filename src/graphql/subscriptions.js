@@ -1,6 +1,131 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateMessageByConversation = /* GraphQL */ `
+  subscription OnCreateMessageByConversation($conversationID: ID!) {
+    onCreateMessageByConversation(conversationID: $conversationID) {
+      id
+      conversationID
+      Conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
+        createdAt
+        updatedAt
+      }
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateNotificationByUserID = /* GraphQL */ `
+  subscription OnCreateNotificationByUserID($toUser: String!) {
+    onCreateNotificationByUserID(toUser: $toUser) {
+      id
+      toUser
+      fromUser
+      notificationType
+      pollID
+      Poll {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        title
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        like {
+          nextToken
+        }
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+        }
+        userAnswers {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateUserInformation = /* GraphQL */ `
   subscription OnCreateUserInformation {
     onCreateUserInformation {
@@ -11,7 +136,16 @@ export const onCreateUserInformation = /* GraphQL */ `
       bday
       anon
       sex
-      subscribedTo {
+      following {
+        items {
+          id
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      followers {
         items {
           id
           userID
@@ -66,6 +200,51 @@ export const onCreateUserInformation = /* GraphQL */ `
           id
           pollID
           userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      conversations {
+        items {
+          id
+          userInformationID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      notifications {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      activity {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
           createdAt
           updatedAt
         }
@@ -86,7 +265,16 @@ export const onUpdateUserInformation = /* GraphQL */ `
       bday
       anon
       sex
-      subscribedTo {
+      following {
+        items {
+          id
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      followers {
         items {
           id
           userID
@@ -141,6 +329,51 @@ export const onUpdateUserInformation = /* GraphQL */ `
           id
           pollID
           userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      conversations {
+        items {
+          id
+          userInformationID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      notifications {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      activity {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
           createdAt
           updatedAt
         }
@@ -161,7 +394,16 @@ export const onDeleteUserInformation = /* GraphQL */ `
       bday
       anon
       sex
-      subscribedTo {
+      following {
+        items {
+          id
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      followers {
         items {
           id
           userID
@@ -216,6 +458,51 @@ export const onDeleteUserInformation = /* GraphQL */ `
           id
           pollID
           userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      conversations {
+        items {
+          id
+          userInformationID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      notifications {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      activity {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
           createdAt
           updatedAt
         }
@@ -239,7 +526,10 @@ export const onCreatePoll = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -254,6 +544,18 @@ export const onCreatePoll = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -264,7 +566,7 @@ export const onCreatePoll = /* GraphQL */ `
       answerChoices
       categories
       tags
-      likes {
+      like {
         items {
           id
           pollID
@@ -294,6 +596,18 @@ export const onCreatePoll = /* GraphQL */ `
           pollID
           userID
           answer
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      activity {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
           createdAt
           updatedAt
         }
@@ -317,7 +631,10 @@ export const onUpdatePoll = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -332,6 +649,18 @@ export const onUpdatePoll = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -342,7 +671,7 @@ export const onUpdatePoll = /* GraphQL */ `
       answerChoices
       categories
       tags
-      likes {
+      like {
         items {
           id
           pollID
@@ -372,6 +701,18 @@ export const onUpdatePoll = /* GraphQL */ `
           pollID
           userID
           answer
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      activity {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
           createdAt
           updatedAt
         }
@@ -395,7 +736,10 @@ export const onDeletePoll = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -410,6 +754,18 @@ export const onDeletePoll = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -420,7 +776,7 @@ export const onDeletePoll = /* GraphQL */ `
       answerChoices
       categories
       tags
-      likes {
+      like {
         items {
           id
           pollID
@@ -450,6 +806,18 @@ export const onDeletePoll = /* GraphQL */ `
           pollID
           userID
           answer
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      activity {
+        items {
+          id
+          toUser
+          fromUser
+          notificationType
+          pollID
           createdAt
           updatedAt
         }
@@ -487,7 +855,7 @@ export const onCreateComment = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -497,6 +865,9 @@ export const onCreateComment = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -511,7 +882,10 @@ export const onCreateComment = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -524,6 +898,18 @@ export const onCreateComment = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -561,7 +947,7 @@ export const onUpdateComment = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -571,6 +957,9 @@ export const onUpdateComment = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -585,7 +974,10 @@ export const onUpdateComment = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -598,6 +990,18 @@ export const onUpdateComment = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -635,7 +1039,7 @@ export const onDeleteComment = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -645,6 +1049,9 @@ export const onDeleteComment = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -659,7 +1066,10 @@ export const onDeleteComment = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -672,6 +1082,18 @@ export const onDeleteComment = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -708,7 +1130,7 @@ export const onCreateUserAnswer = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -718,6 +1140,9 @@ export const onCreateUserAnswer = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -732,7 +1157,10 @@ export const onCreateUserAnswer = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -745,6 +1173,18 @@ export const onCreateUserAnswer = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -782,7 +1222,7 @@ export const onUpdateUserAnswer = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -792,6 +1232,9 @@ export const onUpdateUserAnswer = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -806,7 +1249,10 @@ export const onUpdateUserAnswer = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -819,6 +1265,18 @@ export const onUpdateUserAnswer = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -856,7 +1314,7 @@ export const onDeleteUserAnswer = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -866,6 +1324,9 @@ export const onDeleteUserAnswer = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -880,7 +1341,10 @@ export const onDeleteUserAnswer = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -893,6 +1357,18 @@ export const onDeleteUserAnswer = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -904,9 +1380,9 @@ export const onDeleteUserAnswer = /* GraphQL */ `
     }
   }
 `;
-export const onCreateLikes = /* GraphQL */ `
-  subscription OnCreateLikes {
-    onCreateLikes {
+export const onCreateLike = /* GraphQL */ `
+  subscription OnCreateLike {
+    onCreateLike {
       id
       pollID
       Poll {
@@ -930,7 +1406,7 @@ export const onCreateLikes = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -940,6 +1416,9 @@ export const onCreateLikes = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -954,7 +1433,10 @@ export const onCreateLikes = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -969,6 +1451,18 @@ export const onCreateLikes = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -977,9 +1471,9 @@ export const onCreateLikes = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateLikes = /* GraphQL */ `
-  subscription OnUpdateLikes {
-    onUpdateLikes {
+export const onUpdateLike = /* GraphQL */ `
+  subscription OnUpdateLike {
+    onUpdateLike {
       id
       pollID
       Poll {
@@ -1003,7 +1497,7 @@ export const onUpdateLikes = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -1013,6 +1507,9 @@ export const onUpdateLikes = /* GraphQL */ `
           nextToken
         }
         userAnswers {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -1027,7 +1524,10 @@ export const onUpdateLikes = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -1042,6 +1542,18 @@ export const onUpdateLikes = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1050,9 +1562,9 @@ export const onUpdateLikes = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteLikes = /* GraphQL */ `
-  subscription OnDeleteLikes {
-    onDeleteLikes {
+export const onDeleteLike = /* GraphQL */ `
+  subscription OnDeleteLike {
+    onDeleteLike {
       id
       pollID
       Poll {
@@ -1076,7 +1588,7 @@ export const onDeleteLikes = /* GraphQL */ `
         answerChoices
         categories
         tags
-        likes {
+        like {
           nextToken
         }
         views
@@ -1088,6 +1600,9 @@ export const onDeleteLikes = /* GraphQL */ `
         userAnswers {
           nextToken
         }
+        activity {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1100,7 +1615,10 @@ export const onDeleteLikes = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -1115,40 +1633,16 @@ export const onDeleteLikes = /* GraphQL */ `
         likedPolls {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateSubscribed = /* GraphQL */ `
-  subscription OnCreateSubscribed {
-    onCreateSubscribed {
-      id
-      userID
-      UserInformation {
-        usernameID
-        firstName
-        lastName
-        email
-        bday
-        anon
-        sex
-        subscribedTo {
+        conversations {
           nextToken
         }
-        polls {
+        messages {
           nextToken
         }
-        pollAnswers {
+        notifications {
           nextToken
         }
-        comments {
-          nextToken
-        }
-        likedPolls {
+        activity {
           nextToken
         }
         createdAt
@@ -1159,9 +1653,9 @@ export const onCreateSubscribed = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateSubscribed = /* GraphQL */ `
-  subscription OnUpdateSubscribed {
-    onUpdateSubscribed {
+export const onCreateFollowing = /* GraphQL */ `
+  subscription OnCreateFollowing {
+    onCreateFollowing {
       id
       userID
       UserInformation {
@@ -1172,7 +1666,10 @@ export const onUpdateSubscribed = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -1185,6 +1682,18 @@ export const onUpdateSubscribed = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
           nextToken
         }
         createdAt
@@ -1195,9 +1704,9 @@ export const onUpdateSubscribed = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteSubscribed = /* GraphQL */ `
-  subscription OnDeleteSubscribed {
-    onDeleteSubscribed {
+export const onUpdateFollowing = /* GraphQL */ `
+  subscription OnUpdateFollowing {
+    onUpdateFollowing {
       id
       userID
       UserInformation {
@@ -1208,7 +1717,10 @@ export const onDeleteSubscribed = /* GraphQL */ `
         bday
         anon
         sex
-        subscribedTo {
+        following {
+          nextToken
+        }
+        followers {
           nextToken
         }
         polls {
@@ -1223,6 +1735,981 @@ export const onDeleteSubscribed = /* GraphQL */ `
         likedPolls {
           nextToken
         }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFollowing = /* GraphQL */ `
+  subscription OnDeleteFollowing {
+    onDeleteFollowing {
+      id
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateFollower = /* GraphQL */ `
+  subscription OnCreateFollower {
+    onCreateFollower {
+      id
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFollower = /* GraphQL */ `
+  subscription OnUpdateFollower {
+    onUpdateFollower {
+      id
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFollower = /* GraphQL */ `
+  subscription OnDeleteFollower {
+    onDeleteFollower {
+      id
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateConversation = /* GraphQL */ `
+  subscription OnCreateConversation {
+    onCreateConversation {
+      id
+      users {
+        items {
+          id
+          userInformationID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      recentMessage {
+        id
+        conversationID
+        Conversation {
+          id
+          viewed
+          createdAt
+          updatedAt
+        }
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        message
+        createdAt
+        updatedAt
+      }
+      viewed
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateConversation = /* GraphQL */ `
+  subscription OnUpdateConversation {
+    onUpdateConversation {
+      id
+      users {
+        items {
+          id
+          userInformationID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      recentMessage {
+        id
+        conversationID
+        Conversation {
+          id
+          viewed
+          createdAt
+          updatedAt
+        }
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        message
+        createdAt
+        updatedAt
+      }
+      viewed
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteConversation = /* GraphQL */ `
+  subscription OnDeleteConversation {
+    onDeleteConversation {
+      id
+      users {
+        items {
+          id
+          userInformationID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      recentMessage {
+        id
+        conversationID
+        Conversation {
+          id
+          viewed
+          createdAt
+          updatedAt
+        }
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        message
+        createdAt
+        updatedAt
+      }
+      viewed
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateMessage = /* GraphQL */ `
+  subscription OnCreateMessage {
+    onCreateMessage {
+      id
+      conversationID
+      Conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
+        createdAt
+        updatedAt
+      }
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateMessage = /* GraphQL */ `
+  subscription OnUpdateMessage {
+    onUpdateMessage {
+      id
+      conversationID
+      Conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
+        createdAt
+        updatedAt
+      }
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteMessage = /* GraphQL */ `
+  subscription OnDeleteMessage {
+    onDeleteMessage {
+      id
+      conversationID
+      Conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
+        createdAt
+        updatedAt
+      }
+      userID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateNotification = /* GraphQL */ `
+  subscription OnCreateNotification {
+    onCreateNotification {
+      id
+      toUser
+      fromUser
+      notificationType
+      pollID
+      Poll {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        title
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        like {
+          nextToken
+        }
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+        }
+        userAnswers {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateNotification = /* GraphQL */ `
+  subscription OnUpdateNotification {
+    onUpdateNotification {
+      id
+      toUser
+      fromUser
+      notificationType
+      pollID
+      Poll {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        title
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        like {
+          nextToken
+        }
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+        }
+        userAnswers {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteNotification = /* GraphQL */ `
+  subscription OnDeleteNotification {
+    onDeleteNotification {
+      id
+      toUser
+      fromUser
+      notificationType
+      pollID
+      Poll {
+        id
+        userID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        title
+        publicity
+        disclaimer
+        description
+        answerChoices
+        categories
+        tags
+        like {
+          nextToken
+        }
+        views
+        timeStart
+        timeEnd
+        comments {
+          nextToken
+        }
+        userAnswers {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateUserConversations = /* GraphQL */ `
+  subscription OnCreateUserConversations {
+    onCreateUserConversations {
+      id
+      userInformationID
+      conversationID
+      userInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserConversations = /* GraphQL */ `
+  subscription OnUpdateUserConversations {
+    onUpdateUserConversations {
+      id
+      userInformationID
+      conversationID
+      userInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserConversations = /* GraphQL */ `
+  subscription OnDeleteUserConversations {
+    onDeleteUserConversations {
+      id
+      userInformationID
+      conversationID
+      userInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      conversation {
+        id
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        recentMessage {
+          id
+          conversationID
+          userID
+          message
+          createdAt
+          updatedAt
+        }
+        viewed
         createdAt
         updatedAt
       }

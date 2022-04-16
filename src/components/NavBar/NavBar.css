@@ -3,16 +3,97 @@
     width: 100%;
     height: 80px;
     border-radius: 15px;
-    display: inline-block;
-    align-items: center;
+    display: flex;
+    flex-direction: row;
     margin-bottom: 30px;
-    text-align: center;
     padding:0px;
     margin-left:auto;
     margin-right: auto;
+    margin-bottom: 2%;
 }
 
-.center{
+.navbar__left{
+    margin-left: 15px;
+    margin-right: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 700px;
+}
+
+.nav__homebutton{
+    font-size: 30px;
+    font-weight: 300;
+}
+
+.navbar__avatar{
+    margin-top: 15px;
+    height: 150px;
+    width: 100px;
+}
+
+.nav__searchBar{
+    margin-left: 15px;
+    width: 100%;
+}
+
+.navbar__center {
+
+    display: flex;
+    width: 100%;
+    min-width: 450px;   
+    justify-content: center;
+    align-items: end;
+}
+
+.secMenu {
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 500px;
+    width:100%;
+}
+
+.navbar__right {
+    display: flex;
+    flex-direction: row;
+    width: 700px;
+    min-width: 300px;
+    justify-content: end;
+    align-items: center;
+}
+
+.msgbttn {
+    width: 40px;
+    height: 30px;
+    margin-right: 20px;
+}
+
+.notifications__icon {
+    width: 30px;
+    height: 33px;
+    margin-right:10px;
+}
+
+ 
+
+.navbar__avatar:hover, .notifications__icon:hover,  .msgbttn:hover {
+    cursor: pointer;
+}
+
+.nav__trending:hover, .nav__create:hover, .nav__recommended:hover {
+    cursor: pointer;
+    text-decoration: underline;
+
+}
+
+
+
+
+
+
+/* .center{
     display:inline-block;
     text-align: center;
     position:absolute;
@@ -42,7 +123,6 @@ ul {
   
   }
 
-/* Popup style */
 .popup-box {
     background: #00000050;
     width: 100%;
@@ -131,7 +211,7 @@ ul {
       position: relative;
       
   }
-/* polar bear photo */
+
 .avatar1 {
     
     width: 90px;
@@ -143,6 +223,7 @@ ul {
 }
 
 .Topbar h1 {
+    background-color: black;
     margin-top: 0px;
     margin-left: 0px;
     padding:0px;
@@ -165,18 +246,6 @@ ul {
     z-index:10;
 }
 
-/* .create{
-    border-radius: 10px;
-    background-color: #52ab98;
-    height:23px;
-    width:120px;
-    font-size: 18px;
-    position:absolute;
-    box-shadow: 1px 0px 4px 0px #52ab98 ;
-    top:-55px; 
-    left:220px;
-} */
-
 
 
 
@@ -196,13 +265,6 @@ ul {
     position: relative;
     left:230px;
     top:-218px;
-
-    /* width: 40px;
-    padding:0px;
-    margin:40px;
-    height:30px; 
-    position:absolute;
-    left: 180px; */
 }
 
 .signout__button {
@@ -214,7 +276,7 @@ ul {
     
 }
 
- .homebutton {
+ .nav__homebutton {
     padding:0px;
     margin:0px;
     font-size: 30px;
@@ -243,4 +305,4 @@ ul {
     position: relative;
     top:-210px;
     text-align: center;
-}
+} */

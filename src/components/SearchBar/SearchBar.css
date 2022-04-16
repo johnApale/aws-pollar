@@ -1,4 +1,25 @@
-.searchInput {
+.Search{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position:relative;
+}
+
+.search__input input{
+    padding-left: 35px;
+    padding-right: 10px;
+    background: url("search-icon.png") no-repeat;
+    background-position: 3% 50%;
+    background-size: 25px;
+    height: 40px;
+    width: 100%;
+    min-width:200px;
+    font-size: 18px;
+    border-radius: 20px;
+    border-width: 1px;
+}
+
+/* .searchInput {
     display: flex;
     width:200px;
 }
@@ -63,4 +84,4 @@ input:focus {
 
 .dataResult::-webkit-scrollbar{
     display: none;
-}
+} */

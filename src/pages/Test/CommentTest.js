@@ -1,81 +1,67 @@
 import React, { useState, useEffect } from "react";
-import { DataStore } from "aws-amplify";
-import { Poll, UserInformation, Comment } from "../../models";
+import { API, graphqlOperation } from "aws-amplify";
+import { commentsByPoll, getComment } from "../../graphql/queries";
+import { createComment } from "../../graphql/mutations";
 
 function CommentTest(props) {
-  const [user, setUser] = useState([]);
-  const [userData, setUserData] = useState([]);
-  const [poll, setPoll] = useState([]);
-  const [pollData, setPollData] = useState([]);
+  const [comment, setComment] = useState();
+  const [commentData, setCommentData] = useState();
 
-  useEffect(async () => {
-    setUserData(
-      await DataStore.query(UserInformation, (u) =>
-        u.username("eq", props.user.username)
-      )
-    );
-    userData.map((val, key) => {
-      setUser({
-        id: val.id,
-        username: val.username,
-        firstName: val.firstName,
-        lastName: val.lastName,
-        email: val.email,
-        bday: val.bday,
-        anon: val.anon,
-        sex: val.sex,
-      });
-    });
-
-    setPollData(
-      await DataStore.query(Poll, (p) =>
-        p.id("eq", "942c8a6e-1cd1-4077-aa5b-6eb0d4f3dd77")
-      )
-    );
-    pollData.map((val, key) => {
-      setPoll({
-        userInformationID: val.UserInformation.id,
-        title: val.title,
-        UserInformation: val.UserInformation,
-        publicity: val.publicity,
-        disclaimer: val.disclaimer,
-        description: val.description,
-        answerChoices: val.answerChoices,
-        categories: val.categories,
-        tags: val.tags,
-        likes: val.likes,
-        views: val.views,
-        timeStart: val.timeStart,
-        timeEnd: val.timeEnd,
-        comments: [],
-      });
-    });
-
-    // return () => {
-    //   setUser([]);
-    // };
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const commentsModel = await API.graphql(
+          graphqlOperation(commentsByPoll, {
+            pollID: props.poll,
+            sortDirection: "ASC",
+          })
+        );
+        setCommentData(commentsModel);
+      } catch (error) {
+        console.log("Error fetching comments, ", error);
+      }
+    }
+    fetchData();
   });
 
-  const saveTest = async () => {
-    try {
-      await DataStore.save(
-        new Comment({
-          userInformationID: user.id,
-          pollID: poll.id,
-          UserInformation: user,
-          Poll: poll,
-          content: "Lorem ipsum dolor sit amet",
-        })
-      );
-      console.log("Post saved successfully!");
-    } catch (error) {
-      console.log("Error in saving ", error);
+  const postComment = () => {
+    const newCommentData = {
+      content: comment,
+      pollID: props.poll,
+      userID: props.user,
+    };
+    async function pushData() {
+      try {
+        const newComment = await API.graphql(
+          graphqlOperation(createComment, { input: newCommentData })
+        );
+      } catch (error) {
+        console.log("Error pushing new comment, ", error);
+      }
+    }
+    pushData();
+  };
+
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
+  };
+
+  const handleEnterPress = (event) => {
+    if (event.code === "Enter") {
+      postComment();
     }
   };
 
   return (
     <div className="CommentTest">
-      <button onClick={saveTest}>Save Comment</button>
+      {commentData ? <p>Show Comments</p> : <p>No comments</p>}
+      <input
+        type="text"
+        className="comment__input"
+        onChange={handleCommentChange}
+        onKeyPress={handleEnterPress}
+      />
+      <button onClick={postComment}>Save Comment</button>
     </div>
   );
 }
