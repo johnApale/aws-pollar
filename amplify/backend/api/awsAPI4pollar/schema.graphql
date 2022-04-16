@@ -1,0 +1,123 @@
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type UserInformation @model @searchable{
+  usernameID: String! @primaryKey
+  firstName: String!
+  lastName: String!
+  email: AWSEmail!
+  bday: AWSDate!
+  anon: Boolean!
+  sex: String!
+  follow: [Follow] @hasMany(indexName: "byFollowers", fields: ["usernameID"])
+  polls: [Poll] @hasMany (indexName: "byPolls", fields: ["usernameID"])
+  pollAnswers: [UserAnswer] @hasMany (indexName: "byUserAnswers", fields: ["usernameID"])
+  comments: [Comment] @hasMany (indexName: "byUserComments", fields:["usernameID"])
+  likedPolls: [Like] @hasMany (indexName: "byUserLike", fields: ["usernameID"])
+  conversations: [ConversationLink] @hasMany(indexName: "byUserConversations", fields: ["usernameID"])
+  messages: [Message] @hasMany(indexName: "byUserMessages", fields: ["usernameID"])
+  notifications: [Notification] @hasMany (indexName: "byUserNotifications", fields:["usernameID"])
+  activity: [Notification] @hasMany (indexName: "byUserActivity", fields:["usernameID"])
+}
+
+type Poll @model @searchable{
+  id: ID!
+  userID: String!  @index(name: "byPolls", queryField: "pollByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["userID"])
+  title: String!
+  publicity: Boolean!
+  disclaimer: Boolean!
+  description: String!
+  answerChoices: [String]!
+  categories: [String]
+  tags: [String]
+  like: [Like] @hasMany (indexName: "byPollLike", fields: ["id"])
+  views: Int! 
+  timeStart: AWSDateTime!
+  timeEnd: AWSDateTime!
+  comments: [Comment] @hasMany (indexName: "byPollComments", fields: ["id"])
+  userAnswers: [UserAnswer] @hasMany (indexName: "byAnsweredPolls", fields:["id"])
+  activity: [Notification] @hasMany (indexName: "byPollActivity", fields: ["id"])
+
+}
+
+type Comment @model {
+  id: ID! @primaryKey(sortKeyFields: ["userID", "pollID"])
+  content: String!
+  pollID: ID! @index(name: "byPollComments", queryField: "commentsByPoll")
+  Poll: Poll @belongsTo(fields:["pollID"])
+  userID: String! @index(name: "byUserComments", queryField: "commentsByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["userID"])
+}
+
+type UserAnswer @model {
+  id: ID!
+  pollID: ID! @primaryKey(sortKeyFields: ["userID"]) @index(name: "byAnsweredPolls", queryField: "answerByPoll")
+  Poll: Poll @belongsTo(fields:["pollID"])
+  userID: String! @index(name: "byUserAnswers", queryField: "answersByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["userID"])
+  answer: String!
+}
+
+type Like @model {
+  id: ID!
+  pollID: ID! @primaryKey(sortKeyFields: ["userID"]) @index(name: "byPollLike", queryField: "likeByPoll")
+  Poll: Poll @belongsTo(fields:["pollID"])
+  userID: String! @index(name: "byUserLike", queryField: "likeByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["userID"])
+}
+
+type Follow @model {
+  id: ID!
+  followingID: String! @index(name: "byFollowing", queryField: "userFollowers")
+  followerID: String! @primaryKey(sortKeyFields: ["followingID"]) @index(name: "byFollowers", queryField: "followersByUser")
+  UserInformation: UserInformation @belongsTo( fields: ["followerID"])
+}
+
+type Conversation @model{
+    id: ID!
+    messages: [Message] @hasMany(indexName: "conversationsByDate", fields: ["createdAt"])
+    associated: [ConversationLink] @hasMany(indexName: "associatedLinks", fields: ["associatedLinks"])
+    name: String!
+    members: [String!]!
+    createdAt: String
+}
+
+
+type Message @model{
+    id: ID!
+    author: String @index(name: "byUserMessages", queryField: "messagesByUser")
+    UserInformation: UserInformation @belongsTo(fields: ["author"])
+    content: String!
+    messageConversationID: ID! @index(name: "conversationsByDate", queryField: "conversationsByDate")
+    Conversation: Conversation @belongsTo(fields: ["messageConversationID"])
+    createdAt: String
+}
+
+type ConversationLink @model{
+    id: ID!
+    convoLinkUserID: String! @index(name: "byUserConversations", queryField: "conversationsByUser")
+    UserInformation: UserInformation @belongsTo(fields: ["convoLinkUserID"])
+    convoLinkConversationID: ID!
+    Conversation: Conversation @belongsTo(fields: ["convoLinkConversationID"])
+    createdAt: String
+}
+
+
+type Notification @model {
+    id: ID!
+    toUser: String! @index(name: "byUserNotifications", queryField: "notificationsByUser")
+    fromUser: String! @index(name: "byUserActivity", queryField: "activityByUser")
+    notificationType: String!
+    pollID: ID @index(name: "byPollActivity", queryField: "activityByPoll")
+    Poll: Poll @belongsTo(fields: ["pollID"])
+}
+
+type Subscription {
+    onCreateConversationLink(convoLinkUserID: String!): ConversationLink
+        @aws_subscribe(mutations: ["createConversationLink"])
+    onCreateMessage(messageConversationID: ID!): Message
+        @aws_subscribe(mutations: ["createMessage"])
+    onCreateNotificationByUserID(toUser: String!): Notification
+        @aws_subscribe(mutations: ["createNotification"])
+
+}
