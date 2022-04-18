@@ -6,6 +6,7 @@ import Home from "./pages/Home/Home";
 import CommentTest from "./pages/Test/CommentTest";
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
+import Message from "./pages/Test/messageTest";
 import AnswerPoll from "./pages/Poll/AnswerPoll";
 import ViewPoll from "./pages/Poll/ViewPoll";
 import Notification from "./pages/Notifications/Notifications";
@@ -294,6 +295,7 @@ export default function App() {
             </nav>
             <Routes>
               <Route path="/" element={<Home user={user} />}></Route>
+              <Route path="/message" element={<Message user={user} />}></Route>
               <Route path="home" element={<Home user={user} />}></Route>
               <Route
                 path="poll/create"
