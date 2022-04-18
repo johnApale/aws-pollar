@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./AnswerPoll.css";
 import { API, graphqlOperation } from "aws-amplify";
-import { getPoll } from "../../graphql/queries";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import Notification from "../Notifications/Notifications";
 import {createNotification} from "../Notifications/Notifications";
 import {NotificationContainer, NotificationManager} from "react-notifications";
