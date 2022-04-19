@@ -9,7 +9,9 @@ import CreatePoll from "./pages/Poll/CreatePoll";
 import Message from "./pages/Test/MessageTest";
 import AnswerPoll from "./pages/Poll/AnswerPoll";
 import ViewPoll from "./pages/Poll/ViewPoll";
+import Messenger from "./pages/Messenger/Messenger";
 import Notification from "./pages/Notifications/Notifications";
+import Messages from "./components/ Messages/Messages";
 import UserDetails from "./pages/UserDetails/UserDetails";
 import { Amplify } from "aws-amplify";
 import awsconfig from "./aws-exports";
@@ -308,9 +310,10 @@ export default function App() {
                 element={<ViewPoll user={user} />}
               ></Route>
               <Route
-                path="test"
-                element={<UserDetails trigger={true} user={user} />}
+                path="messages"
+                element={<Messenger user={user} />}
               ></Route>
+              <Route path="test" element={<Messages />}></Route>
               <Route
                 path="comment_test"
                 element={<CommentTest user={user} />}

@@ -1,0 +1,43 @@
+.Messenger{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.messenger__box{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    width: 70vw;
+    height: 80vh;
+    border-radius: 15px;
+}
+
+.messenger__conversations{
+    border-right: 1px solid grey;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 400px;
+}
+
+.messenger_top{
+    display:flex;
+    flex-direction: column;
+}
+
+
+
+.messenger__title {
+    font-size: 30px;
+    font-weight: 550;
+    padding: 15px;
+    width: 100%;
+    height: 115px;
+    border-bottom: 1px solid grey;
+}
+
+.messenger__messages {
+    width: 100%;
+    height: 100%;
+}
