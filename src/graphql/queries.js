@@ -26,30 +26,13 @@ export const searchUserInformations = /* GraphQL */ `
         bday
         anon
         sex
-        following {
-          nextToken
-        }
-        followers {
-          items {
-            userID
-          }
+        follow {
           nextToken
         }
         polls {
           items {
             id
             userID
-            UserInformation {
-              usernameID
-              firstName
-              lastName
-              email
-              bday
-              anon
-              sex
-              createdAt
-              updatedAt
-            }
             title
             publicity
             disclaimer
@@ -91,6 +74,13 @@ export const searchUserInformations = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          items {
+            id
+            pollID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         conversations {
@@ -209,62 +199,6 @@ export const searchPolls = /* GraphQL */ `
     }
   }
 `;
-export const searchConversations = /* GraphQL */ `
-  query SearchConversations(
-    $filter: SearchableConversationFilterInput
-    $sort: [SearchableConversationSortInput]
-    $limit: Int
-    $nextToken: String
-    $from: Int
-    $aggregates: [SearchableConversationAggregationInput]
-  ) {
-    searchConversations(
-      filter: $filter
-      sort: $sort
-      limit: $limit
-      nextToken: $nextToken
-      from: $from
-      aggregates: $aggregates
-    ) {
-      items {
-        id
-        users {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        recentMessage {
-          id
-          conversationID
-          userID
-          message
-          createdAt
-          updatedAt
-        }
-        viewed
-        createdAt
-        updatedAt
-      }
-      nextToken
-      total
-      aggregateItems {
-        name
-        result {
-          ... on SearchableAggregateScalarResult {
-            value
-          }
-          ... on SearchableAggregateBucketResult {
-            buckets {
-              key
-              doc_count
-            }
-          }
-        }
-      }
-    }
-  }
-`;
 export const getUserInformation = /* GraphQL */ `
   query GetUserInformation($usernameID: String!) {
     getUserInformation(usernameID: $usernameID) {
@@ -275,19 +209,11 @@ export const getUserInformation = /* GraphQL */ `
       bday
       anon
       sex
-      following {
+      follow {
         items {
           id
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      followers {
-        items {
-          id
-          userID
+          followingID
+          followerID
           createdAt
           updatedAt
         }
@@ -347,8 +273,8 @@ export const getUserInformation = /* GraphQL */ `
       conversations {
         items {
           id
-          userInformationID
-          conversationID
+          convoLinkUserID
+          convoLinkConversationID
           createdAt
           updatedAt
         }
@@ -357,9 +283,9 @@ export const getUserInformation = /* GraphQL */ `
       messages {
         items {
           id
-          conversationID
-          userID
-          message
+          author
+          content
+          messageConversationID
           createdAt
           updatedAt
         }
@@ -417,10 +343,7 @@ export const listUserInformations = /* GraphQL */ `
         bday
         anon
         sex
-        following {
-          nextToken
-        }
-        followers {
+        follow {
           nextToken
         }
         polls {
@@ -467,10 +390,7 @@ export const getPoll = /* GraphQL */ `
         bday
         anon
         sex
-        following {
-          nextToken
-        }
-        followers {
+        follow {
           nextToken
         }
         polls {
@@ -663,10 +583,7 @@ export const getComment = /* GraphQL */ `
         bday
         anon
         sex
-        following {
-          nextToken
-        }
-        followers {
+        follow {
           nextToken
         }
         polls {
@@ -810,10 +727,7 @@ export const getUserAnswer = /* GraphQL */ `
         bday
         anon
         sex
-        following {
-          nextToken
-        }
-        followers {
+        follow {
           nextToken
         }
         polls {
@@ -958,10 +872,7 @@ export const getLike = /* GraphQL */ `
         bday
         anon
         sex
-        following {
-          nextToken
-        }
-        followers {
+        follow {
           nextToken
         }
         polls {
@@ -1051,11 +962,12 @@ export const listLikes = /* GraphQL */ `
     }
   }
 `;
-export const getFollowing = /* GraphQL */ `
-  query GetFollowing($id: ID!) {
-    getFollowing(id: $id) {
+export const getFollow = /* GraphQL */ `
+  query GetFollow($followerID: String!, $followingID: String!) {
+    getFollow(followerID: $followerID, followingID: $followingID) {
       id
-      userID
+      followingID
+      followerID
       UserInformation {
         usernameID
         firstName
@@ -1064,10 +976,7 @@ export const getFollowing = /* GraphQL */ `
         bday
         anon
         sex
-        following {
-          nextToken
-        }
-        followers {
+        follow {
           nextToken
         }
         polls {
@@ -1102,95 +1011,27 @@ export const getFollowing = /* GraphQL */ `
     }
   }
 `;
-export const listFollowings = /* GraphQL */ `
-  query ListFollowings(
-    $filter: ModelFollowingFilterInput
+export const listFollows = /* GraphQL */ `
+  query ListFollows(
+    $followerID: String
+    $followingID: ModelStringKeyConditionInput
+    $filter: ModelFollowFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listFollowings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listFollows(
+      followerID: $followerID
+      followingID: $followingID
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
-        userID
-        UserInformation {
-          usernameID
-          firstName
-          lastName
-          email
-          bday
-          anon
-          sex
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getFollower = /* GraphQL */ `
-  query GetFollower($id: ID!) {
-    getFollower(id: $id) {
-      id
-      userID
-      UserInformation {
-        usernameID
-        firstName
-        lastName
-        email
-        bday
-        anon
-        sex
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        polls {
-          nextToken
-        }
-        pollAnswers {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        likedPolls {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        activity {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listFollowers = /* GraphQL */ `
-  query ListFollowers(
-    $filter: ModelFollowerFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listFollowers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        userID
+        followingID
+        followerID
         UserInformation {
           usernameID
           firstName
@@ -1210,56 +1051,32 @@ export const listFollowers = /* GraphQL */ `
   }
 `;
 export const getConversation = /* GraphQL */ `
-  query GetConversation($id: ID!) {
-    getConversation(id: $id) {
+  query GetConversation($id: ID!, $createdAt: String!) {
+    getConversation(id: $id, createdAt: $createdAt) {
       id
-      users {
-        items {
-          id
-          userInformationID
-          conversationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       messages {
         items {
           id
-          conversationID
-          userID
-          message
+          author
+          content
+          messageConversationID
           createdAt
           updatedAt
         }
         nextToken
       }
-      recentMessage {
-        id
-        conversationID
-        Conversation {
+      associated {
+        items {
           id
-          viewed
+          convoLinkUserID
+          convoLinkConversationID
           createdAt
           updatedAt
         }
-        userID
-        UserInformation {
-          usernameID
-          firstName
-          lastName
-          email
-          bday
-          anon
-          sex
-          createdAt
-          updatedAt
-        }
-        message
-        createdAt
-        updatedAt
+        nextToken
       }
-      viewed
+      name
+      members
       createdAt
       updatedAt
     }
@@ -1267,28 +1084,31 @@ export const getConversation = /* GraphQL */ `
 `;
 export const listConversations = /* GraphQL */ `
   query ListConversations(
+    $id: ID
+    $createdAt: ModelStringKeyConditionInput
     $filter: ModelConversationFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listConversations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listConversations(
+      id: $id
+      createdAt: $createdAt
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
-        users {
-          nextToken
-        }
         messages {
           nextToken
         }
-        recentMessage {
-          id
-          conversationID
-          userID
-          message
-          createdAt
-          updatedAt
+        associated {
+          nextToken
         }
-        viewed
+        name
+        members
         createdAt
         updatedAt
       }
@@ -1300,28 +1120,7 @@ export const getMessage = /* GraphQL */ `
   query GetMessage($id: ID!) {
     getMessage(id: $id) {
       id
-      conversationID
-      Conversation {
-        id
-        users {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        recentMessage {
-          id
-          conversationID
-          userID
-          message
-          createdAt
-          updatedAt
-        }
-        viewed
-        createdAt
-        updatedAt
-      }
-      userID
+      author
       UserInformation {
         usernameID
         firstName
@@ -1330,10 +1129,7 @@ export const getMessage = /* GraphQL */ `
         bday
         anon
         sex
-        following {
-          nextToken
-        }
-        followers {
+        follow {
           nextToken
         }
         polls {
@@ -1363,7 +1159,21 @@ export const getMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      message
+      content
+      messageConversationID
+      Conversation {
+        id
+        messages {
+          nextToken
+        }
+        associated {
+          nextToken
+        }
+        name
+        members
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -1378,14 +1188,7 @@ export const listMessages = /* GraphQL */ `
     listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        conversationID
-        Conversation {
-          id
-          viewed
-          createdAt
-          updatedAt
-        }
-        userID
+        author
         UserInformation {
           usernameID
           firstName
@@ -1397,7 +1200,117 @@ export const listMessages = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        message
+        content
+        messageConversationID
+        Conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getConversationLink = /* GraphQL */ `
+  query GetConversationLink($id: ID!) {
+    getConversationLink(id: $id) {
+      id
+      convoLinkUserID
+      UserInformation {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        follow {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      convoLinkConversationID
+      Conversation {
+        id
+        messages {
+          nextToken
+        }
+        associated {
+          nextToken
+        }
+        name
+        members
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listConversationLinks = /* GraphQL */ `
+  query ListConversationLinks(
+    $filter: ModelConversationLinkFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listConversationLinks(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        convoLinkUserID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        convoLinkConversationID
+        Conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -1483,117 +1396,6 @@ export const listNotifications = /* GraphQL */ `
           views
           timeStart
           timeEnd
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getUserConversations = /* GraphQL */ `
-  query GetUserConversations($id: ID!) {
-    getUserConversations(id: $id) {
-      id
-      userInformationID
-      conversationID
-      userInformation {
-        usernameID
-        firstName
-        lastName
-        email
-        bday
-        anon
-        sex
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        polls {
-          nextToken
-        }
-        pollAnswers {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        likedPolls {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        activity {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      conversation {
-        id
-        users {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        recentMessage {
-          id
-          conversationID
-          userID
-          message
-          createdAt
-          updatedAt
-        }
-        viewed
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUserConversations = /* GraphQL */ `
-  query ListUserConversations(
-    $filter: ModelUserConversationsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUserConversations(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userInformationID
-        conversationID
-        userInformation {
-          usernameID
-          firstName
-          lastName
-          email
-          bday
-          anon
-          sex
-          createdAt
-          updatedAt
-        }
-        conversation {
-          id
-          viewed
           createdAt
           updatedAt
         }
@@ -1991,16 +1793,16 @@ export const likeByUser = /* GraphQL */ `
     }
   }
 `;
-export const followingByUser = /* GraphQL */ `
-  query FollowingByUser(
-    $userID: String!
+export const userFollowers = /* GraphQL */ `
+  query UserFollowers(
+    $followingID: String!
     $sortDirection: ModelSortDirection
-    $filter: ModelFollowingFilterInput
+    $filter: ModelFollowFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    followingByUser(
-      userID: $userID
+    userFollowers(
+      followingID: $followingID
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -2008,7 +1810,8 @@ export const followingByUser = /* GraphQL */ `
     ) {
       items {
         id
-        userID
+        followingID
+        followerID
         UserInformation {
           usernameID
           firstName
@@ -2029,14 +1832,14 @@ export const followingByUser = /* GraphQL */ `
 `;
 export const followersByUser = /* GraphQL */ `
   query FollowersByUser(
-    $userID: String!
+    $followerID: String!
     $sortDirection: ModelSortDirection
-    $filter: ModelFollowerFilterInput
+    $filter: ModelFollowFilterInput
     $limit: Int
     $nextToken: String
   ) {
     followersByUser(
-      userID: $userID
+      followerID: $followerID
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -2044,7 +1847,8 @@ export const followersByUser = /* GraphQL */ `
     ) {
       items {
         id
-        userID
+        followingID
+        followerID
         UserInformation {
           usernameID
           firstName
@@ -2056,50 +1860,6 @@ export const followersByUser = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const messagesByConversation = /* GraphQL */ `
-  query MessagesByConversation(
-    $conversationID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelMessageFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    messagesByConversation(
-      conversationID: $conversationID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        conversationID
-        Conversation {
-          id
-          viewed
-          createdAt
-          updatedAt
-        }
-        userID
-        UserInformation {
-          usernameID
-          firstName
-          lastName
-          email
-          bday
-          anon
-          sex
-          createdAt
-          updatedAt
-        }
-        message
         createdAt
         updatedAt
       }
@@ -2109,14 +1869,14 @@ export const messagesByConversation = /* GraphQL */ `
 `;
 export const messagesByUser = /* GraphQL */ `
   query MessagesByUser(
-    $userID: String!
+    $author: String!
     $sortDirection: ModelSortDirection
     $filter: ModelMessageFilterInput
     $limit: Int
     $nextToken: String
   ) {
     messagesByUser(
-      userID: $userID
+      author: $author
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -2124,14 +1884,7 @@ export const messagesByUser = /* GraphQL */ `
     ) {
       items {
         id
-        conversationID
-        Conversation {
-          id
-          viewed
-          createdAt
-          updatedAt
-        }
-        userID
+        author
         UserInformation {
           usernameID
           firstName
@@ -2143,7 +1896,148 @@ export const messagesByUser = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        message
+        content
+        messageConversationID
+        Conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const conversationsByDate = /* GraphQL */ `
+  query ConversationsByDate(
+    $messageConversationID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    conversationsByDate(
+      messageConversationID: $messageConversationID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        author
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        content
+        messageConversationID
+        Conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const conversationsByUser = /* GraphQL */ `
+  query ConversationsByUser(
+    $convoLinkUserID: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelConversationLinkFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    conversationsByUser(
+      convoLinkUserID: $convoLinkUserID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        convoLinkUserID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        convoLinkConversationID
+        Conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const associatedLinks = /* GraphQL */ `
+  query AssociatedLinks(
+    $convoLinkConversationID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelConversationLinkFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    associatedLinks(
+      convoLinkConversationID: $convoLinkConversationID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        convoLinkUserID
+        UserInformation {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        convoLinkConversationID
+        Conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }

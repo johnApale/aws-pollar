@@ -1,5 +1,5 @@
 {
-  "AppSyncApiName": "api4pollar",
+  "AppSyncApiName": "api4awspollar",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false
 }

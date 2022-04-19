@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, createSearchParams, useParams } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
-import { getUserInformation, pollByUser } from "../../graphql/queries";
+import {
+  followersByUser,
+  getUserInformation,
+  pollByUser,
+  userFollowers,
+} from "../../graphql/queries";
 import "./UserProfile.css";
 
 function UserProfile() {
@@ -21,21 +26,32 @@ function UserProfile() {
       );
       console.log(userData.data.getUserInformation);
       setUser(userData.data.getUserInformation);
+
       // get polls created by user
       const pollsData = await API.graphql(
         graphqlOperation(pollByUser, { userID: username })
       );
+
       const pollList = pollsData.data.pollByUser.items;
+      console.log(pollList);
       const pollSize = pollList.length;
       setPollCount(pollSize);
-      setFollowingCount(
-        userData.data.getUserInformation.following.items.length
-      );
       for (let i = 0; i < pollSize; i += 1) {
-        console.log(pollList[i].like.items.length);
         pollList[i].likeLen = pollList[i].like.items.length;
       }
       setPolls(pollsData.data.pollByUser.items);
+
+      // Get the amount of following the user has
+      const followingData = await API.graphql(
+        graphqlOperation(userFollowers, { followingID: username })
+      );
+      setFollowingCount(followingData.data.userFollowers.items.length);
+
+      // Get the amount of followers the user has
+      const followersData = await API.graphql(
+        graphqlOperation(followersByUser, { followerID: username })
+      );
+      setFollowerCount(followersData.data.followersByUser.items.length);
     }
     fetchData();
   }, [username]);
@@ -77,7 +93,7 @@ function UserProfile() {
                   <b>{pollCount}</b> posts
                 </p>
                 <p>
-                  <b>0</b> followers
+                  <b>{followerCount}</b> followers
                 </p>
                 <p>
                   <b>{followingCount}</b> following

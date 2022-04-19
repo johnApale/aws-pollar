@@ -13,8 +13,8 @@ type UserInformation @model @searchable{
   pollAnswers: [UserAnswer] @hasMany (indexName: "byUserAnswers", fields: ["usernameID"])
   comments: [Comment] @hasMany (indexName: "byUserComments", fields:["usernameID"])
   likedPolls: [Like] @hasMany (indexName: "byUserLike", fields: ["usernameID"])
-  conversations(after: String, first: Int): UserConverstationsConnection  
-  messages(after: String, first: Int): MessageConnection
+  conversations: [ConversationLink] @hasMany(indexName: "byUserConversations", fields: ["usernameID"])
+  messages: [Message] @hasMany(indexName: "byUserMessages", fields: ["usernameID"])
   notifications: [Notification] @hasMany (indexName: "byUserNotifications", fields:["usernameID"])
   activity: [Notification] @hasMany (indexName: "byUserActivity", fields:["usernameID"])
 }
@@ -73,74 +73,51 @@ type Follow @model {
   UserInformation: UserInformation @belongsTo( fields: ["followerID"])
 }
 
-type Conversation {
-  createdAt: String
-  id: ID!
-  messages(after: String, first: Int): MessageConnection
-  name: String!
+type Conversation @model{
+    id: ID! @primaryKey(sortKeyFields: ["createdAt"])
+    messages: [Message] @hasMany(indexName: "conversationsByDate", fields: ["id"])
+    associated: [ConversationLink] @hasMany(indexName: "associatedLinks", fields: ["id"])
+    name: String!
+    members: [String!]!
+    createdAt: String!
 }
 
-type UserConversations {
-  associated: [UserConversations]
-  conversation: Conversation
-  conversationId: ID!
-  user: UserInformation
-  userId: String!
+
+type Message @model{
+    id: ID!
+    author: String @index(name: "byUserMessages", queryField: "messagesByUser")
+    UserInformation: UserInformation @belongsTo(fields: ["author"])
+    content: String!
+    messageConversationID: ID! @index(name: "conversationsByDate", queryField: "conversationsByDate")
+    Conversation: Conversation @belongsTo(fields: ["messageConversationID"])
+    createdAt: String
 }
 
-type UserConverstationsConnection {
-  nextToken: String
-  userConversations: [UserConversations]
+type ConversationLink @model{
+    id: ID!
+    convoLinkUserID: String! @index(name: "byUserConversations", queryField: "conversationsByUser")
+    UserInformation: UserInformation @belongsTo(fields: ["convoLinkUserID"])
+    convoLinkConversationID: ID! @index(name: "associatedLinks", queryField: "associatedLinks")
+    Conversation: Conversation @belongsTo(fields: ["convoLinkConversationID"])
+    createdAt: String
 }
 
-type Message {
-  id: ID!
-  author: UserInformation
-  content: String!
-  conversationId: ID!
-  createdAt: String
-  isSent: Boolean
-  recipient: UserInformation
-  sender: String
-}
-type MessageConnection {
-  messages: [Message]
-  nextToken: String
-}
 
 type Notification @model {
-  id: ID!
-  toUser: String! @index(name: "byUserNotifications", queryField: "notificationsByUser")
-  fromUser: String! @index(name: "byUserActivity", queryField: "activityByUser")
-  notificationType: String!
-  pollID: ID @index(name: "byPollActivity", queryField: "activityByPoll")
-  Poll: Poll @belongsTo(fields: ["pollID"])
-}
-type Mutation {
-  #  Create a Conversation. Use some of the cooked in template functions for UUID and DateTime.
-  createConversation(createdAt: String, id: ID!, name: String!): Conversation
-  #  Create a message in a Conversation.
-  createMessage(content: String, conversationId: ID!, createdAt: String!, id: ID!): Message
-  #  Put a single value of type 'UserConversations'. If an item does not exist with the same key the item will be created. If there exists an item at that key already, it will be updated.
-  createUserConversations(conversationId: ID!, userId: String!): UserConversations
-}
-
-type Query {
-  #  Scan through all values of type 'Message'. Use the 'after' and 'before' arguments with the 'nextToken' returned by the 'MessageConnection' result to fetch pages.
-  allMessage(after: String, conversationId: ID!, first: Int): [Message]
-  #  Scan through all values of type 'MessageConnection'. Use the 'after' and 'before' arguments with the 'nextToken' returned by the 'MessageConnectionConnection' result to fetch pages.
-  allMessageConnection(after: String, conversationId: ID!, first: Int): MessageConnection
-  allMessageFrom(after: String, conversationId: ID!, first: Int, sender: String!): [Message]
-  #  Get my user.
-  me: UserInformation
+    id: ID!
+    toUser: String! @index(name: "byUserNotifications", queryField: "notificationsByUser")
+    fromUser: String! @index(name: "byUserActivity", queryField: "activityByUser")
+    notificationType: String!
+    pollID: ID @index(name: "byPollActivity", queryField: "activityByPoll")
+    Poll: Poll @belongsTo(fields: ["pollID"])
 }
 
 type Subscription {
-  subscribeToNewMessage(conversationId: ID!): Message
-    @aws_subscribe(mutations:["createMessage"])
-  subscribeToNewUCs(userId:String!): UserConversations
-		@aws_subscribe(mutations: ["createUserConversations"])
-  onCreateNotificationByUserID(toUser: String!): Notification
-    @aws_subscribe(mutations: ["createNotification"])
+    onCreateConversationLinkByUserID(convoLinkUserId: String!): ConversationLink
+        @aws_subscribe(mutations: ["createConversationLink"])
+    onCreateMessageByConversationID(messageConversationId: ID!): Message
+        @aws_subscribe(mutations: ["createMessage"])
+    onCreateNotificationByUserID(toUser: String!): Notification
+        @aws_subscribe(mutations: ["createNotification"])
 
 }

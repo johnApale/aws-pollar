@@ -6,9 +6,7 @@ import "./CommentSection.css";
 
 function CommentSection(props) {
   const [comment, setComment] = useState();
-  const [size, setSize] = useState(0);
   const [commentData, setCommentData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
   const [show, setShow] = useState(false);
 
   const fetchData = useCallback(async () => {
@@ -19,7 +17,6 @@ function CommentSection(props) {
       })
     );
     setCommentData(commentsModel.data.commentsByPoll.items);
-    setIsLoading(false);
     if (commentsModel.data.commentsByPoll.items.length > 0) {
       setShow(true);
     }
@@ -62,10 +59,6 @@ function CommentSection(props) {
     }
   };
 
-  if (isLoading) {
-    return <div className="CommentTest">Loading...</div>;
-  }
-
   return (
     <div className="CommentTest">
       <input
@@ -76,22 +69,24 @@ function CommentSection(props) {
         onKeyPress={handleEnterPress}
         placeholder="Write a comment"
       />
-      <div className="comments">
-        {commentData ? (
-          commentData
-            .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-            .map((val, key) => {
-              return (
-                <div className="comment_cards" key={key}>
-                  <p className="comment_user">{val.userID}</p>
-                  <p className="comment_content">{val.content}</p>
-                </div>
-              );
-            })
-        ) : (
-          <p className="comment_none"> No Comments</p>
-        )}
-      </div>
+      {show ? (
+        <div className="comments">
+          {" "}
+          {commentData &&
+            commentData
+              .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+              .map((val, key) => {
+                return (
+                  <div className="comment_cards" key={key}>
+                    <p className="comment_user">{val.userID}</p>
+                    <p className="comment_content">{val.content}</p>
+                  </div>
+                );
+              })}
+        </div>
+      ) : (
+        <p className="comment_none"> No Comments</p>
+      )}
     </div>
   );
 }

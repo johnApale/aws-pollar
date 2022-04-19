@@ -5,7 +5,11 @@ import {
   createSearchParams,
   useNavigate,
 } from "react-router-dom";
-import { searchPolls, searchUserInformations } from "../../graphql/queries";
+import {
+  searchPolls,
+  searchUserInformations,
+  userFollowers,
+} from "../../graphql/queries";
 import "./Search.css";
 
 function Search(props) {
@@ -13,6 +17,7 @@ function Search(props) {
   const [followerCount, setFollowerCount] = useState();
   const [following, setFollowing] = useState("Follow");
   const [userSearch, setUserSearch] = useState({});
+  const [userFound, setUserFound] = useState(false);
   // const [likeCount, setLikeCount] = useState();
   const [searchParams] = useSearchParams();
   const query = searchParams.get("query");
@@ -30,17 +35,15 @@ function Search(props) {
           })
         );
         // set follower count for user
+        console.log(userModel.data.searchUserInformations.items);
         if (userModel.data.searchUserInformations.items.length > 0) {
           const userData = userModel.data.searchUserInformations.items[0];
-          userData.followerCount = userData.followers.items.length;
           userData.pollCount = userData.polls.items.length;
-          // add user polls to array
           searchArray.push(...userData?.polls.items);
           setUserSearch(userData);
-          // check if user follows searched user
-          console.log(userData.followers.items);
-          const followers = userData.followers.items;
-          // ** need to check if logged in user is following searched user
+          setUserFound(true);
+          console.log(userFound);
+          fetchFollow();
         }
         // poll search
         const models = await API.graphql(
@@ -54,6 +57,11 @@ function Search(props) {
       } catch (e) {
         console.log("Error fetching polls, ", e);
       }
+    }
+
+    async function fetchFollow() {
+      console.log("TEST");
+      // check if the logged in user follows the user fetched
     }
     fetchData();
   }, []);
@@ -77,20 +85,34 @@ function Search(props) {
   return (
     <div className="Search">
       <h1 className="result__query">Search results for "{query}"</h1>
-      <div className="user__results">
-        {userSearch ? (
+
+      {userFound ? (
+        <div className="user__results">
           <div className="search__user">
-            <p className="search__username">{userSearch.usernameID}</p>
-            <p className="search__pollCount">{userSearch.pollCount}</p>
-            <p className="search__followers">{userSearch.followerCount}</p>
-            <button className="search__followUser" onClick={handleFollow}>
-              {following}
-            </button>
+            <div className="user__left">{/* PUT IMAGE HERE */}</div>
+            <div className="user__center">
+              <p
+                className="search__username"
+                onClick={() => goToUser(userSearch.username)}
+              >
+                {userSearch.usernameID}
+              </p>
+              <p className="search__pollCount">{userSearch.pollCount} polls</p>
+              <p className="search__followers">
+                {userSearch.followerCount} 0 followers
+              </p>
+            </div>
+            <div className="user__right">
+              <button className="search__followUser" onClick={handleFollow}>
+                {following}
+              </button>
+            </div>
           </div>
-        ) : (
-          ""
-        )}
-      </div>
+        </div>
+      ) : (
+        ""
+      )}
+
       <div className="search__results">
         {searchList.map((val, key) => {
           return (
