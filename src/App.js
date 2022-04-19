@@ -6,7 +6,7 @@ import Home from "./pages/Home/Home";
 import CommentTest from "./pages/Test/CommentTest";
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
-import Message from "./pages/Test/messageTest";
+import Message from "./pages/Test/MessageTest";
 import AnswerPoll from "./pages/Poll/AnswerPoll";
 import ViewPoll from "./pages/Poll/ViewPoll";
 import Notification from "./pages/Notifications/Notifications";
