@@ -1,0 +1,61 @@
+
+.messages_box{
+    display: flex;
+    flex-direction: column;
+}
+.messages__top {
+    height: 70px;
+    width: 100%;
+    border-bottom: 1px solid grey;
+}
+
+.message__user {
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 500;
+    justify-content: center;
+}
+
+.messages__middle{
+    display: flex;
+    background-color: green;
+    width: 100%;
+    min-height: 100px;
+    height: 100%;
+    align-items: end;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.messages__bottom{
+
+    min-height: 75px;
+    display: flex;
+    align-items: center;
+    
+}
+
+.messages__thread{
+    display: flex;
+    align-items: stretch;
+}
+
+.message__input{
+    margin-left: 10px;
+    border-radius: 15px;
+    height: 40px;
+    width: 80%;
+    padding-left: 15px;
+}
+
+.message__send {
+    display: flex;
+    margin-left: auto;
+    margin-right: 20px;
+    width: 15%;
+    height: 40px;
+    border-radius: 10px;
+    padding-top: 5px;
+    justify-content: center;
+}
+
