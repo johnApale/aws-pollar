@@ -30,6 +30,10 @@ function NavBar(props) {
     navigate("/poll/create");
   };
 
+  const goToRecommended = () => {
+    navigate("/Recommended")
+  }
+
   return (
     <div className="NavBar">
       <div className="navbar__left">
@@ -52,7 +56,7 @@ function NavBar(props) {
           <p className="nav__create" onClick={goToCreate}>
             Create A Poll
           </p>
-          <p className="nav__recommended">Recommended Polls</p>
+          <p className="nav__recommended" onClick = {goToRecommended}>Recommended Polls</p>
         </div>
       </div>
       <div className="navbar__right">

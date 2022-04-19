@@ -16,6 +16,7 @@ import { Amplify } from "aws-amplify";
 import awsconfig from "./aws-exports";
 import Settings from "./pages/Settings/Settings";
 import ProfilePicture from "./pages/Settings/ProfilePicture";
+import Recommended from "./pages/Recommended/Recommended";
 
 import {
   Authenticator,
@@ -327,6 +328,7 @@ export default function App() {
                 path="/Settings/ProfilePicture"
                 element={<ProfilePicture />}
               ></Route> */}
+              <Route path = "recommended" element = {<Recommended/>}></Route>
             </Routes>
           </Router>
         </div>
