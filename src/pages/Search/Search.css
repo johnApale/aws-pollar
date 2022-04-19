@@ -1,25 +1,76 @@
+.Search{
+    display: flex;
+    flex-direction: column;
+}
+
 .result__query{
     position:relative; 
-    top:-180px;
+    border-bottom: 1px solid black;
+    font-size: 20px;
+    width: 700px;
+    padding-bottom: 10px;
+}
+
+.user__results {
+
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 700px;
+    height: 200px;
+    margin-bottom: 10px;
+}
+
+.user__left {
+    float: left;
+    width: 180px;
+    height: 180px;
+    margin-left: 15px;
+}
+.user__center {
+    float: left;
+    margin-left: 50px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.user__right {
+    display: flex;
+    margin-top: 75px;
+    padding-left: 150px;
+}
+
+
+.search__username {
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.user__center:hover, .user__left:hover   {
+    cursor: pointer;
+}
+
+.search__pollCount, .search__followers{
+    font-size: 14px;
+    margin-bottom: 5px;
 }
 
 .search__results {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     position:relative; 
-    top:-190px;
 }
 
 .poll__results {
     background-color: whitesmoke;
-    margin: 30px;
     padding: 15px;
-    width: 510px;
+    margin-bottom: 10px;
+    width: 700px;
     border: 1px #ecebeb;
-    border-radius: 5px;
-    box-shadow: 5px 5px 15px 6px hsl(196, 23%, 78%);
 }
 
 .result__bottom{

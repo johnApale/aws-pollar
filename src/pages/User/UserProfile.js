@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, createSearchParams, useParams } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
-import { getUserInformation, pollByUser } from "../../graphql/queries";
+import {
+  followersByUser,
+  getUserInformation,
+  pollByUser,
+  userFollowers,
+} from "../../graphql/queries";
 import "./UserProfile.css";
 
 function UserProfile() {
   const { username } = useParams();
   const [user, setUser] = useState();
   const [polls, setPolls] = useState();
+  const [pollCount, setPollCount] = useState();
+  const [followerCount, setFollowerCount] = useState();
+  const [followingCount, setFollowingCount] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,12 +26,32 @@ function UserProfile() {
       );
       console.log(userData.data.getUserInformation);
       setUser(userData.data.getUserInformation);
+
       // get polls created by user
       const pollsData = await API.graphql(
         graphqlOperation(pollByUser, { userID: username })
       );
+
+      const pollList = pollsData.data.pollByUser.items;
+      console.log(pollList);
+      const pollSize = pollList.length;
+      setPollCount(pollSize);
+      for (let i = 0; i < pollSize; i += 1) {
+        pollList[i].likeLen = pollList[i].like.items.length;
+      }
       setPolls(pollsData.data.pollByUser.items);
-      console.log(pollsData.data.pollByUser.items);
+
+      // Get the amount of following the user has
+      const followingData = await API.graphql(
+        graphqlOperation(userFollowers, { followingID: username })
+      );
+      setFollowingCount(followingData.data.userFollowers.items.length);
+
+      // Get the amount of followers the user has
+      const followersData = await API.graphql(
+        graphqlOperation(followersByUser, { followerID: username })
+      );
+      setFollowerCount(followersData.data.followersByUser.items.length);
     }
     fetchData();
   }, [username]);
@@ -46,33 +74,81 @@ function UserProfile() {
     });
   }
 
-  function countLikes(valPoll) {
-    if (!valPoll.likes.nextToken) {
-      valPoll.likeCounts = 0;
-    }
-  }
-
   return (
     <div className="user">
       <div className="userProfile">
-        <div className="profile_header">
-          <h3 className="profile_username">{username} </h3>
-          <img src="/1.png" className="user_avatar" />
-
-          <div className="user_info">
-            <p className="user_bday">Birthday: {formatDate(user?.bday)} </p>
-            <p className="user_gender">Gender: {user?.sex}</p>
+        <div className="user__profile">
+          <div className="profile_header">
+            <div className="p_header__left">{/* add profile image here */}</div>
+            <div className="p_header__right">
+              <div className="right_top">
+                <h3 className="profile_username">{username} </h3>
+                <div className="profile__header__buttons">
+                  <button>Message</button>
+                  <button>Follow</button>
+                </div>
+              </div>
+              <div className="right_middle">
+                <p>
+                  <b>{pollCount}</b> posts
+                </p>
+                <p>
+                  <b>{followerCount}</b> followers
+                </p>
+                <p>
+                  <b>{followingCount}</b> following
+                </p>
+              </div>
+              <div className="right_bottom"></div>
+              <p>About Me</p>
+            </div>
+            <div className="user_info">
+              {/* <p className="user_bday">Birthday: {formatDate(user?.bday)} </p>
+            <p className="user_gender">Gender: {user?.sex}</p> */}
+              <p className="date_joined">
+                {" "}
+                Joined: {formatDate(user?.createdAt)}
+              </p>
+            </div>
           </div>
-          <p className="date_joined"> Joined: {formatDate(user?.createdAt)}</p>
-
-          <div className="profile_tabs">
-            <a className="goToPolls">Polls</a>
-            <a className="goToLikes">Likes</a>
-            <a className="goToFollowers">Followers</a>
-            <a className="goToFollowing">Following</a>
+          <div className="profile__body">
+            <div className="body__top">
+              <div className="profile_tabs">
+                <p className="tab__polls">Polls</p>
+                <p className="tab__answered">Answered</p>
+                <p className="tab__likes">Liked</p>
+              </div>
+            </div>
+            <div className="body__bottom">
+              <div className="polls">
+                {polls?.map((val, key) => {
+                  return (
+                    <div
+                      className="user_poll_cards"
+                      key={key}
+                      onClick={() => goToPoll(val.id)}
+                    >
+                      <p className="user_poll_title">{val.title}</p>
+                      <div className="user_poll_bottom">
+                        <div className="user_poll_stats">
+                          <p className="user_poll_likes">
+                            {" "}
+                            {val.likeLen} likes {val.views} views
+                          </p>
+                          <p className="user_poll_views"></p>
+                        </div>
+                        <p className="user_poll_created">
+                          {formatDate(val.createdAt)}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
-          <template id="user_edits">
+          {/* <template id="user_edits">
             <a className="editProfile">Edit Profile</a>
           </template>
 
@@ -80,27 +156,7 @@ function UserProfile() {
             <button className="user_subscribes" id="sub">
               Follow
             </button>
-          </template>
-        </div>
-        <div className="polls">
-          {polls?.map((val, key) => {
-            countLikes(val);
-            return (
-              <div
-                className="user_poll_cards"
-                key={key}
-                onClick={() => goToPoll(val.id)}
-              >
-                <p className="user_poll_title">{val.title}</p>
-
-                <div className="stats">
-                  <p className="user_poll_views">Views: {val.views}</p>
-                  <p className="user_poll_likes">Likes: {val.likeCounts}</p>
-                </div>
-                <p className="user_poll_created">{formatDate(val.createdAt)}</p>
-              </div>
-            );
-          })}
+          </template> */}
         </div>
       </div>
     </div>

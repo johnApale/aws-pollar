@@ -28,10 +28,13 @@ import {
 } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import UserProfile from "./pages/User/UserProfile";
-import { NotificationContainer, NotificationManager} from "react-notifications";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 Amplify.configure(awsconfig);
 
-export const myNotif = new Notification();
+// export const myNotif = new Notification();
 
 const components = {
   Header() {
@@ -278,17 +281,16 @@ const formFields = {
 export default function App() {
   return (
     <Authenticator formFields={formFields} components={components}>
-      
       {({ signOut, user }) => (
         <div className="App">
           <div>
             {/* <button className='btn btn-info'
               onClick={myNotif.createNotification('Liked')}>Info
             </button> */}
-            
-            <NotificationContainer/>
+
+            <NotificationContainer />
           </div>
-          
+
           <Router>
             <nav>
               <NavBar user={user} signOut={signOut} />

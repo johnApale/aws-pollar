@@ -5,13 +5,19 @@ import {
   createSearchParams,
   useNavigate,
 } from "react-router-dom";
-import { searchPolls } from "../../graphql/queries";
+import {
+  searchPolls,
+  searchUserInformations,
+  userFollowers,
+} from "../../graphql/queries";
 import "./Search.css";
-
-// Still need to figure out like counter
 
 function Search(props) {
   const [searchList, setSearchList] = useState([]);
+  const [followerCount, setFollowerCount] = useState();
+  const [following, setFollowing] = useState("Follow");
+  const [userSearch, setUserSearch] = useState({});
+  const [userFound, setUserFound] = useState(false);
   // const [likeCount, setLikeCount] = useState();
   const [searchParams] = useSearchParams();
   const query = searchParams.get("query");
@@ -19,21 +25,46 @@ function Search(props) {
 
   useEffect(() => {
     async function fetchData() {
+      let searchArray = [];
+      // poll search
       try {
+        // user search
+        const userModel = await API.graphql(
+          graphqlOperation(searchUserInformations, {
+            filter: { usernameID: { match: query } },
+          })
+        );
+        // set follower count for user
+        console.log(userModel.data.searchUserInformations.items);
+        if (userModel.data.searchUserInformations.items.length > 0) {
+          const userData = userModel.data.searchUserInformations.items[0];
+          userData.pollCount = userData.polls.items.length;
+          searchArray.push(...userData?.polls.items);
+          setUserSearch(userData);
+          setUserFound(true);
+          console.log(userFound);
+          fetchFollow();
+        }
+        // poll search
         const models = await API.graphql(
           graphqlOperation(searchPolls, { filter: { title: { match: query } } })
         );
-        const search = models.data.searchPolls.items;
-        for (let i = 0; i < search.length; i += 1) {
-          search[i].likeLen = search[0].likes.items.length;
+        searchArray.push(...models.data.searchPolls.items);
+        for (let i = 0; i < searchArray.length; i += 1) {
+          searchArray[i].likeLen = searchArray[i].like.items.length;
         }
-        setSearchList(models.data.searchPolls.items);
-      } catch (error) {
-        console.log(error);
+        setSearchList(searchArray);
+      } catch (e) {
+        console.log("Error fetching polls, ", e);
       }
     }
+
+    async function fetchFollow() {
+      console.log("TEST");
+      // check if the logged in user follows the user fetched
+    }
     fetchData();
-  }, [query]);
+  }, []);
 
   function goToPoll(pollID) {
     navigate({
@@ -47,15 +78,50 @@ function Search(props) {
     navigate(`/profile/${username}`);
   }
 
+  const handleFollow = () => {
+    // const newFollow = await
+  };
+
   return (
     <div className="Search">
       <h1 className="result__query">Search results for "{query}"</h1>
+
+      {userFound ? (
+        <div className="user__results">
+          <div className="search__user">
+            <div className="user__left">{/* PUT IMAGE HERE */}</div>
+            <div className="user__center">
+              <p
+                className="search__username"
+                onClick={() => goToUser(userSearch.username)}
+              >
+                {userSearch.usernameID}
+              </p>
+              <p className="search__pollCount">{userSearch.pollCount} polls</p>
+              <p className="search__followers">
+                {userSearch.followerCount} 0 followers
+              </p>
+            </div>
+            <div className="user__right">
+              <button className="search__followUser" onClick={handleFollow}>
+                {following}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
 
       <div className="search__results">
         {searchList.map((val, key) => {
           return (
             <div className="poll__results">
-              <h3 className="result__title" onClick={() => goToPoll(val.id)}>
+              <h3
+                className="result__title"
+                onClick={() => goToPoll(val.id)}
+                key={key}
+              >
                 {val.title}
               </h3>
               <p className="result__categories">Category: {val.categories}</p>

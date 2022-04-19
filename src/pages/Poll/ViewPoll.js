@@ -5,15 +5,16 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
-import { getPoll, getUserAnswer, getLikes } from "../../graphql/queries";
+import { getPoll, getUserAnswer, getLike } from "../../graphql/queries";
 import {
-  createLikes,
-  deleteLikes,
+  createLike,
+  deleteLike,
   createUserAnswer,
   deleteUserAnswer,
   updateUserAnswer,
   updatePoll,
 } from "../../graphql/mutations";
+import CommentSection from "../../components/CommentSection/CommentSection";
 import "./ViewPoll.css";
 
 function ViewPoll(props) {
@@ -35,14 +36,13 @@ function ViewPoll(props) {
         );
         const newPoll = pollData.data.getPoll;
         newPoll.categoryLength = newPoll.categories.length;
-        setLikeCount(newPoll.likes.items.length);
+        setLikeCount(newPoll.like.items.length);
         setPoll(newPoll);
         const count = newPoll.views + 1;
         try {
           const addView = await API.graphql(
             graphqlOperation(updatePoll, { input: { id: id, views: count } })
           );
-          console.log(pollData);
         } catch (error) {
           console.log("Update error: ", error);
         }
@@ -65,8 +65,6 @@ function ViewPoll(props) {
         } else {
           setAnswerButton("Vote");
         }
-
-        console.log(answerData.data.getUserAnswer);
       } catch (error) {
         console.log(error);
       }
@@ -75,12 +73,12 @@ function ViewPoll(props) {
     async function fetchLike() {
       try {
         const likeData = await API.graphql(
-          graphqlOperation(getLikes, {
+          graphqlOperation(getLike, {
             pollID: id,
             userID: props.user.username,
           })
         );
-        if (likeData.data.getLikes) {
+        if (likeData.data.getLike) {
           setLike("Unlike");
         }
       } catch (error) {
@@ -100,13 +98,11 @@ function ViewPoll(props) {
       userID: props.user.username,
       answer: answer,
     };
-    console.log(answerData);
     if (answerButton === "Vote") {
       try {
         const newAnswer = await API.graphql(
           graphqlOperation(createUserAnswer, { input: answerData })
         );
-        console.log(newAnswer);
         setCurrentAnswer(newAnswer.data.createUserAnswer);
         setAnswerButton("Change Vote");
       } catch (error) {
@@ -152,7 +148,7 @@ function ViewPoll(props) {
     if (like === "Like") {
       try {
         const addLike = await API.graphql(
-          graphqlOperation(createLikes, { input: answerData })
+          graphqlOperation(createLike, { input: answerData })
         );
         setLike("Unlike");
         setLikeCount(likeCount + 1);
@@ -162,7 +158,7 @@ function ViewPoll(props) {
     } else {
       try {
         const removeLike = await API.graphql(
-          graphqlOperation(deleteLikes, { input: answerData })
+          graphqlOperation(deleteLike, { input: answerData })
         );
         setLike("Like");
         setLikeCount(likeCount - 1);
@@ -216,6 +212,7 @@ function ViewPoll(props) {
             return (
               <div className="poll__option" key={key}>
                 <input
+                  className="poll__radio"
                   type="radio"
                   name="options"
                   value={option}
@@ -223,7 +220,10 @@ function ViewPoll(props) {
                     setAnswer(event.target.value);
                   }}
                 ></input>
-                <li key={option}> {option}</li>
+                <li key={option} className="poll__value">
+                  {" "}
+                  {option}
+                </li>
               </div>
             );
           })}
@@ -264,6 +264,11 @@ function ViewPoll(props) {
           </div>
         </div>
       </div>
+      {currentAnswer ? (
+        <CommentSection user={props.user.username} poll={poll.id} />
+      ) : (
+        ""
+      )}
     </div>
   );
 }

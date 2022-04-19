@@ -19,22 +19,52 @@ function NavBar(props) {
   };
 
   const goToSettings = () => {
-    navigate('/Settings');
+    navigate("/Settings");
+  };
+
+  const goToHome = () => {
+    navigate("/home");
+  };
+
+  const goToCreate = () => {
+    navigate("/poll/create");
   };
 
   return (
     <div className="NavBar">
-      <div className="Center">
-        <div
-          style={{
-            display: "inline-block",
-            width: 700,
-            padding: 30,
-            position: "relative",
-            top: "-25px",
-            left: "290px",
-          }}
-        >
+      <div className="navbar__left">
+        <img
+          src={process.env.PUBLIC_URL + "/transparentpolarbear.png"}
+          className="navbar__avatar"
+          onClick={goToHome}
+        />
+        {/* <h1 className="nav__homebutton">Pollar</h1> */}
+
+        <div className="nav__searchBar">
+          <SearchBar placeholder={"Search"} />
+          {/* <SearchBar placeholder="Search..." /> */}
+        </div>
+      </div>
+      <div className="navbar__center">
+        <div className="secMenu">
+          <p className="nav__trending">Trending Polls</p>
+
+          <p className="nav__create" onClick={goToCreate}>
+            Create A Poll
+          </p>
+          <p className="nav__recommended">Recommended Polls</p>
+        </div>
+      </div>
+      <div className="navbar__right">
+        <img
+          src={process.env.PUBLIC_URL + "/messages.png"}
+          className="msgbttn"
+        />
+        <img
+          src={process.env.PUBLIC_URL + "/notif_icon .png"}
+          className="notifications__icon"
+        />
+        <div className="navbar__dropdown">
           <Dropdown>
             <Dropdown.Toggle variant="white" size="lg">
               &#9776;
@@ -46,84 +76,47 @@ function NavBar(props) {
               <Dropdown.Item href="#" onClick={goToProfile}>
                 User Profile
               </Dropdown.Item>
-              <Dropdown.Item href="/Settings" onClick={goToSettings}>Settings</Dropdown.Item>
+              <Dropdown.Item href="/Settings" onClick={goToSettings}>
+                Settings
+              </Dropdown.Item>
               <Dropdown.Item href="#" onClick={props.signOut}>
                 Sign Out
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
-
-        <div className="homebttn">
-          <ul>
-            <a href="/home" className="homebutton">
-              <h1>Pollar</h1>
-            </a>
-          </ul>
-        </div>
-        <img
-          src={process.env.PUBLIC_URL + "/transparentpolarbear.png"}
-          className="avatar1"
-        />
-        <div className="searchBar">
-          <SearchBar placeholder="Search..." />
-        </div>
-        <div className="buttons">
-          <a href="/messages">
-            <img
-              src={process.env.PUBLIC_URL + "/messages.png"}
-              className="msgbttn"
-            />
-          </a>
-          <a href="/notifications">
-            <img
-              src={process.env.PUBLIC_URL + "/notif_icon .png"}
-              className="notifications"
-            />
-          </a>
-        </div>
-
-        <div className="secMenu">
-          <ul>
-            <a href="/trending" className="trending">
-              Trending Polls
-            </a>
-
-            <a href="/poll/create" className="create">
-              Create Poll
-            </a>
-
-            <a href="/random" className="random">
-              Random Polls
-            </a>
-          </ul>
-        </div>
-
-        {isOpen && (
-          <Popup
-            content={
-              <>
-                <p className="anon_title">Anonymous Mode</p>
-                <div className = "mode_description">
+      </div>
+      {isOpen && (
+        <Popup
+          content={
+            <>
+              <p className="anon_title">Anonymous Mode</p>
+              <div className="mode_description">
                 <p>
                   What you do on Pollar is private, your activity won't affect
                   your account.{" "}
                 </p>
-                </div>
-                <p className = "Mode_On_Desc"> Turn On Anonymous Mode</p>
-                <form>
-                <input type = "checkbox" id = "anonymous_on" value = "anonymous" className="anonymousMode_On"></input>
-                <input type = "submit" id = "submit_mode" className = "submit_anon"></input>
-                </form>
-              </>
-
-            }
-            handleClose={togglePopup}
-          />
-        )}
-      </div>
+              </div>
+              <p className="Mode_On_Desc"> Turn On Anonymous Mode</p>
+              <form>
+                <input
+                  type="checkbox"
+                  id="anonymous_on"
+                  value="anonymous"
+                  className="anonymousMode_On"
+                ></input>
+                <input
+                  type="submit"
+                  id="submit_mode"
+                  className="submit_anon"
+                ></input>
+              </form>
+            </>
+          }
+          handleClose={togglePopup}
+        />
+      )}
     </div>
   );
 }
 export default NavBar;
-
