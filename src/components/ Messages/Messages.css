@@ -1,4 +1,6 @@
+.Messages {
 
+}
 .messages_box{
     display: flex;
     flex-direction: column;
@@ -18,10 +20,9 @@
 
 .messages__middle{
     display: flex;
-    background-color: green;
     width: 100%;
     min-height: 100px;
-    height: 100%;
+    height: 640px;
     align-items: end;
     overflow-y: auto;
     flex-grow: 1;
