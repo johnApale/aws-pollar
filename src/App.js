@@ -321,14 +321,17 @@ export default function App() {
                 path="poll/answer"
                 element={<AnswerPoll user={user} />}
               ></Route>
-              <Route path="results" element={<Search />}></Route>
-              <Route path="profile/:username" element={<UserProfile />}></Route>
+              <Route path="results" element={<Search user={user} />}></Route>
+              <Route
+                path="profile/:username"
+                element={<UserProfile user={user} />}
+              ></Route>
               {/* <Route path="Settings" element={<Settings />}></Route>
               <Route
                 path="/Settings/ProfilePicture"
                 element={<ProfilePicture />}
               ></Route> */}
-              <Route path = "recommended" element = {<Recommended/>}></Route>
+              <Route path="recommended" element={<Recommended />}></Route>
             </Routes>
           </Router>
         </div>

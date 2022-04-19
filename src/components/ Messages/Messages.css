@@ -25,20 +25,16 @@
     height: 640px;
     align-items: end;
     overflow-y: auto;
-    flex-grow: 1;
 }
 
 .messages__bottom{
-
     min-height: 75px;
     display: flex;
     align-items: center;
-    
 }
 
 .messages__thread{
-    display: flex;
-    align-items: stretch;
+    margin-left: 15px;
 }
 
 .message__input{

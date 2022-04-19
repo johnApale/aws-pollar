@@ -10,7 +10,7 @@ function Messages() {
           <p className="message__user">User</p>
         </div>
         <div className="messages__middle">
-          <div className="messages_thread">Message Thread</div>
+          <div className="messages__thread">Message Thread</div>
         </div>
         <div className="messages__bottom">
           <input
