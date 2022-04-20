@@ -128,7 +128,7 @@ function Search(props) {
     <div className="Search">
       <h1 className="result__query">Search results for "{query}"</h1>
 
-      {userFound ? (
+      {userFound && (
         <div className="user__results">
           <div className="search__user">
             <div className="user__left">{/* PUT IMAGE HERE */}</div>
@@ -149,8 +149,6 @@ function Search(props) {
             </div>
           </div>
         </div>
-      ) : (
-        ""
       )}
 
       <div className="search__results">

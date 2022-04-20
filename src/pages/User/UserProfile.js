@@ -169,7 +169,7 @@ function UserProfile(props) {
               </div>
             </div>
             <div className="body__bottom">
-              <div className="polls">
+              <div className="user__polls">
                 {polls?.map((val, key) => {
                   return (
                     <div

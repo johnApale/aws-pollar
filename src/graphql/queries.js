@@ -479,6 +479,37 @@ export const getPoll = /* GraphQL */ `
     }
   }
 `;
+
+export const trendingPolls = /* GraphQL */ `
+  query TrendingPolls(
+    $filter: ModelPollFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPolls(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        title
+        id
+        createdAt
+        userID
+        categories
+        like {
+          items {
+            id
+          }
+        }
+        views
+        userAnswers {
+          items {
+            id
+          }
+        }
+      }
+      nextToken
+    }
+  }
+`;
+
 export const listPolls = /* GraphQL */ `
   query ListPolls(
     $filter: ModelPollFilterInput
