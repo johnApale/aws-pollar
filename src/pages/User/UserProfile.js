@@ -9,7 +9,7 @@ import {
   userFollowers,
 } from "../../graphql/queries";
 import "./UserProfile.css";
-import { createFollow, deleteFollow } from "../../graphql/mutations";
+import { createConversation, createFollow, deleteFollow } from "../../graphql/mutations";
 
 function UserProfile(props) {
   const { username } = useParams();
@@ -123,7 +123,23 @@ function UserProfile(props) {
     }
   };
 
-  const handleMessage = () =>{
+  const handleMessage = async () =>{
+    const messageData = {
+      name: username,
+      members: [username, props.user.username]
+
+    };
+    try {
+      const createConvo = await API.graphql(
+        graphqlOperation(createConversation, {input: messageData})
+      );
+      console.log(messageData);
+      console.log("wants to message");
+      console.log(username);
+    }
+    catch(e){
+      console.log(e);
+    }
     navigate("/messages");
   }
 
