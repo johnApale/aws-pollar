@@ -493,6 +493,13 @@ export const trendingPolls = /* GraphQL */ `
         createdAt
         userID
         categories
+        comments {
+          items {
+            content
+            userID
+            createdAt
+          }
+        }
         like {
           items {
             id
@@ -502,6 +509,7 @@ export const trendingPolls = /* GraphQL */ `
         userAnswers {
           items {
             id
+            userID
           }
         }
       }

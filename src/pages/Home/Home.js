@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import "./Home.css";
 import UserDetails from "../UserDetails/UserDetails";
 import { API, graphqlOperation } from "aws-amplify";
-import { getUserInformation } from "../../graphql/queries";
+import { getUserInformation, trendingPolls } from "../../graphql/queries";
+import FeedPost from "../../components/FeedPost/FeedPost";
 
 function Home(props) {
   const [popupTrigger, setPopupTrigger] = useState(false);
-  const [show, setShow] = useState(true);
+  const [pollList, setPollList] = useState();
   const [placeholder, setPlaceholder] = useState("Ask a question");
 
   useEffect(() => {
+    console.log(props.user);
     async function fetchData() {
       try {
         const userInfoArray = await API.graphql(
@@ -19,7 +21,6 @@ function Home(props) {
         );
 
         const userInfo = userInfoArray.data.getUserInformation;
-        console.log(userInfo);
         setPlaceholder(`Ask a question, ${userInfo.firstName}`);
         if (!userInfo) {
           setPopupTrigger(true);
@@ -28,16 +29,42 @@ function Home(props) {
         console.log("Error fetching user information, ", error);
       }
     }
+
+    async function fetchPolls() {
+      const pollModel = await API.graphql(
+        graphqlOperation(trendingPolls, { filter: { publicity: { eq: true } } })
+      );
+      const polls = pollModel.data.listPolls.items;
+      for (let i = 0; i < polls.length; i++) {
+        polls[i].time = formatDate(polls[i].createdAt);
+      }
+      setPollList(pollModel.data.listPolls.items);
+      console.log(polls);
+    }
+
     fetchData();
+    fetchPolls();
   }, [props.user.username]);
 
-  function goToUser() {}
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    const updatedDate = date.toLocaleDateString("default", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
 
-  function goToPoll() {}
+    const updatedTime = date.toLocaleTimeString("en-US", {
+      timezone: "America/Los_Angeles",
+      hour12: true,
+      hour: "numeric",
+      minute: "numeric",
+      seconds: "numeric",
+    });
 
-  function handleLike() {}
-
-  function openComments() {}
+    const time = updatedDate + " at " + updatedTime;
+    return time;
+  };
 
   return (
     <div className="Home">
@@ -51,29 +78,12 @@ function Home(props) {
           />
         </div>
         <div className="home__cards">
-          {show ? (
-            <div className="home__card">
-              <div className="homecard__top">
-                <div className="homecard__image"></div>
-                <div className="homecard__info">
-                  <div className="homecard__user">johndoe</div>
-                  <div className="homecard__date">
-                    April 12, 2022 at 12:45PM
-                  </div>
-                </div>
-              </div>
-              <div className="homecard__middle">
-                <div className="homecard__question">
-                  What is your favorite color?
-                </div>
-                <div className="homecard__question-answers">0 answers</div>
-              </div>
-              <div className="homecard__bottom">
-                <div className="homecard__stats">0 Likes{"  "}12 Views</div>
-                <div className="homecard__comments">View Comments</div>
-              </div>
-            </div>
-          ) : (
+          {pollList
+            ?.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+            .map((val, key) => {
+              return <FeedPost val={val} key={key} user={props.user} />;
+            })}
+          {!pollList && (
             <div className="home__nothing">Nothing to show on feed</div>
           )}
         </div>
