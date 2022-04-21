@@ -123,6 +123,10 @@ function UserProfile(props) {
     }
   };
 
+  const handleMessage = () =>{
+    navigate("/messages");
+  }
+
   return (
     <div className="user">
       <div className="userProfile">
@@ -133,7 +137,7 @@ function UserProfile(props) {
               <div className="right_top">
                 <h3 className="profile_username">{username} </h3>
                 <div className="profile__header__buttons">
-                  <button>Message</button>
+                  <button onClick={handleMessage}>Message</button>
                   <button onClick={handleFollow}>{follow}</button>
                 </div>
               </div>
