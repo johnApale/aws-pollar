@@ -1718,7 +1718,7 @@ export const createConversationUser = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
@@ -1781,7 +1781,7 @@ export const updateConversationUser = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
@@ -1844,7 +1844,7 @@ export const deleteConversationUser = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
@@ -1865,7 +1865,7 @@ export const createConversation = /* GraphQL */ `
   ) {
     createConversation(input: $input, condition: $condition) {
       id
-      cnversationUsers {
+      conversationUsers {
         items {
           id
           userID
@@ -1898,7 +1898,7 @@ export const updateConversation = /* GraphQL */ `
   ) {
     updateConversation(input: $input, condition: $condition) {
       id
-      cnversationUsers {
+      conversationUsers {
         items {
           id
           userID
@@ -1931,7 +1931,7 @@ export const deleteConversation = /* GraphQL */ `
   ) {
     deleteConversation(input: $input, condition: $condition) {
       id
-      cnversationUsers {
+      conversationUsers {
         items {
           id
           userID
@@ -2008,7 +2008,7 @@ export const createMessage = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
@@ -2072,7 +2072,7 @@ export const updateMessage = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
@@ -2136,7 +2136,7 @@ export const deleteMessage = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {

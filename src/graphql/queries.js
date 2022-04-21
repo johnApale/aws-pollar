@@ -1135,7 +1135,7 @@ export const getConversationUser = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
@@ -1197,7 +1197,7 @@ export const getConversation = /* GraphQL */ `
   query GetConversation($id: ID!) {
     getConversation(id: $id) {
       id
-      cnversationUsers {
+      conversationUsers {
         items {
           id
           userID
@@ -1232,7 +1232,7 @@ export const listConversations = /* GraphQL */ `
     listConversations(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
@@ -1293,7 +1293,7 @@ export const getMessage = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {

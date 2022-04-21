@@ -23,8 +23,7 @@ function Home(props) {
 
         const userInfo = userInfoArray.data.getUserInformation;
         setPlaceholder(`Ask a question, ${userInfo.firstName}`);
-
-        if (!userInfo) {
+        if (userInfo.length < 1) {
           setPopupTrigger(true);
         }
       } catch (error) {
@@ -45,7 +44,6 @@ function Home(props) {
         setShowPolls(false);
       }
       setPollList(pollModel.data.listPolls.items);
-      console.log(polls);
     }
 
     fetchData();

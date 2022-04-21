@@ -83,8 +83,9 @@ type ConversationUser @model {
 
 type Conversation @model {
   id: ID!
-  cnversationUsers: [ConversationUser] @hasMany(indexName: "byConversation", fields: ["id"])
+  conversationUsers: [ConversationUser] @hasMany(indexName: "byConversation", fields: ["id"])
   messages: [Message]  @hasMany(indexName: "byConversation", fields: ["id"])
+  createdAt: String!
 }
 
 type Message @model{

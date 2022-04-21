@@ -47,7 +47,7 @@ export const onCreateConversationUserByUserID = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
@@ -109,7 +109,7 @@ export const onCreateMessageByConversationID = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
@@ -1834,7 +1834,7 @@ export const onCreateConversationUser = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
@@ -1894,7 +1894,7 @@ export const onUpdateConversationUser = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
@@ -1954,7 +1954,7 @@ export const onDeleteConversationUser = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
@@ -1972,7 +1972,7 @@ export const onCreateConversation = /* GraphQL */ `
   subscription OnCreateConversation {
     onCreateConversation {
       id
-      cnversationUsers {
+      conversationUsers {
         items {
           id
           userID
@@ -2002,7 +2002,7 @@ export const onUpdateConversation = /* GraphQL */ `
   subscription OnUpdateConversation {
     onUpdateConversation {
       id
-      cnversationUsers {
+      conversationUsers {
         items {
           id
           userID
@@ -2032,7 +2032,7 @@ export const onDeleteConversation = /* GraphQL */ `
   subscription OnDeleteConversation {
     onDeleteConversation {
       id
-      cnversationUsers {
+      conversationUsers {
         items {
           id
           userID
@@ -2106,7 +2106,7 @@ export const onCreateMessage = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
@@ -2167,7 +2167,7 @@ export const onUpdateMessage = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
@@ -2228,7 +2228,7 @@ export const onDeleteMessage = /* GraphQL */ `
       }
       Conversation {
         id
-        cnversationUsers {
+        conversationUsers {
           nextToken
         }
         messages {
