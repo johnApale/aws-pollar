@@ -1,0 +1,51 @@
+.Trending {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.trending__page-title{
+    position:relative; 
+    border-bottom: 1px solid black;
+    font-size: 28px;
+    width: 700px;
+    padding-bottom: 10px;
+}
+
+.trending__polls{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position:relative; 
+}
+
+.trending__results{
+    background-color: whitesmoke;
+    padding: 15px;
+    margin-bottom: 10px;
+    width: 700px;
+    border: 1px #ecebeb;
+}
+
+.trending__bottom{
+    display: flex;
+    font-size: small;
+    margin-top: 10px;
+    margin-bottom: -20px;    
+}
+
+.trending__left{
+    display: flex;
+    width: 120px;
+    justify-content: space-between;
+}
+
+.trending__created{
+    display: flex;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.trending__title:hover, .trending__created:hover {
+    cursor: pointer;
+}

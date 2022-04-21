@@ -9,7 +9,10 @@ import {
   searchPolls,
   searchUserInformations,
   userFollowers,
+  getFollow,
 } from "../../graphql/queries";
+import { createFollow, deleteFollow } from "../../graphql/mutations";
+
 import "./Search.css";
 
 function Search(props) {
@@ -35,15 +38,13 @@ function Search(props) {
           })
         );
         // set follower count for user
-        console.log(userModel.data.searchUserInformations.items);
         if (userModel.data.searchUserInformations.items.length > 0) {
           const userData = userModel.data.searchUserInformations.items[0];
           userData.pollCount = userData.polls.items.length;
           searchArray.push(...userData?.polls.items);
           setUserSearch(userData);
           setUserFound(true);
-          console.log(userFound);
-          fetchFollow();
+          fetchFollow(userData);
         }
         // poll search
         const models = await API.graphql(
@@ -59,9 +60,25 @@ function Search(props) {
       }
     }
 
-    async function fetchFollow() {
-      console.log("TEST");
-      // check if the logged in user follows the user fetched
+    async function fetchFollow(user) {
+      const followingData = await API.graphql(
+        graphqlOperation(userFollowers, { followingID: user.usernameID })
+      );
+      setFollowerCount(followingData.data.userFollowers.items.length);
+      try {
+        const followData = await API.graphql(
+          graphqlOperation(getFollow, {
+            followingID: user.usernameID,
+            followerID: props.user.username,
+          })
+        );
+        // console.log(followData);
+        if (followData.data.getFollow) {
+          setFollowing("Following");
+        }
+      } catch (e) {
+        console.log("Error fetching following data, ", e);
+      }
     }
     fetchData();
   }, []);
@@ -78,29 +95,52 @@ function Search(props) {
     navigate(`/profile/${username}`);
   }
 
-  const handleFollow = () => {
-    // const newFollow = await
+  const handleFollow = async (event) => {
+    event.preventDefault();
+    const followData = {
+      followingID: userSearch.usernameID,
+      followerID: props.user.username,
+    };
+    if (following === "Follow") {
+      try {
+        const addFollow = await API.graphql(
+          graphqlOperation(createFollow, { input: followData })
+        );
+        setFollowing("Following");
+        setFollowerCount(followerCount + 1);
+      } catch (e) {
+        console.log("Error following user, ", e);
+      }
+    } else {
+      try {
+        const removeFollow = await API.graphql(
+          graphqlOperation(deleteFollow, { input: followData })
+        );
+        setFollowing("Follow");
+        setFollowerCount(followerCount - 1);
+      } catch (e) {
+        console.log(e);
+      }
+    }
   };
 
   return (
     <div className="Search">
       <h1 className="result__query">Search results for "{query}"</h1>
 
-      {userFound ? (
+      {userFound && (
         <div className="user__results">
           <div className="search__user">
             <div className="user__left">{/* PUT IMAGE HERE */}</div>
             <div className="user__center">
               <p
                 className="search__username"
-                onClick={() => goToUser(userSearch.username)}
+                onClick={() => goToUser(userSearch.usernameID)}
               >
                 {userSearch.usernameID}
               </p>
               <p className="search__pollCount">{userSearch.pollCount} polls</p>
-              <p className="search__followers">
-                {userSearch.followerCount} 0 followers
-              </p>
+              <p className="search__followers">{followerCount} followers</p>
             </div>
             <div className="user__right">
               <button className="search__followUser" onClick={handleFollow}>
@@ -109,8 +149,6 @@ function Search(props) {
             </div>
           </div>
         </div>
-      ) : (
-        ""
       )}
 
       <div className="search__results">

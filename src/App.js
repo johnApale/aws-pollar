@@ -11,6 +11,7 @@ import AnswerPoll from "./pages/Poll/AnswerPoll";
 import ViewPoll from "./pages/Poll/ViewPoll";
 import Messenger from "./pages/Messenger/Messenger";
 import Notification from "./pages/Notifications/Notifications";
+import Trending from "./pages/Trending/Trending";
 import Messages from "./components/ Messages/Messages";
 import UserDetails from "./pages/UserDetails/UserDetails";
 import { Amplify } from "aws-amplify";
@@ -314,6 +315,7 @@ export default function App() {
                 path="messages"
                 element={<Messenger user={user} />}
               ></Route>
+              <Route path="trending" element={<Trending user={user} />}></Route>
               <Route path="test" element={<Messages />}></Route>
               <Route
                 path="comment_test"
@@ -323,14 +325,17 @@ export default function App() {
                 path="poll/answer"
                 element={<AnswerPoll user={user} />}
               ></Route>
-              <Route path="results" element={<Search />}></Route>
-              <Route path="profile/:username" element={<UserProfile />}></Route>
+              <Route path="results" element={<Search user={user} />}></Route>
+              <Route
+                path="profile/:username"
+                element={<UserProfile user={user} />}
+              ></Route>
               {/* <Route path="Settings" element={<Settings />}></Route>
               <Route
                 path="/Settings/ProfilePicture"
                 element={<ProfilePicture />}
               ></Route> */}
-              <Route path = "recommended" element = {<Recommended/>}></Route>
+              <Route path="recommended" element={<Recommended />}></Route>
             </Routes>
           </Router>
         </div>

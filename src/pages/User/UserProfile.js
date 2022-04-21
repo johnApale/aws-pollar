@@ -3,16 +3,19 @@ import { useNavigate, createSearchParams, useParams } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
 import {
   followersByUser,
+  getFollow,
   getUserInformation,
   pollByUser,
   userFollowers,
 } from "../../graphql/queries";
 import "./UserProfile.css";
+import { createFollow, deleteFollow } from "../../graphql/mutations";
 
-function UserProfile() {
+function UserProfile(props) {
   const { username } = useParams();
   const [user, setUser] = useState();
   const [polls, setPolls] = useState();
+  const [follow, setFollow] = useState("Follow");
   const [pollCount, setPollCount] = useState();
   const [followerCount, setFollowerCount] = useState();
   const [followingCount, setFollowingCount] = useState();
@@ -45,15 +48,32 @@ function UserProfile() {
       const followingData = await API.graphql(
         graphqlOperation(userFollowers, { followingID: username })
       );
-      setFollowingCount(followingData.data.userFollowers.items.length);
+      setFollowerCount(followingData.data.userFollowers.items.length);
 
       // Get the amount of followers the user has
       const followersData = await API.graphql(
         graphqlOperation(followersByUser, { followerID: username })
       );
-      setFollowerCount(followersData.data.followersByUser.items.length);
+      setFollowingCount(followersData.data.followersByUser.items.length);
+    }
+    async function fetchFollow() {
+      try {
+        const followData = await API.graphql(
+          graphqlOperation(getFollow, {
+            followingID: username,
+            followerID: props.user.username,
+          })
+        );
+        // console.log(followData);
+        if (followData.data.getFollow) {
+          setFollow("Following");
+        }
+      } catch (e) {
+        console.log("Error fetching following data, ", e);
+      }
     }
     fetchData();
+    fetchFollow();
   }, [username]);
 
   const formatDate = (isoDate) => {
@@ -74,6 +94,35 @@ function UserProfile() {
     });
   }
 
+  const handleFollow = async (event) => {
+    event.preventDefault();
+    const followData = {
+      followingID: username,
+      followerID: props.user.username,
+    };
+    if (follow === "Follow") {
+      try {
+        const addFollow = await API.graphql(
+          graphqlOperation(createFollow, { input: followData })
+        );
+        setFollow("Following");
+        setFollowerCount(followerCount + 1);
+      } catch (e) {
+        console.log("Error following user, ", e);
+      }
+    } else {
+      try {
+        const removeFollow = await API.graphql(
+          graphqlOperation(deleteFollow, { input: followData })
+        );
+        setFollow("Follow");
+        setFollowerCount(followerCount - 1);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
   return (
     <div className="user">
       <div className="userProfile">
@@ -85,7 +134,7 @@ function UserProfile() {
                 <h3 className="profile_username">{username} </h3>
                 <div className="profile__header__buttons">
                   <button>Message</button>
-                  <button>Follow</button>
+                  <button onClick={handleFollow}>{follow}</button>
                 </div>
               </div>
               <div className="right_middle">
@@ -120,7 +169,7 @@ function UserProfile() {
               </div>
             </div>
             <div className="body__bottom">
-              <div className="polls">
+              <div className="user__polls">
                 {polls?.map((val, key) => {
                   return (
                     <div

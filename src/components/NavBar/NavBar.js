@@ -14,12 +14,16 @@ function NavBar(props) {
     setIsOpen(!isOpen);
   };
 
+  const goToTrending = () => {
+    navigate("/trending");
+  };
+
   const goToProfile = () => {
     navigate(`/profile/${props.user.username}`);
   };
 
   const goToSettings = () => {
-    navigate("/Settings");
+    navigate("/settings");
   };
 
   const goToHome = () => {
@@ -31,8 +35,8 @@ function NavBar(props) {
   };
 
   const goToRecommended = () => {
-    navigate("/Recommended")
-  }
+    navigate("/Recommended");
+  };
 
   return (
     <div className="NavBar">
@@ -51,12 +55,16 @@ function NavBar(props) {
       </div>
       <div className="navbar__center">
         <div className="secMenu">
-          <p className="nav__trending">Trending Polls</p>
+          <p className="nav__trending" onClick={goToTrending}>
+            Trending Polls
+          </p>
 
           <p className="nav__create" onClick={goToCreate}>
             Create A Poll
           </p>
-          <p className="nav__recommended" onClick = {goToRecommended}>Recommended Polls</p>
+          <p className="nav__recommended" onClick={goToRecommended}>
+            Recommended Polls
+          </p>
         </div>
       </div>
       <div className="navbar__right">
