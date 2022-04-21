@@ -1,12 +1,13 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateConversationLinkByUserID = /* GraphQL */ `
-  subscription OnCreateConversationLinkByUserID($convoLinkUserId: String!) {
-    onCreateConversationLinkByUserID(convoLinkUserId: $convoLinkUserId) {
+export const onCreateConversationUserByUserID = /* GraphQL */ `
+  subscription OnCreateConversationUserByUserID($userID: String!) {
+    onCreateConversationUserByUserID(userID: $userID) {
       id
-      convoLinkUserID
-      UserInformation {
+      userID
+      conversationID
+      user {
         usernameID
         firstName
         lastName
@@ -44,17 +45,14 @@ export const onCreateConversationLinkByUserID = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      convoLinkConversationID
       Conversation {
         id
+        cnversationUsers {
+          nextToken
+        }
         messages {
           nextToken
         }
-        associated {
-          nextToken
-        }
-        name
-        members
         createdAt
         updatedAt
       }
@@ -64,13 +62,14 @@ export const onCreateConversationLinkByUserID = /* GraphQL */ `
   }
 `;
 export const onCreateMessageByConversationID = /* GraphQL */ `
-  subscription OnCreateMessageByConversationID($messageConversationId: ID!) {
-    onCreateMessageByConversationID(
-      messageConversationId: $messageConversationId
-    ) {
+  subscription OnCreateMessageByConversationID($conversationId: ID!) {
+    onCreateMessageByConversationID(conversationId: $conversationId) {
       id
-      author
-      UserInformation {
+      createdAt
+      content
+      userID
+      conversationID
+      user {
         usernameID
         firstName
         lastName
@@ -108,22 +107,17 @@ export const onCreateMessageByConversationID = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      content
-      messageConversationID
       Conversation {
         id
+        cnversationUsers {
+          nextToken
+        }
         messages {
           nextToken
         }
-        associated {
-          nextToken
-        }
-        name
-        members
         createdAt
         updatedAt
       }
-      createdAt
       updatedAt
     }
   }
@@ -254,8 +248,8 @@ export const onCreateUserInformation = /* GraphQL */ `
       conversations {
         items {
           id
-          convoLinkUserID
-          convoLinkConversationID
+          userID
+          conversationID
           createdAt
           updatedAt
         }
@@ -264,10 +258,10 @@ export const onCreateUserInformation = /* GraphQL */ `
       messages {
         items {
           id
-          author
-          content
-          messageConversationID
           createdAt
+          content
+          userID
+          conversationID
           updatedAt
         }
         nextToken
@@ -375,8 +369,8 @@ export const onUpdateUserInformation = /* GraphQL */ `
       conversations {
         items {
           id
-          convoLinkUserID
-          convoLinkConversationID
+          userID
+          conversationID
           createdAt
           updatedAt
         }
@@ -385,10 +379,10 @@ export const onUpdateUserInformation = /* GraphQL */ `
       messages {
         items {
           id
-          author
-          content
-          messageConversationID
           createdAt
+          content
+          userID
+          conversationID
           updatedAt
         }
         nextToken
@@ -496,8 +490,8 @@ export const onDeleteUserInformation = /* GraphQL */ `
       conversations {
         items {
           id
-          convoLinkUserID
-          convoLinkConversationID
+          userID
+          conversationID
           createdAt
           updatedAt
         }
@@ -506,10 +500,10 @@ export const onDeleteUserInformation = /* GraphQL */ `
       messages {
         items {
           id
-          author
-          content
-          messageConversationID
           createdAt
+          content
+          userID
+          conversationID
           updatedAt
         }
         nextToken
@@ -1794,33 +1788,211 @@ export const onDeleteFollow = /* GraphQL */ `
     }
   }
 `;
+export const onCreateConversationUser = /* GraphQL */ `
+  subscription OnCreateConversationUser {
+    onCreateConversationUser {
+      id
+      userID
+      conversationID
+      user {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        follow {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      Conversation {
+        id
+        cnversationUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateConversationUser = /* GraphQL */ `
+  subscription OnUpdateConversationUser {
+    onUpdateConversationUser {
+      id
+      userID
+      conversationID
+      user {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        follow {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      Conversation {
+        id
+        cnversationUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteConversationUser = /* GraphQL */ `
+  subscription OnDeleteConversationUser {
+    onDeleteConversationUser {
+      id
+      userID
+      conversationID
+      user {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        follow {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      Conversation {
+        id
+        cnversationUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateConversation = /* GraphQL */ `
   subscription OnCreateConversation {
     onCreateConversation {
       id
+      cnversationUsers {
+        items {
+          id
+          userID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       messages {
         items {
           id
-          author
+          createdAt
           content
-          messageConversationID
-          createdAt
+          userID
+          conversationID
           updatedAt
         }
         nextToken
       }
-      associated {
-        items {
-          id
-          convoLinkUserID
-          convoLinkConversationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      name
-      members
       createdAt
       updatedAt
     }
@@ -1830,29 +2002,27 @@ export const onUpdateConversation = /* GraphQL */ `
   subscription OnUpdateConversation {
     onUpdateConversation {
       id
+      cnversationUsers {
+        items {
+          id
+          userID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       messages {
         items {
           id
-          author
+          createdAt
           content
-          messageConversationID
-          createdAt
+          userID
+          conversationID
           updatedAt
         }
         nextToken
       }
-      associated {
-        items {
-          id
-          convoLinkUserID
-          convoLinkConversationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      name
-      members
       createdAt
       updatedAt
     }
@@ -1862,29 +2032,27 @@ export const onDeleteConversation = /* GraphQL */ `
   subscription OnDeleteConversation {
     onDeleteConversation {
       id
+      cnversationUsers {
+        items {
+          id
+          userID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       messages {
         items {
           id
-          author
+          createdAt
           content
-          messageConversationID
-          createdAt
+          userID
+          conversationID
           updatedAt
         }
         nextToken
       }
-      associated {
-        items {
-          id
-          convoLinkUserID
-          convoLinkConversationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      name
-      members
       createdAt
       updatedAt
     }
@@ -1894,8 +2062,11 @@ export const onCreateMessage = /* GraphQL */ `
   subscription OnCreateMessage {
     onCreateMessage {
       id
-      author
-      UserInformation {
+      createdAt
+      content
+      userID
+      conversationID
+      user {
         usernameID
         firstName
         lastName
@@ -1933,22 +2104,17 @@ export const onCreateMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      content
-      messageConversationID
       Conversation {
         id
+        cnversationUsers {
+          nextToken
+        }
         messages {
           nextToken
         }
-        associated {
-          nextToken
-        }
-        name
-        members
         createdAt
         updatedAt
       }
-      createdAt
       updatedAt
     }
   }
@@ -1957,8 +2123,11 @@ export const onUpdateMessage = /* GraphQL */ `
   subscription OnUpdateMessage {
     onUpdateMessage {
       id
-      author
-      UserInformation {
+      createdAt
+      content
+      userID
+      conversationID
+      user {
         usernameID
         firstName
         lastName
@@ -1996,22 +2165,17 @@ export const onUpdateMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      content
-      messageConversationID
       Conversation {
         id
+        cnversationUsers {
+          nextToken
+        }
         messages {
           nextToken
         }
-        associated {
-          nextToken
-        }
-        name
-        members
         createdAt
         updatedAt
       }
-      createdAt
       updatedAt
     }
   }
@@ -2020,71 +2184,11 @@ export const onDeleteMessage = /* GraphQL */ `
   subscription OnDeleteMessage {
     onDeleteMessage {
       id
-      author
-      UserInformation {
-        usernameID
-        firstName
-        lastName
-        email
-        bday
-        anon
-        sex
-        follow {
-          nextToken
-        }
-        polls {
-          nextToken
-        }
-        pollAnswers {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        likedPolls {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        activity {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      createdAt
       content
-      messageConversationID
-      Conversation {
-        id
-        messages {
-          nextToken
-        }
-        associated {
-          nextToken
-        }
-        name
-        members
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateConversationLink = /* GraphQL */ `
-  subscription OnCreateConversationLink {
-    onCreateConversationLink {
-      id
-      convoLinkUserID
-      UserInformation {
+      userID
+      conversationID
+      user {
         usernameID
         firstName
         lastName
@@ -2122,145 +2226,17 @@ export const onCreateConversationLink = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      convoLinkConversationID
       Conversation {
         id
-        messages {
-          nextToken
-        }
-        associated {
-          nextToken
-        }
-        name
-        members
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateConversationLink = /* GraphQL */ `
-  subscription OnUpdateConversationLink {
-    onUpdateConversationLink {
-      id
-      convoLinkUserID
-      UserInformation {
-        usernameID
-        firstName
-        lastName
-        email
-        bday
-        anon
-        sex
-        follow {
-          nextToken
-        }
-        polls {
-          nextToken
-        }
-        pollAnswers {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        likedPolls {
-          nextToken
-        }
-        conversations {
+        cnversationUsers {
           nextToken
         }
         messages {
           nextToken
         }
-        notifications {
-          nextToken
-        }
-        activity {
-          nextToken
-        }
         createdAt
         updatedAt
       }
-      convoLinkConversationID
-      Conversation {
-        id
-        messages {
-          nextToken
-        }
-        associated {
-          nextToken
-        }
-        name
-        members
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteConversationLink = /* GraphQL */ `
-  subscription OnDeleteConversationLink {
-    onDeleteConversationLink {
-      id
-      convoLinkUserID
-      UserInformation {
-        usernameID
-        firstName
-        lastName
-        email
-        bday
-        anon
-        sex
-        follow {
-          nextToken
-        }
-        polls {
-          nextToken
-        }
-        pollAnswers {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        likedPolls {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        activity {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      convoLinkConversationID
-      Conversation {
-        id
-        messages {
-          nextToken
-        }
-        associated {
-          nextToken
-        }
-        name
-        members
-        createdAt
-        updatedAt
-      }
-      createdAt
       updatedAt
     }
   }

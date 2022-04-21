@@ -8,6 +8,7 @@ import FeedPost from "../../components/FeedPost/FeedPost";
 function Home(props) {
   const [popupTrigger, setPopupTrigger] = useState(false);
   const [pollList, setPollList] = useState();
+  const [showPolls, setShowPolls] = useState(true);
   const [placeholder, setPlaceholder] = useState("Ask a question");
 
   useEffect(() => {
@@ -22,10 +23,12 @@ function Home(props) {
 
         const userInfo = userInfoArray.data.getUserInformation;
         setPlaceholder(`Ask a question, ${userInfo.firstName}`);
+
         if (!userInfo) {
           setPopupTrigger(true);
         }
       } catch (error) {
+        setPopupTrigger(true);
         console.log("Error fetching user information, ", error);
       }
     }
@@ -37,6 +40,9 @@ function Home(props) {
       const polls = pollModel.data.listPolls.items;
       for (let i = 0; i < polls.length; i++) {
         polls[i].time = formatDate(polls[i].createdAt);
+      }
+      if (polls.length < 1) {
+        setShowPolls(false);
       }
       setPollList(pollModel.data.listPolls.items);
       console.log(polls);
@@ -78,12 +84,13 @@ function Home(props) {
           />
         </div>
         <div className="home__cards">
-          {pollList
-            ?.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-            .map((val, key) => {
-              return <FeedPost val={val} key={key} user={props.user} />;
-            })}
-          {!pollList && (
+          {showPolls &&
+            pollList
+              ?.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+              .map((val, key) => {
+                return <FeedPost val={val} key={key} user={props.user} />;
+              })}
+          {!showPolls && (
             <div className="home__nothing">Nothing to show on feed</div>
           )}
         </div>
