@@ -140,12 +140,15 @@ function Search(props) {
                 {userSearch.usernameID}
               </p>
               <p className="search__pollCount">{userSearch.pollCount} polls</p>
+
               <p className="search__followers">{followerCount} followers</p>
             </div>
             <div className="user__right">
-              <button className="search__followUser" onClick={handleFollow}>
-                {following}
-              </button>
+              {props.user.username !== userSearch.usernameID && (
+                <button className="search__followUser" onClick={handleFollow}>
+                  {following}
+                </button>
+              )}
             </div>
           </div>
         </div>

@@ -78,8 +78,8 @@ export const createUserInformation = /* GraphQL */ `
       conversations {
         items {
           id
-          convoLinkUserID
-          convoLinkConversationID
+          userID
+          conversationID
           createdAt
           updatedAt
         }
@@ -88,10 +88,10 @@ export const createUserInformation = /* GraphQL */ `
       messages {
         items {
           id
-          author
-          content
-          messageConversationID
           createdAt
+          content
+          userID
+          conversationID
           updatedAt
         }
         nextToken
@@ -202,8 +202,8 @@ export const updateUserInformation = /* GraphQL */ `
       conversations {
         items {
           id
-          convoLinkUserID
-          convoLinkConversationID
+          userID
+          conversationID
           createdAt
           updatedAt
         }
@@ -212,10 +212,10 @@ export const updateUserInformation = /* GraphQL */ `
       messages {
         items {
           id
-          author
-          content
-          messageConversationID
           createdAt
+          content
+          userID
+          conversationID
           updatedAt
         }
         nextToken
@@ -326,8 +326,8 @@ export const deleteUserInformation = /* GraphQL */ `
       conversations {
         items {
           id
-          convoLinkUserID
-          convoLinkConversationID
+          userID
+          conversationID
           createdAt
           updatedAt
         }
@@ -336,10 +336,10 @@ export const deleteUserInformation = /* GraphQL */ `
       messages {
         items {
           id
-          author
-          content
-          messageConversationID
           createdAt
+          content
+          userID
+          conversationID
           updatedAt
         }
         nextToken
@@ -1669,6 +1669,195 @@ export const deleteFollow = /* GraphQL */ `
     }
   }
 `;
+export const createConversationUser = /* GraphQL */ `
+  mutation CreateConversationUser(
+    $input: CreateConversationUserInput!
+    $condition: ModelConversationUserConditionInput
+  ) {
+    createConversationUser(input: $input, condition: $condition) {
+      id
+      userID
+      conversationID
+      user {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        follow {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      Conversation {
+        id
+        conversationUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateConversationUser = /* GraphQL */ `
+  mutation UpdateConversationUser(
+    $input: UpdateConversationUserInput!
+    $condition: ModelConversationUserConditionInput
+  ) {
+    updateConversationUser(input: $input, condition: $condition) {
+      id
+      userID
+      conversationID
+      user {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        follow {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      Conversation {
+        id
+        conversationUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteConversationUser = /* GraphQL */ `
+  mutation DeleteConversationUser(
+    $input: DeleteConversationUserInput!
+    $condition: ModelConversationUserConditionInput
+  ) {
+    deleteConversationUser(input: $input, condition: $condition) {
+      id
+      userID
+      conversationID
+      user {
+        usernameID
+        firstName
+        lastName
+        email
+        bday
+        anon
+        sex
+        follow {
+          nextToken
+        }
+        polls {
+          nextToken
+        }
+        pollAnswers {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        likedPolls {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        notifications {
+          nextToken
+        }
+        activity {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      Conversation {
+        id
+        conversationUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createConversation = /* GraphQL */ `
   mutation CreateConversation(
     $input: CreateConversationInput!
@@ -1676,29 +1865,27 @@ export const createConversation = /* GraphQL */ `
   ) {
     createConversation(input: $input, condition: $condition) {
       id
+      conversationUsers {
+        items {
+          id
+          userID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       messages {
         items {
           id
-          author
+          createdAt
           content
-          messageConversationID
-          createdAt
+          userID
+          conversationID
           updatedAt
         }
         nextToken
       }
-      associated {
-        items {
-          id
-          convoLinkUserID
-          convoLinkConversationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      name
-      members
       createdAt
       updatedAt
     }
@@ -1711,29 +1898,27 @@ export const updateConversation = /* GraphQL */ `
   ) {
     updateConversation(input: $input, condition: $condition) {
       id
+      conversationUsers {
+        items {
+          id
+          userID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       messages {
         items {
           id
-          author
+          createdAt
           content
-          messageConversationID
-          createdAt
+          userID
+          conversationID
           updatedAt
         }
         nextToken
       }
-      associated {
-        items {
-          id
-          convoLinkUserID
-          convoLinkConversationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      name
-      members
       createdAt
       updatedAt
     }
@@ -1746,29 +1931,27 @@ export const deleteConversation = /* GraphQL */ `
   ) {
     deleteConversation(input: $input, condition: $condition) {
       id
+      conversationUsers {
+        items {
+          id
+          userID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       messages {
         items {
           id
-          author
+          createdAt
           content
-          messageConversationID
-          createdAt
+          userID
+          conversationID
           updatedAt
         }
         nextToken
       }
-      associated {
-        items {
-          id
-          convoLinkUserID
-          convoLinkConversationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      name
-      members
       createdAt
       updatedAt
     }
@@ -1781,8 +1964,11 @@ export const createMessage = /* GraphQL */ `
   ) {
     createMessage(input: $input, condition: $condition) {
       id
-      author
-      UserInformation {
+      createdAt
+      content
+      userID
+      conversationID
+      user {
         usernameID
         firstName
         lastName
@@ -1820,22 +2006,17 @@ export const createMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      content
-      messageConversationID
       Conversation {
         id
+        conversationUsers {
+          nextToken
+        }
         messages {
           nextToken
         }
-        associated {
-          nextToken
-        }
-        name
-        members
         createdAt
         updatedAt
       }
-      createdAt
       updatedAt
     }
   }
@@ -1847,8 +2028,11 @@ export const updateMessage = /* GraphQL */ `
   ) {
     updateMessage(input: $input, condition: $condition) {
       id
-      author
-      UserInformation {
+      createdAt
+      content
+      userID
+      conversationID
+      user {
         usernameID
         firstName
         lastName
@@ -1886,22 +2070,17 @@ export const updateMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      content
-      messageConversationID
       Conversation {
         id
+        conversationUsers {
+          nextToken
+        }
         messages {
           nextToken
         }
-        associated {
-          nextToken
-        }
-        name
-        members
         createdAt
         updatedAt
       }
-      createdAt
       updatedAt
     }
   }
@@ -1913,74 +2092,11 @@ export const deleteMessage = /* GraphQL */ `
   ) {
     deleteMessage(input: $input, condition: $condition) {
       id
-      author
-      UserInformation {
-        usernameID
-        firstName
-        lastName
-        email
-        bday
-        anon
-        sex
-        follow {
-          nextToken
-        }
-        polls {
-          nextToken
-        }
-        pollAnswers {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        likedPolls {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        activity {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      createdAt
       content
-      messageConversationID
-      Conversation {
-        id
-        messages {
-          nextToken
-        }
-        associated {
-          nextToken
-        }
-        name
-        members
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createConversationLink = /* GraphQL */ `
-  mutation CreateConversationLink(
-    $input: CreateConversationLinkInput!
-    $condition: ModelConversationLinkConditionInput
-  ) {
-    createConversationLink(input: $input, condition: $condition) {
-      id
-      convoLinkUserID
-      UserInformation {
+      userID
+      conversationID
+      user {
         usernameID
         firstName
         lastName
@@ -2018,151 +2134,17 @@ export const createConversationLink = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      convoLinkConversationID
       Conversation {
         id
-        messages {
-          nextToken
-        }
-        associated {
-          nextToken
-        }
-        name
-        members
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateConversationLink = /* GraphQL */ `
-  mutation UpdateConversationLink(
-    $input: UpdateConversationLinkInput!
-    $condition: ModelConversationLinkConditionInput
-  ) {
-    updateConversationLink(input: $input, condition: $condition) {
-      id
-      convoLinkUserID
-      UserInformation {
-        usernameID
-        firstName
-        lastName
-        email
-        bday
-        anon
-        sex
-        follow {
-          nextToken
-        }
-        polls {
-          nextToken
-        }
-        pollAnswers {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        likedPolls {
-          nextToken
-        }
-        conversations {
+        conversationUsers {
           nextToken
         }
         messages {
           nextToken
         }
-        notifications {
-          nextToken
-        }
-        activity {
-          nextToken
-        }
         createdAt
         updatedAt
       }
-      convoLinkConversationID
-      Conversation {
-        id
-        messages {
-          nextToken
-        }
-        associated {
-          nextToken
-        }
-        name
-        members
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteConversationLink = /* GraphQL */ `
-  mutation DeleteConversationLink(
-    $input: DeleteConversationLinkInput!
-    $condition: ModelConversationLinkConditionInput
-  ) {
-    deleteConversationLink(input: $input, condition: $condition) {
-      id
-      convoLinkUserID
-      UserInformation {
-        usernameID
-        firstName
-        lastName
-        email
-        bday
-        anon
-        sex
-        follow {
-          nextToken
-        }
-        polls {
-          nextToken
-        }
-        pollAnswers {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        likedPolls {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        notifications {
-          nextToken
-        }
-        activity {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      convoLinkConversationID
-      Conversation {
-        id
-        messages {
-          nextToken
-        }
-        associated {
-          nextToken
-        }
-        name
-        members
-        createdAt
-        updatedAt
-      }
-      createdAt
       updatedAt
     }
   }
