@@ -10,6 +10,7 @@ import {
 } from "../../graphql/queries";
 import "./UserProfile.css";
 import { createConversation, createFollow, deleteFollow } from "../../graphql/mutations";
+import Messages from "../../components/ Messages/Messages";
 
 function UserProfile(props) {
   const { username } = useParams();
@@ -124,23 +125,25 @@ function UserProfile(props) {
   };
 
   const handleMessage = async () =>{
-    const messageData = {
-      name: username,
-      members: [username, props.user.username]
+    // const messageData = {
+    //   name: username,
+    //   members: [username, props.user.username]
 
-    };
-    try {
-      const createConvo = await API.graphql(
-        graphqlOperation(createConversation, {input: messageData})
-      );
-      console.log(messageData);
-      console.log("wants to message");
-      console.log(username);
-    }
-    catch(e){
-      console.log(e);
-    }
-    navigate("/messages");
+    // };
+    // try {
+    //   const createConvo = await API.graphql(
+    //     graphqlOperation(createConversation, {input: messageData})
+    //   );
+    //   console.log(messageData);
+    //   console.log("wants to message");
+    //   console.log(username);
+    // }
+    // catch(e){
+    //   console.log(e);
+    // }
+    
+    navigate("/messages", {state:{toUser: username ,  fromUser: props.user.username}});
+    // navigate(<Messages toUser = {username} fromUser={props.user.username}/>);
   }
 
   return (
