@@ -13,7 +13,7 @@ type UserInformation @model @searchable{
   pollAnswers: [UserAnswer] @hasMany (indexName: "byUserAnswers", fields: ["usernameID"])
   comments: [Comment] @hasMany (indexName: "byUserComments", fields:["usernameID"])
   likedPolls: [Like] @hasMany (indexName: "byUserLike", fields: ["usernameID"])
-  conversations: [ConversationLink] @hasMany(indexName: "byUserConversations", fields: ["usernameID"])
+  conversations: [ConversationUser] @hasMany(indexName: "byUserConversations", fields: ["usernameID"])
   messages: [Message] @hasMany(indexName: "byUserMessages", fields: ["usernameID"])
   notifications: [Notification] @hasMany (indexName: "byUserNotifications", fields:["usernameID"])
   activity: [Notification] @hasMany (indexName: "byUserActivity", fields:["usernameID"])
@@ -73,35 +73,30 @@ type Follow @model {
   UserInformation: UserInformation @belongsTo( fields: ["followerID"])
 }
 
-type Conversation @model{
-    id: ID! @primaryKey(sortKeyFields: ["createdAt"])
-    messages: [Message] @hasMany(indexName: "conversationsByDate", fields: ["id"])
-    associated: [ConversationLink] @hasMany(indexName: "associatedLinks", fields: ["id"])
-    name: String!
-    members: [String!]!
-    createdAt: String!
+type ConversationUser @model {
+  id: ID!
+  userID: String! @primaryKey(sortKeyFields: ["conversationID"]) @index(name: "byUserConversations", queryField: "conversationsByUser")
+  conversationID: ID! @index(name: "byConversation", sortKeyFields: ["userID"])
+  user: UserInformation @belongsTo(fields: ["userID"])
+  Conversation: Conversation @belongsTo(fields: ["conversationID"])
 }
 
+type Conversation @model {
+  id: ID!
+  cnversationUsers: [ConversationUser] @hasMany(indexName: "byConversation", fields: ["id"])
+  messages: [Message]  @hasMany(indexName: "byConversation", fields: ["id"])
+  createdAt: String!
+}
 
 type Message @model{
-    id: ID!
-    author: String @index(name: "byUserMessages", queryField: "messagesByUser")
-    UserInformation: UserInformation @belongsTo(fields: ["author"])
-    content: String!
-    messageConversationID: ID! @index(name: "conversationsByDate", queryField: "conversationsByDate")
-    Conversation: Conversation @belongsTo(fields: ["messageConversationID"])
-    createdAt: String
+  id: ID!
+  createdAt: String!
+  content: String!
+  userID: String! @index(name: "byUserMessages", queryField: "messagesByUser")
+  conversationID: ID! @primaryKey(sortKeyFields: ["createdAt"]) @index(name:"byConversation", queryField: "messagesByConversation")
+  user: UserInformation @belongsTo(fields: ["userID"])
+  Conversation: Conversation @belongsTo(fields: ["conversationID"])
 }
-
-type ConversationLink @model{
-    id: ID!
-    convoLinkUserID: String! @index(name: "byUserConversations", queryField: "conversationsByUser")
-    UserInformation: UserInformation @belongsTo(fields: ["convoLinkUserID"])
-    convoLinkConversationID: ID! @index(name: "associatedLinks", queryField: "associatedLinks")
-    Conversation: Conversation @belongsTo(fields: ["convoLinkConversationID"])
-    createdAt: String
-}
-
 
 type Notification @model {
     id: ID!
@@ -113,11 +108,15 @@ type Notification @model {
 }
 
 type Subscription {
-    onCreateConversationLinkByUserID(convoLinkUserId: String!): ConversationLink
-        @aws_subscribe(mutations: ["createConversationLink"])
-    onCreateMessageByConversationID(messageConversationId: ID!): Message
+    onCreateConversationUserByUserID(userID: String!): ConversationUser
+        @aws_subscribe(mutations: ["createConversationUser"])
+    onCreateMessageByConversationID(conversationId: ID!): Message
         @aws_subscribe(mutations: ["createMessage"])
     onCreateNotificationByUserID(toUser: String!): Notification
         @aws_subscribe(mutations: ["createNotification"])
 
 }
+
+
+
+
