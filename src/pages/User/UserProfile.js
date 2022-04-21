@@ -132,9 +132,14 @@ function UserProfile(props) {
             <div className="p_header__right">
               <div className="right_top">
                 <h3 className="profile_username">{username} </h3>
+
                 <div className="profile__header__buttons">
-                  <button>Message</button>
-                  <button onClick={handleFollow}>{follow}</button>
+                  {props.user.username !== username && (
+                    <>
+                      <button>Message</button>
+                      <button onClick={handleFollow}>{follow}</button>
+                    </>
+                  )}
                 </div>
               </div>
               <div className="right_middle">
