@@ -1,7 +1,25 @@
-import React from "react";
+import { API, graphqlOperation } from "aws-amplify";
+import React, { useCallback, useEffect, useState } from "react";
+import { conversationsByUser } from "../../graphql/queries";
 import "./Messages.css";
 
-function Messages() {
+function Messages(props) {
+  const[convoData, setConvoData] = useState();
+  const fetchData = useCallback(async () => {
+    const user = props.user.username;
+    const convosModel = await API.graphql(
+      //i think i need to use convorsation link somehow?
+      graphqlOperation(conversationsByUser,{
+        user: user,
+      })
+    );
+    setConvoData(convosModel.data.conversationsByUser);
+    console.log(convoData);
+  }, []);
+
+  useEffect(() => {
+    fetchData().catch(console.error);
+  },[fetchData]);
   //use createMessages subscription
   return (
     <div className="Messages">
