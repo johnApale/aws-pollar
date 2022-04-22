@@ -38,6 +38,10 @@ function NavBar(props) {
     navigate("/Recommended");
   };
 
+  const goToMessages = () => {
+    navigate("/messages");
+  };
+
   return (
     <div className="NavBar">
       <div className="navbar__left">
@@ -71,6 +75,7 @@ function NavBar(props) {
         <img
           src={process.env.PUBLIC_URL + "/messages.png"}
           className="msgbttn"
+          onClick={goToMessages}
         />
         <img
           src={process.env.PUBLIC_URL + "/notif_icon .png"}
