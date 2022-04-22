@@ -13,7 +13,10 @@ import { Route, useLocation } from "react-router-dom";
 function Messages(props) {
   const location = useLocation();
   const [conversationID, setConversationID] = useState();
+  const [user1Convos, setUser1Convos] = useState([]);
   const [message, setMessage] = useState("");
+  const [userName1, setUserName1] = useState("");
+  const [userName2, setUserName2] = useState("");
   
   useEffect(() => {
     console.log(formatDate());
@@ -54,32 +57,70 @@ function Messages(props) {
   // onSendMessage
     // create Message
   const getConversation = async () => {
-    // const conversationData = await API.graphql(
-    //   graphqlOperation(conversationsByUser, { convoLinkUserID: "johndoe" })
-    // );
-    // console.log(conversationData);
-  };
-  const sendMessage = async () => {
-    const time = formatDate();
-    // if{
-// if convo isnt made yet
-    // }
+    const user1 = location.state.fromUser;
+    const user2 = location.state.toUser;
+    let commonID = 0;
+    
+    
     try{
-      const conversationData = await API.graphql(graphqlOperation(createConversation, {input: {createdAt: time,}}));
-      const newConversationID = conversationData.data.createConversation.id;
-      // create user 1
-      const conversationUser1 = await API.graphql(graphqlOperation(createConversationUser,{input: {conversationID: newConversationID, userID: location.state.fromUser}})); 
-      // create user 2
-      const conversationUser2 = await API.graphql(graphqlOperation(createConversationUser,{input: {conversationID: newConversationID, userID: location.state.toUser}}));
-      const messageData = await API.graphql(graphqlOperation(createMessage, {input: {conversationID: newConversationID, userID: location.state.fromUser, content: message}}));
-    }
-    catch (e){
-      console.log(e)
+      const user1Convos = await API.graphql(graphqlOperation(conversationsByUser, {userID:  user1}));
+      const user2Convos = await API.graphql(graphqlOperation(conversationsByUser, { userID: user2}));
+      
+      
+      for (let i = 0; i < user1Convos.data.conversationsByUser.items.length; i++){
+        for(let k = 0; k < user2Convos.data.conversationsByUser.items.length; k ++){
+          if(user1Convos.data.conversationsByUser.items[i].conversationID == user2Convos.data.conversationsByUser.items[k].conversationID){
+            commonID = user1Convos.data.conversationsByUser.items[i].conversationID;
+          }
+        }
+      }
+
+      console.log(commonID);
+      
+      
+    }catch (e){
+      console.log(e);
     }
     
+    return commonID;
+  };
+  const sendMessage = async (convoID) => {
+    
+    const time = formatDate();
+    
+    
+    if(convoID == 0){
+      try{
+        const conversationData = await API.graphql(graphqlOperation(createConversation, {input: {createdAt: time,}}));
+        const newConversationID = conversationData.data.createConversation.id;
+        // create user 1
+        const conversationUser1 = await API.graphql(graphqlOperation(createConversationUser,{input: {conversationID: newConversationID, userID: location.state.fromUser}})); 
+        // create user 2
+        const conversationUser2 = await API.graphql(graphqlOperation(createConversationUser,{input: {conversationID: newConversationID, userID: location.state.toUser}}));
+        const messageData = await API.graphql(graphqlOperation(createMessage, {input: {conversationID: String(newConversationID), userID: location.state.fromUser, content: message}}));
+        
+      }
+      catch (e){
+        console.log(e);
+        
+      }
+    }else{
+      try{
+        const messageData = await API.graphql(graphqlOperation(createMessage, {input: {conversationID: String(convoID), userID: location.state.fromUser, content: message}}));
+      }
+      catch (e){
+        console.log(e);
+      }
+      
+    }
+    
+  };
 
-    //still need to add users and message to convorsation
-    //still need to figure out how to determine if this conversation exists already or not
+  const send = async () =>{
+    const convoID = getConversation();
+
+    setTimeout(() => { sendMessage(convoID)  }, 2000);
+
   };
   //use createMessages subscription
   return (
@@ -96,9 +137,11 @@ function Messages(props) {
             type="text"
             className="message__input"
             placeholder="Write a message"
-            onChange={setMessage}
+            onChange={(event) => {
+              setMessage(event.target.value);
+            }}
           />
-          <button className="message__send" onClick={getConversation}>
+          <button className="message__send" onClick={send}>
             Send
           </button>
         </div>
