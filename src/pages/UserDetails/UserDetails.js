@@ -36,58 +36,67 @@ function UserDetails(props) {
   };
 
   return props.trigger ? (
-    <div className="pop__up">
-      <div className="userCard">
-        <form className="info">
-          <p className="title"> User Information </p>
-          <p className="fN"> First Name </p>
-          <input
-            type="text"
-            className="firstN"
-            onChange={(event) => {
-              setFirstName(event.target.value);
-            }}
-          ></input>
-          <p className="lN"> Last Name </p>
-          <input
-            type="text"
-            className="lastN"
-            onChange={(event) => {
-              setLastName(event.target.value);
-            }}
-          ></input>
-          <p className="bday"> Birthday </p>
-          <input
-            type="date"
-            className="userBirthday"
-            onChange={(event) => {
-              setBirthday(event.target.value);
-            }}
-          ></input>
-          <p className="sx"> Sex </p>
-          <select
-            className="userSex"
-            value={userSex}
-            onChange={(event) => {
-              setUserSex(event.target.value);
-            }}
-          >
-            {options.map((option) => (
-              <option value={option.value}>{option.label}</option>
-            ))}
-          </select>
+    <div className="details_pop__up">
+      <div className="details_userCard">
+        <p className="details_title">User Information</p>
+        <form className="details_info">
+          <div className="details_fN">
+            First Name
+            <input
+              type="text"
+              className="details_firstN"
+              onChange={(event) => {
+                setFirstName(event.target.value);
+              }}
+            ></input>
+          </div>
 
-          <br></br>
-          <button
-            className="submitInfo"
-            onClick={saveInformation}
-            type="button"
-            id="saveButton"
-          >
-            {" "}
-            Save Information{" "}
-          </button>
+          <div className="details_lN">
+            Last Name
+            <input
+              type="text"
+              className="details_lastN"
+              onChange={(event) => {
+                setLastName(event.target.value);
+              }}
+            ></input>
+          </div>
+
+          <div className="details_bday">
+            Birthday
+            <input
+              type="date"
+              className="details_userBirthday"
+              onChange={(event) => {
+                setBirthday(event.target.value);
+              }}
+            ></input>
+          </div>
+
+          <div className="details_sx">
+            Sex{" "}
+            <select
+              className="details_userSex"
+              value={userSex}
+              onChange={(event) => {
+                setUserSex(event.target.value);
+              }}
+            >
+              {options.map((option) => (
+                <option value={option.value}>{option.label}</option>
+              ))}
+            </select>
+          </div>
         </form>
+        <button
+          className="details_submitInfo"
+          onClick={saveInformation}
+          type="button"
+          id="saveButton"
+        >
+          {" "}
+          Save Information{" "}
+        </button>
       </div>
     </div>
   ) : (

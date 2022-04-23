@@ -1,4 +1,4 @@
-.pop__up{
+.details_pop__up{
     position: fixed;
     top: 0;
     left:0;
@@ -10,19 +10,64 @@
     align-items: center;
 }
 
-.userCard{
+.details_userCard{
     width: 500px;
     height:500px;
     border: 1px solid black; 
     border-radius: 30px;
-    position: relative;
     display:flex;
+    flex-direction: column;
     overflow: hidden;
     background-color: white;
-    
+    padding: 50px;
 }
 
-.submitInfo{
+.details_title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.details_info{
+    margin-bottom: 20px;
+    font-size: 20px;
+
+}
+
+.details_firstN, .details_lastN {
+    border-top:1px;
+    border-color:#a4d9f8;
+    border-left: none;
+    border-right:none;
+    width: 280px; 
+    margin-left: 20px;
+}
+
+.details_fN, .details_lN, .details_bday, .details_sx {
+    display: flex;
+    margin-bottom: 40px;
+    align-items: end;
+}
+
+.details_userBirthday {
+    margin-left: 40px;
+}
+
+.details_userSex {
+    margin-left: 80px;
+}
+
+.details_submitInfo{
+    border-radius: 25px;
+    border:none; 
+    background-color: #a4d9f8;
+    color:white;
+    font-weight: 800;
+}
+
+/* .details_submitInfo{
     border-radius: 25px;
     border:none; 
     background-color: #a4d9f8;
@@ -33,25 +78,24 @@
     left:110px;
 }
 
-.fN, .lN, .bday, .sx {
+.details_fN, .details_lN, .details_bday, .details_sx {
     font-weight: 200;
     position: relative;
     right:38px;
     top:35px;
 
 }
-.fN, .lN {
+.details_fN, .details_lN {
     position: relative;
     left:0px;
     margin: 5px;
 }
-.bday{
-    position: relative;
-    left: -10px;
+.details_bday{
+
     margin-top: 10px;
     margin-bottom: 1px;
 }
-.sx {
+.details_sx {
     position: relative;
     right:61px;
     top:45px;
@@ -59,20 +103,20 @@
     margin-top: 5px;
 }
 
-.userSex {
+.details_userSex {
     position: relative;
     right:42px;
     top:35px;
     left:-5px;
 }
 
-.userBirthday {
+.details_userBirthday {
     position: relative;
     top:40px;
     left:50px;
 }
 
-.firstN, .lastN {
+.details_firstN, .details_lastN {
     border-top:1px;
     border-color:#a4d9f8;
     border-left: none;
@@ -83,13 +127,13 @@
     top:35px;
 }
 
-.title{
+.details_title{
     position: relative;
     left:100px;
     font-weight:bold;
     margin-top: 20px;
     margin-bottom: -10px;
     
-}
+} */
 
 
