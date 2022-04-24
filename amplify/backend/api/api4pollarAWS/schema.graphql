@@ -86,6 +86,7 @@ type Conversation @model {
   conversationUsers: [ConversationUser] @hasMany(indexName: "byConversation", fields: ["id"])
   messages: [Message]  @hasMany(indexName: "byConversation", fields: ["id"])
   createdAt: String!
+  lastMessage: Message
 }
 
 type Message @model{
