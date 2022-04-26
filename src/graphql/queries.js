@@ -1142,6 +1142,14 @@ export const getConversationUser = /* GraphQL */ `
           nextToken
         }
         createdAt
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          conversationID
+          updatedAt
+        }
         updatedAt
       }
       createdAt
@@ -1219,6 +1227,30 @@ export const getConversation = /* GraphQL */ `
         nextToken
       }
       createdAt
+      lastMessage {
+        id
+        createdAt
+        content
+        userID
+        conversationID
+        user {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        Conversation {
+          id
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
       updatedAt
     }
   }
@@ -1239,6 +1271,14 @@ export const listConversations = /* GraphQL */ `
           nextToken
         }
         createdAt
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          conversationID
+          updatedAt
+        }
         updatedAt
       }
       nextToken
@@ -1300,6 +1340,14 @@ export const getMessage = /* GraphQL */ `
           nextToken
         }
         createdAt
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          conversationID
+          updatedAt
+        }
         updatedAt
       }
       updatedAt
@@ -1931,6 +1979,12 @@ export const conversationsByUser = /* GraphQL */ `
           updatedAt
         }
         Conversation {
+          conversationUsers {
+            items {
+              conversationID
+              userID
+            }
+          }
           id
           createdAt
           updatedAt

@@ -1725,6 +1725,14 @@ export const createConversationUser = /* GraphQL */ `
           nextToken
         }
         createdAt
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          conversationID
+          updatedAt
+        }
         updatedAt
       }
       createdAt
@@ -1788,6 +1796,14 @@ export const updateConversationUser = /* GraphQL */ `
           nextToken
         }
         createdAt
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          conversationID
+          updatedAt
+        }
         updatedAt
       }
       createdAt
@@ -1851,6 +1867,14 @@ export const deleteConversationUser = /* GraphQL */ `
           nextToken
         }
         createdAt
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          conversationID
+          updatedAt
+        }
         updatedAt
       }
       createdAt
@@ -1887,6 +1911,30 @@ export const createConversation = /* GraphQL */ `
         nextToken
       }
       createdAt
+      lastMessage {
+        id
+        createdAt
+        content
+        userID
+        conversationID
+        user {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        Conversation {
+          id
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
       updatedAt
     }
   }
@@ -1920,6 +1968,30 @@ export const updateConversation = /* GraphQL */ `
         nextToken
       }
       createdAt
+      lastMessage {
+        id
+        createdAt
+        content
+        userID
+        conversationID
+        user {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        Conversation {
+          id
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
       updatedAt
     }
   }
@@ -1953,6 +2025,30 @@ export const deleteConversation = /* GraphQL */ `
         nextToken
       }
       createdAt
+      lastMessage {
+        id
+        createdAt
+        content
+        userID
+        conversationID
+        user {
+          usernameID
+          firstName
+          lastName
+          email
+          bday
+          anon
+          sex
+          createdAt
+          updatedAt
+        }
+        Conversation {
+          id
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
       updatedAt
     }
   }
@@ -2015,6 +2111,14 @@ export const createMessage = /* GraphQL */ `
           nextToken
         }
         createdAt
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          conversationID
+          updatedAt
+        }
         updatedAt
       }
       updatedAt
@@ -2079,6 +2183,14 @@ export const updateMessage = /* GraphQL */ `
           nextToken
         }
         createdAt
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          conversationID
+          updatedAt
+        }
         updatedAt
       }
       updatedAt
@@ -2143,6 +2255,14 @@ export const deleteMessage = /* GraphQL */ `
           nextToken
         }
         createdAt
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          conversationID
+          updatedAt
+        }
         updatedAt
       }
       updatedAt

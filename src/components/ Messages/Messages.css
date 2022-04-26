@@ -4,6 +4,7 @@
 .messages_box{
     display: flex;
     flex-direction: column;
+
 }
 .messages__top {
     height: 70px;
@@ -18,13 +19,17 @@
     justify-content: center;
 }
 
+.message__user:hover{
+    cursor: pointer;
+}
+
 .messages__middle{
-    display: flex;
+
+    
     width: 100%;
     min-height: 100px;
     height: 640px;
     align-items: end;
-    overflow-y: auto;
 }
 
 .messages__bottom{
@@ -34,7 +39,57 @@
 }
 
 .messages__thread{
+
     margin-left: 15px;
+    margin-right: 15px;
+    width: 98%;
+    height: 640px;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: auto;
+}
+
+.message__right{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    margin-right: 15px;
+}
+
+.message__bubble{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 10px;
+    padding-right: 15px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.message__content{
+    display: flex;
+    justify-content: end;
+}
+.message__created{
+    display: flex;
+    justify-content: end;
+    font-weight: 100;
+    font-size: 8px;
+}
+
+.message__bubble__left{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.left__message__created{
+    display: flex;
+    justify-content: start;
+    font-weight: 100;
+    font-size: 8px;
+    margin-left: 10px;
 }
 
 .message__input{

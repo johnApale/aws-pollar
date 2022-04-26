@@ -9,7 +9,11 @@ import {
   userFollowers,
 } from "../../graphql/queries";
 import "./UserProfile.css";
-import { createConversation, createFollow, deleteFollow } from "../../graphql/mutations";
+import {
+  createConversation,
+  createFollow,
+  deleteFollow,
+} from "../../graphql/mutations";
 import Messages from "../../components/ Messages/Messages";
 
 function UserProfile(props) {
@@ -124,7 +128,7 @@ function UserProfile(props) {
     }
   };
 
-  const handleMessage = async () =>{
+  const handleMessage = async () => {
     // const messageData = {
     //   name: username,
     //   members: [username, props.user.username]
@@ -141,10 +145,10 @@ function UserProfile(props) {
     // catch(e){
     //   console.log(e);
     // }
-    
-    navigate("/messages", {state:{toUser: username ,  fromUser: props.user.username}});
+
+    navigate("/messages", { state: { toUser: username } });
     // navigate(<Messages toUser = {username} fromUser={props.user.username}/>);
-  }
+  };
 
   return (
     <div className="user">
