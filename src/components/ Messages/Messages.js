@@ -1,26 +1,124 @@
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import // createConversationLink,
-// createConversation,
-// createMessage,
-"../../graphql/mutations";
-import { conversationsByUser } from "../../graphql/queries";
+import {
+  conversationsByUser,
+  messagesByConversation,
+} from "../../graphql/queries";
 
 import "./Messages.css";
-import { createConversation, createConversationUser, createMessage } from "../../graphql/mutations";
-import { Route, useLocation } from "react-router-dom";
+import {
+  createConversation,
+  createConversationUser,
+  createMessage,
+  updateConversation,
+} from "../../graphql/mutations";
+import { onCreateMessageByConversationID } from "../../graphql/subscriptions";
+import { Route, useLocation, useNavigate } from "react-router-dom";
+import { ConsoleLogger } from "@aws-amplify/core";
 
-function Messages(props) {
-  const location = useLocation();
-  const [conversationID, setConversationID] = useState();
+function Messages({ user, convoUser, conversationID }) {
+  const [convoID, setConvoID] = useState();
+  const [messageList, setMessageList] = useState();
   const [user1Convos, setUser1Convos] = useState([]);
   const [message, setMessage] = useState("");
-  const [userName1, setUserName1] = useState("");
-  const [userName2, setUserName2] = useState("");
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
-    console.log(formatDate());
-  },[]);
+    API.graphql({
+      query: onCreateMessageByConversationID,
+      variables: { conversationID: conversationID },
+    }).subscribe({
+      next: (convo) => {
+        const newConvoID = convo.value.data.onCreateMessageByConversationID;
+        setMessageList((messageList) => [...messageList, newConvoID]);
+      },
+    });
+  }, [convoUser, conversationID]);
+
+  useEffect(() => {
+    async function getMessages() {
+      try {
+        const conversationData = await API.graphql(
+          graphqlOperation(messagesByConversation, {
+            conversationID: conversationID,
+          })
+        );
+        console.log(conversationData);
+        setMessageList([...conversationData.data.messagesByConversation.items]);
+      } catch (e) {
+        console.log("error fetching messages, ", e);
+      }
+    }
+    if (conversationID) {
+      getMessages();
+    }
+  }, [convoUser, conversationID]);
+
+  const handleSendMessage = () => {
+    async function createNewConversation() {
+      const time = formatDate();
+      let newConversationID = "";
+      // create conversation
+      try {
+        const conversationData = await API.graphql(
+          graphqlOperation(createConversation, { input: { createdAt: time } })
+        );
+        newConversationID = conversationData.data.createConversation.id;
+
+        try {
+          // create user 1
+          const conversationUser1 = await API.graphql(
+            graphqlOperation(createConversationUser, {
+              input: {
+                conversationID: newConversationID,
+                userID: user,
+              },
+            })
+          );
+
+          // create user 2
+          const conversationUser2 = await API.graphql(
+            graphqlOperation(createConversationUser, {
+              input: {
+                conversationID: newConversationID,
+                userID: convoUser,
+              },
+            })
+          );
+        } catch (e) {
+          console.log("Error making user conversation, ", e);
+        }
+      } catch (e) {
+        console.log("Error creating conversation, ", e);
+      }
+      setConvoID(newConversationID);
+      createMessageData(newConversationID);
+    }
+
+    async function createMessageData(converID) {
+      const messageData = {
+        content: message,
+        userID: user,
+        conversationID: converID,
+      };
+      try {
+        const messageModel = API.graphql(
+          graphqlOperation(createMessage, { input: messageData })
+        );
+      } catch (e) {
+        console.log("Error sending message, ", e);
+      }
+      setMessage("");
+    }
+    if (conversationID) {
+      console.log(conversationID);
+      // console.log("Existing");
+      createMessageData(conversationID);
+    } else {
+      // console.log("New");
+      createNewConversation();
+    }
+  };
 
   const formatDate = () => {
     const date = new Date();
@@ -41,107 +139,92 @@ function Messages(props) {
     const time = updatedDate + " at " + updatedTime;
     return time;
   };
-  
 
-  // create Conversation, need to get ConversationID
-  const createConvo = () =>{
+  const stringDate = (iso) => {
+    const date = new Date(iso);
+    const updatedDate = date.toLocaleDateString("default", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
 
+    const updatedTime = date.toLocaleTimeString("en-US", {
+      timezone: "America/Los_Angeles",
+      hour12: true,
+      hour: "numeric",
+      minute: "numeric",
+      seconds: "numeric",
+    });
 
+    const time = updatedDate + " at " + updatedTime;
+    return time;
+  };
+
+  function goToUser(username) {
+    navigate(`/profile/${username}`);
   }
 
-  // create ConversationUser
-
-  // create ConversationUser
-
-  
-  // onSendMessage
-    // create Message
-  const getConversation = async () => {
-    const user1 = location.state.fromUser;
-    const user2 = location.state.toUser;
-    let commonID = 0;
-    
-    
-    try{
-      const user1Convos = await API.graphql(graphqlOperation(conversationsByUser, {userID:  user1}));
-      const user2Convos = await API.graphql(graphqlOperation(conversationsByUser, { userID: user2}));
-      
-      
-      for (let i = 0; i < user1Convos.data.conversationsByUser.items.length; i++){
-        for(let k = 0; k < user2Convos.data.conversationsByUser.items.length; k ++){
-          if(user1Convos.data.conversationsByUser.items[i].conversationID == user2Convos.data.conversationsByUser.items[k].conversationID){
-            commonID = user1Convos.data.conversationsByUser.items[i].conversationID;
-          }
-        }
-      }
-
-      console.log(commonID);
-      
-      
-    }catch (e){
-      console.log(e);
-    }
-    
-    return commonID;
-  };
-  const sendMessage = async (convoID) => {
-    
-    const time = formatDate();
-    
-    
-    if(convoID == 0){
-      try{
-        const conversationData = await API.graphql(graphqlOperation(createConversation, {input: {createdAt: time,}}));
-        const newConversationID = conversationData.data.createConversation.id;
-        // create user 1
-        const conversationUser1 = await API.graphql(graphqlOperation(createConversationUser,{input: {conversationID: newConversationID, userID: location.state.fromUser}})); 
-        // create user 2
-        const conversationUser2 = await API.graphql(graphqlOperation(createConversationUser,{input: {conversationID: newConversationID, userID: location.state.toUser}}));
-        const messageData = await API.graphql(graphqlOperation(createMessage, {input: {conversationID: String(newConversationID), userID: location.state.fromUser, content: message}}));
-        
-      }
-      catch (e){
-        console.log(e);
-        
-      }
-    }else{
-      try{
-        const messageData = await API.graphql(graphqlOperation(createMessage, {input: {conversationID: String(convoID), userID: location.state.fromUser, content: message}}));
-      }
-      catch (e){
-        console.log(e);
-      }
-      
-    }
-    
-  };
-
-  const send = async () =>{
-    const convoID = getConversation();
-
-    setTimeout(() => { sendMessage(convoID)  }, 2000);
-
-  };
-  //use createMessages subscription
   return (
     <div className="Messages">
       <div className="messages__box">
         <div className="messages__top">
-          <p className="message__user">User</p>
+          <p
+            className="message__user"
+            onClick={() => {
+              goToUser(convoUser);
+            }}
+          >
+            {convoUser}
+          </p>
         </div>
         <div className="messages__middle">
-          <div className="messages__thread">Message Thread</div>
+          <div className="messages__thread">
+            {messageList &&
+              messageList
+                .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+                .map((val, key) => {
+                  return (
+                    <>
+                      {val.userID === user ? (
+                        <div className="message__right" key={key}>
+                          <div className="message__bubble">
+                            <div className="message__content">
+                              {val.content}
+                            </div>
+                          </div>
+                          <div className="message__created">
+                            {stringDate(val.createdAt)}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="message__left" key={key}></div>
+                      )}
+                    </>
+                  );
+                })}
+          </div>
         </div>
         <div className="messages__bottom">
           <input
             type="text"
             className="message__input"
+            value={message}
             placeholder="Write a message"
+            onKeyPress={(event) => {
+              if (event.code === "Enter") {
+                handleSendMessage();
+              }
+            }}
             onChange={(event) => {
               setMessage(event.target.value);
             }}
           />
-          <button className="message__send" onClick={send}>
+          <button
+            className="message__send"
+            onClick={() => {
+              handleSendMessage();
+            }}
+          >
             Send
           </button>
         </div>

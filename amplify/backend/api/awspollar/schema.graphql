@@ -111,12 +111,13 @@ type Notification @model {
 type Subscription {
     onCreateConversationUserByUserID(userID: String!): ConversationUser
         @aws_subscribe(mutations: ["createConversationUser"])
-    onCreateMessageByConversationID(conversationId: ID!): Message
+    onCreateMessageByConversationID(conversationID: ID!): Message
         @aws_subscribe(mutations: ["createMessage"])
     onCreateNotificationByUserID(toUser: String!): Notification
         @aws_subscribe(mutations: ["createNotification"])
 
 }
+
 
 
 

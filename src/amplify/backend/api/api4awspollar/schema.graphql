@@ -83,9 +83,10 @@ type ConversationUser @model {
 
 type Conversation @model {
   id: ID!
-  cnversationUsers: [ConversationUser] @hasMany(indexName: "byConversation", fields: ["id"])
+  conversationUsers: [ConversationUser] @hasMany(indexName: "byConversation", fields: ["id"])
   messages: [Message]  @hasMany(indexName: "byConversation", fields: ["id"])
   createdAt: String!
+  lastMessage: Message
 }
 
 type Message @model{
@@ -110,7 +111,7 @@ type Notification @model {
 type Subscription {
     onCreateConversationUserByUserID(userID: String!): ConversationUser
         @aws_subscribe(mutations: ["createConversationUser"])
-    onCreateMessageByConversationID(conversationId: ID!): Message
+    onCreateMessageByConversationID(conversationID: ID!): Message
         @aws_subscribe(mutations: ["createMessage"])
     onCreateNotificationByUserID(toUser: String!): Notification
         @aws_subscribe(mutations: ["createNotification"])
