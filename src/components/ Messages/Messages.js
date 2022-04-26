@@ -33,7 +33,7 @@ function Messages({ user, convoUser, conversationID }) {
         setMessageList((messageList) => [...messageList, newConvoID]);
       },
     });
-  }, [convoUser, conversationID]);
+  }, [convoUser]);
 
   useEffect(() => {
     async function getMessages() {
