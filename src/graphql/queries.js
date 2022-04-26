@@ -240,12 +240,17 @@ export const getUserInformation = /* GraphQL */ `
       }
       pollAnswers {
         items {
-          id
-          pollID
-          userID
-          answer
-          createdAt
-          updatedAt
+          Poll {
+            title
+            createdAt
+            id
+            views
+            like {
+              items {
+                id
+              }
+            }
+          }
         }
         nextToken
       }
@@ -262,11 +267,17 @@ export const getUserInformation = /* GraphQL */ `
       }
       likedPolls {
         items {
-          id
-          pollID
-          userID
-          createdAt
-          updatedAt
+          Poll {
+            title
+            createdAt
+            id
+            views
+            like {
+              items {
+                id
+              }
+            }
+          }
         }
         nextToken
       }
