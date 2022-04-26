@@ -197,7 +197,14 @@ function Messages({ user, convoUser, conversationID }) {
                           </div>
                         </div>
                       ) : (
-                        <div className="message__left" key={key}></div>
+                        <div className="message__left" key={key}>
+                          <div className="message__bubble__left">
+                            <div className="left__content">{val.content}</div>
+                          </div>
+                          <div className="left__message__created">
+                            {stringDate(val.createdAt)}
+                          </div>
+                        </div>
                       )}
                     </>
                   );
