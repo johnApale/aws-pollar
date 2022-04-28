@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import {
-  conversationsByUser,
-  messagesByConversation,
-} from "../../graphql/queries";
+import { messagesByConversation } from "../../graphql/queries";
 
 import "./Messages.css";
 import {
   createConversation,
   createConversationUser,
   createMessage,
-  updateConversation,
 } from "../../graphql/mutations";
 import { onCreateMessageByConversationID } from "../../graphql/subscriptions";
-import { Route, useLocation, useNavigate } from "react-router-dom";
-import { ConsoleLogger } from "@aws-amplify/core";
+import { useNavigate } from "react-router-dom";
 
 function Messages({ user, convoUser, conversationID }) {
   const [convoID, setConvoID] = useState();
   const [messageList, setMessageList] = useState();
-  const [user1Convos, setUser1Convos] = useState([]);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 

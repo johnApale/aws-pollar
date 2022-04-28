@@ -17,7 +17,7 @@ function Trending() {
       setPollList(pollModel.data.listPolls.items);
     }
     fetchData();
-  });
+  }, []);
 
   function goToPoll(pollID) {
     navigate({
