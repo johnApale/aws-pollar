@@ -86,6 +86,11 @@ function goToUser(username) {
 
   return (
     <div>
+    <div className = "encasedR">
+    <div>
+      <h className = "r_title">
+        Recommended Polls
+      </h>
     <div>
       <Checkbox
         label="Color"
@@ -93,19 +98,20 @@ function goToUser(username) {
         onChange={handleChange}
       />
     </div>
-    <div>
-      <Checkbox
-        label="Sports"
-        value={checkedTwo}
-        onChange={handleChangeTwo}
-      />
-    </div>
+      <div>
+        <Checkbox
+          label="Sports"
+         value={checkedTwo}
+          onChange={handleChangeTwo}
+       />
+     </div>
 
     <div>
     <button type="button" onClick = {fetchPoll}>Recommend Poll</button>
     </div>
-
-    <div className="search__results">
+    </div>
+    </div>
+    <div className="recommend__results">
         {searchList.map((val, key) => {
           return (
             <div className="poll__results">
@@ -134,6 +140,7 @@ function goToUser(username) {
           );
         })}
       </div>
+
       </div>
   );
 

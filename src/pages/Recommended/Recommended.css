@@ -21,7 +21,7 @@
     left:-30px;
     top:5px;
 
-    
+
 }
 
 .liked_username{
@@ -68,4 +68,30 @@
 .poll_link:hover {
     cursor: pointer;
     color: rgb(126, 173, 204);
+}
+
+.r_title{
+    position: center;
+    font-weight: 500;
+}
+
+.encasedR{
+    position: relative;
+    width: 250px;
+    height: 175px;
+    box-shadow: 5px 5px 5px 5px #c8d8e4;
+    background-color: #ffffff;
+    border-radius: 25px;
+    display:inline-block;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    text-align: left;
+    
+}
+
+.recommend__results{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position:relative; 
 }
