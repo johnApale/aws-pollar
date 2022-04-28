@@ -13,17 +13,40 @@
     border-radius: 15px;
 }
 
-.messenger__conversations{
+.messenger__left{
     border-right: 1px solid grey;
     display: flex;
     flex-direction: column;
-    height: 100%;
     width: 400px;
+    height: 100%;
+}
+
+.messenger__conversations{
+    display: flex;
+    width: 100%
 }
 
 .messenger_top{
     display:flex;
     flex-direction: column;
+}
+
+.conversation__card{
+    display: flex;
+    height: 80px;
+    justify-content: end;
+    align-items: center;
+    padding-right: 15px;
+    border-bottom: 1px solid grey;
+}
+
+.conversation__card:hover{
+    cursor: pointer
+}
+
+.conversation__user{
+    font-size: 20px;
+    font-weight: 500;
 }
 
 

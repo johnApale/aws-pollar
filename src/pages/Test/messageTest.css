@@ -1,0 +1,37 @@
+.messageTest{
+    background-color: #ffffff;
+    box-shadow: 5px 5px 5px 5px #c8d8e4;
+    border-radius: 25px;
+    width: 50%;
+    height: 50%;
+    min-height: 300px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    margin: auto;
+    position: top;
+}
+
+.conversations{
+    float: left;
+}
+
+.current{
+    float: right;
+    position: top;
+    min-height: 300px;
+    height: auto;
+    width: auto;
+}
+
+.interaction{
+    float: bottom;
+    position: fixed;
+    height: auto;
+    width: auto;
+
+}
+
+.button {
+    display: inline-block;
+}
+

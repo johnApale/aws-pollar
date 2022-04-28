@@ -9,13 +9,21 @@ import {
   userFollowers,
 } from "../../graphql/queries";
 import "./UserProfile.css";
-import { createFollow, deleteFollow } from "../../graphql/mutations";
+import {
+  createConversation,
+  createFollow,
+  deleteFollow,
+} from "../../graphql/mutations";
+import Messages from "../../components/ Messages/Messages";
 
 function UserProfile(props) {
   const { username } = useParams();
   const [user, setUser] = useState();
   const [polls, setPolls] = useState();
+  const [likedPolls, setLikedPolls] = useState();
+  const [answeredPolls, setAnsweredPolls] = useState();
   const [follow, setFollow] = useState("Follow");
+  const [pollType, setPollType] = useState("Polls");
   const [pollCount, setPollCount] = useState();
   const [followerCount, setFollowerCount] = useState();
   const [followingCount, setFollowingCount] = useState();
@@ -29,11 +37,14 @@ function UserProfile(props) {
       );
       console.log(userData.data.getUserInformation);
       setUser(userData.data.getUserInformation);
-
+      setLikedPolls(userData.data.getUserInformation.likedPolls.items);
+      setAnsweredPolls(userData.data.getUserInformation.pollAnswers.items);
       // get polls created by user
       const pollsData = await API.graphql(
         graphqlOperation(pollByUser, { userID: username })
       );
+
+      console.log(pollsData);
 
       const pollList = pollsData.data.pollByUser.items;
       console.log(pollList);
@@ -123,6 +134,28 @@ function UserProfile(props) {
     }
   };
 
+  const handleMessage = async () => {
+    // const messageData = {
+    //   name: username,
+    //   members: [username, props.user.username]
+
+    // };
+    // try {
+    //   const createConvo = await API.graphql(
+    //     graphqlOperation(createConversation, {input: messageData})
+    //   );
+    //   console.log(messageData);
+    //   console.log("wants to message");
+    //   console.log(username);
+    // }
+    // catch(e){
+    //   console.log(e);
+    // }
+
+    navigate("/messages", { state: { toUser: username } });
+    // navigate(<Messages toUser = {username} fromUser={props.user.username}/>);
+  };
+
   return (
     <div className="user">
       <div className="userProfile">
@@ -136,7 +169,7 @@ function UserProfile(props) {
                 <div className="profile__header__buttons">
                   {props.user.username !== username && (
                     <>
-                      <button>Message</button>
+                      <button onClick={handleMessage}>Message</button>
                       <button onClick={handleFollow}>{follow}</button>
                     </>
                   )}
@@ -168,36 +201,108 @@ function UserProfile(props) {
           <div className="profile__body">
             <div className="body__top">
               <div className="profile_tabs">
-                <p className="tab__polls">Polls</p>
-                <p className="tab__answered">Answered</p>
-                <p className="tab__likes">Liked</p>
+                <p
+                  className="tab__polls"
+                  onClick={() => {
+                    setPollType("Polls");
+                  }}
+                >
+                  Polls
+                </p>
+                <p
+                  className="tab__answered"
+                  onClick={() => {
+                    setPollType("Answered");
+                  }}
+                >
+                  Answered
+                </p>
+                <p
+                  className="tab__likes"
+                  onClick={() => {
+                    setPollType("Liked");
+                  }}
+                >
+                  Liked
+                </p>
               </div>
             </div>
             <div className="body__bottom">
               <div className="user__polls">
-                {polls?.map((val, key) => {
-                  return (
-                    <div
-                      className="user_poll_cards"
-                      key={key}
-                      onClick={() => goToPoll(val.id)}
-                    >
-                      <p className="user_poll_title">{val.title}</p>
-                      <div className="user_poll_bottom">
-                        <div className="user_poll_stats">
-                          <p className="user_poll_likes">
-                            {" "}
-                            {val.likeLen} likes {val.views} views
+                {pollType === "Answered" &&
+                  answeredPolls?.map((val, key) => {
+                    return (
+                      <div
+                        className="user_poll_cards"
+                        key={key}
+                        onClick={() => goToPoll(val.Poll.id)}
+                      >
+                        <p className="user_poll_title">{val.Poll.title}</p>
+                        <div className="user_poll_bottom">
+                          <div className="user_poll_stats">
+                            <p className="user_poll_likes">
+                              {" "}
+                              {val.Poll.like.items.length} likes{" "}
+                              {val.Poll.views} views
+                            </p>
+                            <p className="user_poll_views"></p>
+                          </div>
+                          <p className="user_poll_created">
+                            {formatDate(val.Poll.createdAt)}
                           </p>
-                          <p className="user_poll_views"></p>
                         </div>
-                        <p className="user_poll_created">
-                          {formatDate(val.createdAt)}
-                        </p>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                {pollType === "Liked" &&
+                  likedPolls?.map((val, key) => {
+                    return (
+                      <div
+                        className="user_poll_cards"
+                        key={key}
+                        onClick={() => goToPoll(val.Poll.id)}
+                      >
+                        <p className="user_poll_title">{val.Poll.title}</p>
+                        <div className="user_poll_bottom">
+                          <div className="user_poll_stats">
+                            <p className="user_poll_likes">
+                              {" "}
+                              {val.Poll.like.items.length} likes{" "}
+                              {val.Poll.views} views
+                            </p>
+                            <p className="user_poll_views"></p>
+                          </div>
+                          <p className="user_poll_created">
+                            {formatDate(val.Poll.createdAt)}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                {pollType === "Polls" &&
+                  polls?.map((val, key) => {
+                    return (
+                      <div
+                        className="user_poll_cards"
+                        key={key}
+                        onClick={() => goToPoll(val.id)}
+                      >
+                        <p className="user_poll_title">{val.title}</p>
+                        <div className="user_poll_bottom">
+                          <div className="user_poll_stats">
+                            <p className="user_poll_likes">
+                              {" "}
+                              {val.likeLen} likes {val.views} views
+                            </p>
+                            <p className="user_poll_views"></p>
+                          </div>
+                          <p className="user_poll_created">
+                            {formatDate(val.createdAt)}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>

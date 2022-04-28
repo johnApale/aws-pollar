@@ -74,6 +74,11 @@
     /* border-radius: 5px 5px 0 0 ; */
 }
 
+.tab__polls:hover, .tab__answered:hover, .tab__likes:hover{
+    cursor: pointer;
+}
+
+
 .profile_tabs{
     display: flex;
     bottom: 0;
