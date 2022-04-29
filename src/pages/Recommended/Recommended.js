@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React ,{useState, useEffect} from "react";
 import {
   useSearchParams,
   createSearchParams,
   useNavigate,
 } from "react-router-dom";
-import { searchPolls } from "../../graphql/queries";
+import {searchPolls,} from "../../graphql/queries";
 import { API, graphqlOperation } from "aws-amplify";
 
 import "./Recommended.css";
@@ -14,16 +14,16 @@ function RecommendedPolls() {
   const [checkedTwo, setCheckedTwo] = React.useState(false);
   const [searchList, setSearchList] = useState([]);
   const navigate = useNavigate();
-
+  
   const handleChange = () => {
     setChecked(!checked);
-  };
+  }
 
   const handleChangeTwo = () => {
     setCheckedTwo(!checkedTwo);
-  };
+  }
 
-  const Checkbox = ({ label, value, onChange }) => {
+  const Checkbox = ({label, value, onChange}) => {
     return (
       <label>
         <input type="checkbox" checked={value} onChange={onChange} />
@@ -32,81 +32,86 @@ function RecommendedPolls() {
     );
   };
 
-  const fetchPoll = async () => {
+  const fetchPoll = async() =>{
+    
     let searchArray = [];
-    // poll search
-    if (checked) {
-      try {
         // poll search
-        const models = await API.graphql(
-          graphqlOperation(searchPolls, {
-            filter: { categories: { match: "color" } },
-          })
-        );
-        searchArray.push(...models.data.searchPolls.items);
-        for (let i = 0; i < searchArray.length; i += 1) {
-          searchArray[i].likeLen = searchArray[i].like.items.length;
+        if (checked){
+          try {
+            // poll search
+            const models = await API.graphql(
+              graphqlOperation(searchPolls, { filter: { categories: { match: 'color' } } })
+            );
+            searchArray.push(...models.data.searchPolls.items);
+            for (let i = 0; i < searchArray.length; i += 1) {
+              searchArray[i].likeLen = searchArray[i].like.items.length;
+            }
+            setSearchList(searchArray);
+            console.log(searchArray)
+          } catch (e) {
+            console.log("Error fetching polls, ", e);
+    }
         }
-        setSearchList(searchArray);
-        console.log(searchArray);
-      } catch (e) {
-        console.log("Error fetching polls, ", e);
-      }
+        if (checkedTwo){
+          try {
+            // poll search
+            const models = await API.graphql(
+              graphqlOperation(searchPolls, { filter: { categories: { match: 'sports' } } })
+            );
+            searchArray.push(...models.data.searchPolls.items);
+            for (let i = 0; i < searchArray.length; i += 1) {
+              searchArray[i].likeLen = searchArray[i].like.items.length;
+            }
+            setSearchList(searchArray);
+            console.log(searchArray)
+          } catch (e) {
+            console.log("Error fetching polls, ", e);
     }
-    if (checkedTwo) {
-      try {
-        // poll search
-        const models = await API.graphql(
-          graphqlOperation(searchPolls, {
-            filter: { categories: { match: "sports" } },
-          })
-        );
-        searchArray.push(...models.data.searchPolls.items);
-        for (let i = 0; i < searchArray.length; i += 1) {
-          searchArray[i].likeLen = searchArray[i].like.items.length;
         }
-        setSearchList(searchArray);
-        console.log(searchArray);
-      } catch (e) {
-        console.log("Error fetching polls, ", e);
+      if (!(checked) && !(checkedTwo)){
+        setSearchList([])
       }
-    }
-    if (!checked && !checkedTwo) {
-      setSearchList([]);
-    }
-  };
-  function goToPoll(pollID) {
-    navigate({
-      pathname: "/poll/view",
-      search: `?${createSearchParams({ id: pollID })}`,
-      replace: true,
-    });
-  }
+}
+function goToPoll(pollID) {
+  navigate({
+    pathname: "/poll/view",
+    search: `?${createSearchParams({ id: pollID })}`,
+    replace: true,
+  });
+}
 
-  function goToUser(username) {
-    navigate(`/profile/${username}`);
-  }
+function goToUser(username) {
+  navigate(`/profile/${username}`);
+}
 
   return (
     <div>
-      <div>
-        <Checkbox label="Color" value={checked} onChange={handleChange} />
-      </div>
+    <div className = "encasedR">
+    <div>
+      <h className = "r_title">
+        Recommended Polls
+      </h>
+    <div>
+      <Checkbox
+        label="Color"
+        value={checked}
+        onChange={handleChange}
+      />
+    </div>
       <div>
         <Checkbox
           label="Sports"
-          value={checkedTwo}
+         value={checkedTwo}
           onChange={handleChangeTwo}
-        />
-      </div>
+       />
+     </div>
 
-      <div>
-        <button type="button" onClick={fetchPoll}>
-          Recommend Poll
-        </button>
-      </div>
-
-      <div className="search__results">
+    <div>
+    <button type="button" onClick = {fetchPoll}>Recommend Poll</button>
+    </div>
+    </div>
+    </div>
+    <div className="recommend__results">
         {searchList.map((val, key) => {
           return (
             <div className="poll__results">
@@ -135,8 +140,13 @@ function RecommendedPolls() {
           );
         })}
       </div>
-    </div>
+
+      </div>
   );
+
+
 }
+
+
 
 export default RecommendedPolls;
