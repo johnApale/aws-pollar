@@ -37,7 +37,7 @@ function Messages({ user, convoUser, conversationID }) {
             conversationID: conversationID,
           })
         );
-        console.log(conversationData);
+
         setMessageList([...conversationData.data.messagesByConversation.items]);
       } catch (e) {
         console.log("error fetching messages, ", e);
@@ -85,8 +85,21 @@ function Messages({ user, convoUser, conversationID }) {
       } catch (e) {
         console.log("Error creating conversation, ", e);
       }
+
       setConvoID(newConversationID);
       createMessageData(newConversationID);
+
+      try {
+        const conversationData = await API.graphql(
+          graphqlOperation(messagesByConversation, {
+            conversationID: newConversationID,
+          })
+        );
+        console.log(conversationData);
+        setMessageList([...conversationData.data.messagesByConversation.items]);
+      } catch (e) {
+        console.log("error fetching messages, ", e);
+      }
     }
 
     async function createMessageData(converID) {
@@ -105,11 +118,10 @@ function Messages({ user, convoUser, conversationID }) {
       setMessage("");
     }
     if (conversationID) {
-      console.log(conversationID);
-      // console.log("Existing");
+      console.log("Existing");
       createMessageData(conversationID);
     } else {
-      // console.log("New");
+      console.log("New");
       createNewConversation();
     }
   };

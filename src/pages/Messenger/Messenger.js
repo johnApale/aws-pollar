@@ -17,9 +17,11 @@ function Messenger(props) {
   useEffect(() => {
     // clear location state on reload
     navigate(location.pathname, {});
+    console.log(location.state);
 
     async function fetchConversations() {
       // // handle if location state exists
+      let userFound = false;
 
       try {
         const conversationModel = await API.graphql(
@@ -36,17 +38,24 @@ function Messenger(props) {
             }
             if (location.state) {
               if (user.userID === location.state.toUser) {
-                console.log("test");
+                userFound = true;
                 setConvoUser(location.state.toUser);
                 setConvoID(element.conversationID);
                 openConversation(location.state.toUser, element.conversationID);
+                setNewMessage(false);
               }
             }
           }
         }
+        if (location.state) {
+          if (!userFound) {
+            setConvoUser(location.state.toUser);
+            openConversation(location.state.toUser);
+          }
+        }
 
-        setNewMessage(false);
-        setConversationList(conversationListData);
+        setConversationList([...conversationListData]);
+        console.log(conversationListData);
 
         // console.log(conversationListData[0].Conversation.id);
       } catch (e) {
@@ -63,10 +72,15 @@ function Messenger(props) {
       variables: { userID: props.user.username },
     }).subscribe({
       next: (convo) => {
-        const newConvoID =
-          convo.value.data.onCreateConversationUserByUserID.Conversation.id;
-        console.log(newConvoID);
-        fetchConversation(newConvoID);
+        const newConvo = convo.value.data.onCreateConversationUserByUserID;
+        newConvo.conversationUser = location.state.toUser;
+        console.log(newConvo);
+        setConversationList((conversationList) => [
+          ...conversationList,
+          newConvo,
+        ]);
+
+        // fetchConversation(newConvoID);
       },
     });
   }
@@ -86,6 +100,7 @@ function Messenger(props) {
     setConversationList(...conversationList, newConvoData);
   }
   function openConversation(user, conversationID) {
+    console.log(user, conversationID);
     setConvoUser(user);
     setConvoID(conversationID);
   }
@@ -107,24 +122,26 @@ function Messenger(props) {
               </div>
             )}
             {conversationList &&
-              conversationList.map((val, key) => {
-                return (
-                  <div
-                    className="conversation__card"
-                    key={key}
-                    onClick={() => {
-                      openConversation(
-                        val.conversationUser,
-                        val.conversationID
-                      );
-                    }}
-                  >
-                    <div className="conversation__user">
-                      {val.conversationUser}
+              conversationList
+                .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+                .map((val, key) => {
+                  return (
+                    <div
+                      className="conversation__card"
+                      key={key}
+                      onClick={() => {
+                        openConversation(
+                          val.conversationUser,
+                          val.conversationID
+                        );
+                      }}
+                    >
+                      <div className="conversation__user">
+                        {val.conversationUser}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
           </div>
         </div>
 
