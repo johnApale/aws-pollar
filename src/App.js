@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./pages/Home/Home";
 import CommentTest from "./pages/Test/CommentTest";
+import Test from "./pages/Test/Test"
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
 import AnswerPoll from "./pages/Poll/AnswerPoll";
@@ -300,7 +301,6 @@ export default function App() {
             </nav>
             <Routes>
               <Route path="/" element={<Home user={user} />}></Route>
-              <Route path="/message" element={<Messages user={user} />}></Route>
               <Route path="home" element={<Home user={user} />}></Route>
               <Route
                 path="poll/create"
@@ -315,10 +315,10 @@ export default function App() {
                 element={<Messenger user={user} />}
               ></Route>
               <Route path="trending" element={<Trending user={user} />}></Route>
-              <Route path="test"></Route>
+              <Route path="test" element={<Test />}></Route>
               <Route
                 path="comment_test"
-                element={<Recommended user={user} />}
+                element={<CommentTest user={user} />}
               ></Route>
               <Route
                 path="poll/answer"

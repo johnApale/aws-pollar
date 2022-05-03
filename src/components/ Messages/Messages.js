@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import {
-  conversationsByUser,
-  messagesByConversation,
-} from "../../graphql/queries";
+import { messagesByConversation } from "../../graphql/queries";
 
 import "./Messages.css";
 import {
   createConversation,
   createConversationUser,
   createMessage,
-  updateConversation,
 } from "../../graphql/mutations";
 import { onCreateMessageByConversationID } from "../../graphql/subscriptions";
-import { Route, useLocation, useNavigate } from "react-router-dom";
-import { ConsoleLogger } from "@aws-amplify/core";
+import { useNavigate } from "react-router-dom";
 
 function Messages({ user, convoUser, conversationID }) {
   const [convoID, setConvoID] = useState();
   const [messageList, setMessageList] = useState();
-  const [user1Convos, setUser1Convos] = useState([]);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
@@ -43,7 +37,7 @@ function Messages({ user, convoUser, conversationID }) {
             conversationID: conversationID,
           })
         );
-        console.log(conversationData);
+
         setMessageList([...conversationData.data.messagesByConversation.items]);
       } catch (e) {
         console.log("error fetching messages, ", e);
@@ -91,8 +85,21 @@ function Messages({ user, convoUser, conversationID }) {
       } catch (e) {
         console.log("Error creating conversation, ", e);
       }
+
       setConvoID(newConversationID);
       createMessageData(newConversationID);
+
+      try {
+        const conversationData = await API.graphql(
+          graphqlOperation(messagesByConversation, {
+            conversationID: newConversationID,
+          })
+        );
+        console.log(conversationData);
+        setMessageList([...conversationData.data.messagesByConversation.items]);
+      } catch (e) {
+        console.log("error fetching messages, ", e);
+      }
     }
 
     async function createMessageData(converID) {
@@ -111,11 +118,10 @@ function Messages({ user, convoUser, conversationID }) {
       setMessage("");
     }
     if (conversationID) {
-      console.log(conversationID);
-      // console.log("Existing");
+      console.log("Existing");
       createMessageData(conversationID);
     } else {
-      // console.log("New");
+      console.log("New");
       createNewConversation();
     }
   };
