@@ -6,8 +6,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 import {
-  searchPolls,
-  searchUserInformations,
+  listPolls,
+  listUserInformations,
   userFollowers,
   getFollow,
 } from "../../graphql/queries";
@@ -33,13 +33,13 @@ function Search(props) {
       try {
         // user search
         const userModel = await API.graphql(
-          graphqlOperation(searchUserInformations, {
-            filter: { usernameID: { match: query } },
+          graphqlOperation(listUserInformations, {
+            filter: { usernameID: { eq: query } },
           })
         );
         // set follower count for user
-        if (userModel.data.searchUserInformations.items.length > 0) {
-          const userData = userModel.data.searchUserInformations.items[0];
+        if (userModel.data.listUserInformations.items.length > 0) {
+          const userData = userModel.data.listUserInformations.items[0];
           userData.pollCount = userData.polls.items.length;
           searchArray.push(...userData?.polls.items);
           setUserSearch(userData);
@@ -48,9 +48,12 @@ function Search(props) {
         }
         // poll search
         const models = await API.graphql(
-          graphqlOperation(searchPolls, { filter: { title: { match: query } } })
+          graphqlOperation(listPolls, {
+            filter: { title: { contains: query } },
+          })
         );
-        searchArray.push(...models.data.searchPolls.items);
+        searchArray.push(...models.data.listPolls.items);
+        console.log(models);
         for (let i = 0; i < searchArray.length; i += 1) {
           searchArray[i].likeLen = searchArray[i].like.items.length;
         }

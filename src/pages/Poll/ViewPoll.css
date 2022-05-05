@@ -25,7 +25,8 @@
     margin-bottom: -2px;
 }
 .poll__created{
-    color: gray
+    color: gray;
+    margin-right: 12px
 }
 
 .poll__bottom{
@@ -36,6 +37,15 @@
     margin-bottom: -23px;
 }
 
+.poll__answer_count{
+    font-style: italic;
+    font-weight: 500;
+}
+
+.poll__top-mid{
+    display: flex;
+
+}
 .bottom__left{
     display: flex;
     width: 120px;
