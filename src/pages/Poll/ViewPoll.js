@@ -5,7 +5,12 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
-import { getPoll, getUserAnswer, getLike } from "../../graphql/queries";
+import {
+  getPoll,
+  getUserAnswer,
+  getLike,
+  answerByPoll,
+} from "../../graphql/queries";
 import {
   createLike,
   deleteLike,
@@ -20,6 +25,7 @@ import "./ViewPoll.css";
 function ViewPoll(props) {
   const [poll, setPoll] = useState([]);
   const [answer, setAnswer] = useState();
+  const [answerCount, setAnswerCount] = useState();
   const [answerButton, setAnswerButton] = useState("Vote");
   const [like, setLike] = useState("Like");
   const [likeCount, setLikeCount] = useState();
@@ -48,6 +54,14 @@ function ViewPoll(props) {
         }
       } catch (error) {
         console.log(error);
+      }
+      try {
+        const answerData = await API.graphql(
+          graphqlOperation(answerByPoll, { pollID: id })
+        );
+        setAnswerCount(answerData.data.answerByPoll.items.length);
+      } catch (e) {
+        console.log(e);
       }
     }
 
@@ -198,7 +212,15 @@ function ViewPoll(props) {
           <p className="poll__username" onClick={() => goToUser(poll.userID)}>
             {poll.userID}
           </p>
-          <p className="poll__created">{formatDate(poll.createdAt)}</p>
+          <div className="poll__top-mid">
+            <p className="poll__created">{formatDate(poll.createdAt)}</p>
+            <li />
+            {answerCount === 1 ? (
+              <p className="poll__answer_count">{answerCount} vote</p>
+            ) : (
+              <p className="poll__answer_count">{answerCount} votes</p>
+            )}
+          </div>
         </div>
         <h3 className="poll__title">{poll.title}</h3>
         <p className="poll__description">{poll.description}</p>
@@ -230,6 +252,7 @@ function ViewPoll(props) {
         </div>
         <br />
         {currentAnswer ? <p>Current Answer: {currentAnswer.answer}</p> : null}
+
         <br />
         <div className="poll__buttons">
           <button className="answer__button" onClick={handleAnswer}>
