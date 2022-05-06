@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import {
   useSearchParams,
   createSearchParams,
@@ -21,6 +21,7 @@ import {
 } from "../../graphql/mutations";
 import CommentSection from "../../components/CommentSection/CommentSection";
 import "./ViewPoll.css";
+import { AnonymousContext } from "../../components/ToggleButton/anonymous-context";
 
 function ViewPoll(props) {
   const [poll, setPoll] = useState([]);
@@ -34,6 +35,7 @@ function ViewPoll(props) {
   const id = searchParams.get("id");
   const navigate = useNavigate();
 
+  const { anonymous } = useContext(AnonymousContext);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -41,6 +43,7 @@ function ViewPoll(props) {
           graphqlOperation(getPoll, { id: id })
         );
         const newPoll = pollData.data.getPoll;
+        console.log(newPoll);
         newPoll.categoryLength = newPoll.categories.length;
         setLikeCount(newPoll.like.items.length);
         setPoll(newPoll);
@@ -103,7 +106,7 @@ function ViewPoll(props) {
     fetchData();
     fetchAnswer();
     fetchLike();
-  }, [id]);
+  }, [id, props.user.username]);
 
   const handleAnswer = async (event) => {
     event.preventDefault();
@@ -254,22 +257,24 @@ function ViewPoll(props) {
         {currentAnswer ? <p>Current Answer: {currentAnswer.answer}</p> : null}
 
         <br />
-        <div className="poll__buttons">
-          <button className="answer__button" onClick={handleAnswer}>
-            {answerButton}
-          </button>
-          {currentAnswer ? (
-            <button
-              className="delete__button"
-              onClick={removeAnswer}
-              type="button"
-              id="removeAns"
-            >
-              {" "}
-              Delete Answer
+        {anonymous === true && poll.disclaimer === true ? null : (
+          <div className="poll__buttons">
+            <button className="answer__button" onClick={handleAnswer}>
+              {answerButton}
             </button>
-          ) : null}
-        </div>
+            {currentAnswer ? (
+              <button
+                className="delete__button"
+                onClick={removeAnswer}
+                type="button"
+                id="removeAns"
+              >
+                {" "}
+                Delete Answer
+              </button>
+            ) : null}
+          </div>
+        )}
 
         <div className="poll__bottom">
           <div className="bottom__left">

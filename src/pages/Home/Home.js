@@ -12,7 +12,6 @@ function Home(props) {
   const [placeholder, setPlaceholder] = useState("Ask a question");
 
   useEffect(() => {
-    console.log(props.user);
     async function fetchData() {
       try {
         const userInfoArray = await API.graphql(
