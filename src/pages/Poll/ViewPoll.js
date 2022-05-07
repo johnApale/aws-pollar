@@ -10,6 +10,7 @@ import {
   getUserAnswer,
   getLike,
   answerByPoll,
+  listUserAnswers,
 } from "../../graphql/queries";
 import {
   createLike,
@@ -25,12 +26,12 @@ import { AnonymousContext } from "../../components/ToggleButton/anonymous-contex
 
 function ViewPoll(props) {
   const [poll, setPoll] = useState([]);
-  const [answer, setAnswer] = useState();
   const [answerCount, setAnswerCount] = useState();
   const [answerButton, setAnswerButton] = useState("Vote");
   const [like, setLike] = useState("Like");
   const [likeCount, setLikeCount] = useState();
-  const [currentAnswer, setCurrentAnswer] = useState();
+  const [totalCount, setTotalCount] = useState({});
+  const [currentAnswer, setCurrentAnswer] = useState(null);
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   const navigate = useNavigate();
@@ -43,11 +44,11 @@ function ViewPoll(props) {
           graphqlOperation(getPoll, { id: id })
         );
         const newPoll = pollData.data.getPoll;
-        console.log(newPoll);
         newPoll.categoryLength = newPoll.categories.length;
         setLikeCount(newPoll.like.items.length);
         setPoll(newPoll);
         const count = newPoll.views + 1;
+        fetchCalculateVotes(newPoll);
         try {
           const addView = await API.graphql(
             graphqlOperation(updatePoll, { input: { id: id, views: count } })
@@ -68,6 +69,32 @@ function ViewPoll(props) {
       }
     }
 
+    async function fetchCalculateVotes(poll) {
+      let totals = {};
+      // get answers for poll
+      let pollAnswerModel = [];
+      try {
+        pollAnswerModel = await API.graphql(
+          graphqlOperation(listUserAnswers, { filter: { pollID: { eq: id } } })
+        );
+        pollAnswerModel = pollAnswerModel.data.listUserAnswers.items;
+      } catch (e) {
+        console.log("Error, ", e);
+      }
+
+      for (let i = 0; i < poll.answerChoices.length; i++) {
+        let answer = poll.answerChoices[i];
+        const count = pollAnswerModel.filter((choice) => {
+          if (choice.answer === answer) {
+            return true;
+          }
+          return false;
+        }).length;
+        totals[answer] = Math.round((count / pollAnswerModel.length) * 100);
+      }
+      setTotalCount(totals);
+    }
+
     async function fetchAnswer() {
       try {
         const answerData = await API.graphql(
@@ -76,7 +103,7 @@ function ViewPoll(props) {
             userID: props.user.username,
           })
         );
-        setCurrentAnswer(answerData.data.getUserAnswer);
+        setCurrentAnswer(answerData.data.getUserAnswer.answer);
         if (answerData.data.getUserAnswer) {
           setAnswerButton("Change Vote");
         } else {
@@ -105,56 +132,56 @@ function ViewPoll(props) {
 
     fetchData();
     fetchAnswer();
+    calculateVotes();
     fetchLike();
   }, [id, props.user.username]);
 
-  const handleAnswer = async (event) => {
-    event.preventDefault();
+  async function handleAnswer(option) {
     const answerData = {
       pollID: id,
       userID: props.user.username,
-      answer: answer,
+      answer: option,
     };
-    if (answerButton === "Vote") {
+
+    if (currentAnswer === null) {
+      // create answer
       try {
         const newAnswer = await API.graphql(
           graphqlOperation(createUserAnswer, { input: answerData })
         );
-        setCurrentAnswer(newAnswer.data.createUserAnswer);
-        setAnswerButton("Change Vote");
+        setAnswerCount(answerCount + 1);
+        setCurrentAnswer(newAnswer.data.createUserAnswer.answer);
       } catch (error) {
         console.log("Error submitting answer, ", error);
       }
-    }
-    if (answerButton === "Change Vote") {
+      calculateVotes();
+    } else if (currentAnswer === option) {
+      // delete answer
+      try {
+        const removeAnswer = await API.graphql(
+          graphqlOperation(deleteUserAnswer, {
+            input: { pollID: id, userID: props.user.username },
+          })
+        );
+        alert("Your answer has been removed.");
+        setAnswerCount(answerCount - 1);
+        setCurrentAnswer(null);
+      } catch (error) {
+        console.log("Delete error, ", error);
+      }
+    } else {
+      // update answer
       try {
         const updatedAnswer = await API.graphql(
           graphqlOperation(updateUserAnswer, { input: answerData })
         );
-        setCurrentAnswer(updatedAnswer.data.updateUserAnswer);
+        setCurrentAnswer(updatedAnswer.data.updateUserAnswer.answer);
       } catch (error) {
         console.log("Update error, ", error);
       }
+      calculateVotes();
     }
-  };
-
-  const removeAnswer = async (event) => {
-    event.preventDefault();
-    const answerData = {
-      pollID: id,
-      userID: props.user.username,
-    };
-    try {
-      const removeAnswer = await API.graphql(
-        graphqlOperation(deleteUserAnswer, { input: answerData })
-      );
-      alert("Your answer has been removed.");
-      setAnswerButton("Vote");
-      setCurrentAnswer(null);
-    } catch (error) {
-      console.log("Delete error, ", error);
-    }
-  };
+  }
 
   const handleLike = async (event) => {
     event.preventDefault();
@@ -184,6 +211,32 @@ function ViewPoll(props) {
       }
     }
   };
+
+  async function calculateVotes() {
+    let totals = {};
+    // get answers for poll
+    let pollAnswerModel = [];
+    try {
+      pollAnswerModel = await API.graphql(
+        graphqlOperation(listUserAnswers, { filter: { pollID: { eq: id } } })
+      );
+      pollAnswerModel = pollAnswerModel.data.listUserAnswers.items;
+    } catch (e) {
+      console.log("Error, ", e);
+    }
+
+    for (let i = 0; i < poll.answerChoices.length; i++) {
+      let answer = poll.answerChoices[i];
+      const count = pollAnswerModel.filter((choice) => {
+        if (choice.answer === answer) {
+          return true;
+        }
+        return false;
+      }).length;
+      totals[answer] = Math.round((count / pollAnswerModel.length) * 100);
+    }
+    setTotalCount(totals);
+  }
 
   const [copySuccess, setCopySuccess] = useState("");
   const textAreaRef = useRef(null);
@@ -233,52 +286,63 @@ function ViewPoll(props) {
         </p>
 
         <div className="poll__options">
-          {poll.answerChoices?.map((option, key) => {
-            return (
-              <div className="poll__option" key={key}>
-                <input
-                  className="poll__radio"
-                  type="radio"
-                  name="options"
-                  value={option}
-                  onChange={(event) => {
-                    setAnswer(event.target.value);
-                  }}
-                ></input>
-                <li key={option} className="poll__value">
-                  {" "}
-                  {option}
-                </li>
-              </div>
-            );
-          })}
+          {anonymous === true && poll.disclaimer === true ? (
+            <>
+              {poll.answerChoices?.map((option, key) => {
+                return (
+                  <div className="anon__poll__option" key={key}>
+                    {" "}
+                    {option}
+                  </div>
+                );
+              })}
+            </>
+          ) : (
+            <>
+              {poll.answerChoices?.map((option, key) => {
+                return (
+                  <>
+                    {currentAnswer === option ? (
+                      <div
+                        className="current__poll__option"
+                        key={key}
+                        onClick={() => handleAnswer(option)}
+                      >
+                        {" "}
+                        {option}
+                        {currentAnswer && (
+                          <div className="poll__percentage">
+                            {totalCount[option]}%
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div
+                        className="poll__option"
+                        key={key}
+                        onClick={() => handleAnswer(option)}
+                      >
+                        {" "}
+                        {option}
+                        {currentAnswer && (
+                          <div className="poll__percentage">
+                            {totalCount[option]}%
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </>
+                );
+              })}
+            </>
+          )}
         </div>
-        <br />
-        {currentAnswer ? <p>Current Answer: {currentAnswer.answer}</p> : null}
-
-        <br />
-        {anonymous === true && poll.disclaimer === true ? null : (
-          <div className="poll__buttons">
-            <button className="answer__button" onClick={handleAnswer}>
-              {answerButton}
-            </button>
-            {currentAnswer ? (
-              <button
-                className="delete__button"
-                onClick={removeAnswer}
-                type="button"
-                id="removeAns"
-              >
-                {" "}
-                Delete Answer
-              </button>
-            ) : null}
-          </div>
-        )}
+        {anonymous === true && poll.disclaimer === true ? null : <></>}
 
         <div className="poll__bottom">
           <div className="bottom__left">
             <p className="poll__likes">Likes: {likeCount}</p>
+            <li />
             <p className="poll__views">Views: {poll.views}</p>
           </div>
           <div className="bottom__right">
