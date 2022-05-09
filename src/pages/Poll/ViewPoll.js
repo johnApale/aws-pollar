@@ -5,7 +5,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
-import { getPoll, getUserAnswer, getLike } from "../../graphql/queries";
+import { getPoll, getUserAnswer, getLike, answersByUser } from "../../graphql/queries";
 import {
   createLike,
   deleteLike,
@@ -13,9 +13,17 @@ import {
   deleteUserAnswer,
   updateUserAnswer,
   updatePoll,
+  createNotification,
 } from "../../graphql/mutations";
 import CommentSection from "../../components/CommentSection/CommentSection";
 import "./ViewPoll.css";
+import { AWSIoTProvider } from "@aws-amplify/pubsub";
+import Notification from "../Notifications/Notifications";
+import {createMyNotification} from "../Notifications/Notifications";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 function ViewPoll(props) {
   const [poll, setPoll] = useState([]);
@@ -27,6 +35,8 @@ function ViewPoll(props) {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   const navigate = useNavigate();
+
+  const myNotif = new Notification();
 
   useEffect(() => {
     async function fetchData() {
@@ -83,6 +93,18 @@ function ViewPoll(props) {
         }
       } catch (error) {
         console.log("Error fetching likes, ", error);
+      }
+    }
+
+    async function fetchAnalytics() {
+      try {
+        const analytics = await API.graphql(
+          graphqlOperation(getPoll, {
+            pollID: id,
+          })
+        );
+      } catch (error) {
+        console.log("Error compiling analytics");
       }
     }
 
@@ -152,6 +174,7 @@ function ViewPoll(props) {
         );
         setLike("Unlike");
         setLikeCount(likeCount + 1);
+        NotificationManager.success("You have liked this user's post.", 'Liked');
       } catch (error) {
         console.log("Delete error, ", error);
       }
