@@ -6,8 +6,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 import {
-  searchPolls,
-  searchUserInformations,
+  listPolls,
+  listUserInformations,
   userFollowers,
   getFollow,
 } from "../../graphql/queries";
@@ -33,13 +33,13 @@ function Search(props) {
       try {
         // user search
         const userModel = await API.graphql(
-          graphqlOperation(searchUserInformations, {
-            filter: { usernameID: { match: query } },
+          graphqlOperation(listUserInformations, {
+            filter: { usernameID: { eq: query } },
           })
         );
         // set follower count for user
-        if (userModel.data.searchUserInformations.items.length > 0) {
-          const userData = userModel.data.searchUserInformations.items[0];
+        if (userModel.data.listUserInformations.items.length > 0) {
+          const userData = userModel.data.listUserInformations.items[0];
           userData.pollCount = userData.polls.items.length;
           searchArray.push(...userData?.polls.items);
           setUserSearch(userData);
@@ -48,9 +48,12 @@ function Search(props) {
         }
         // poll search
         const models = await API.graphql(
-          graphqlOperation(searchPolls, { filter: { title: { match: query } } })
+          graphqlOperation(listPolls, {
+            filter: { title: { contains: query } },
+          })
         );
-        searchArray.push(...models.data.searchPolls.items);
+        searchArray.push(...models.data.listPolls.items);
+        console.log(models);
         for (let i = 0; i < searchArray.length; i += 1) {
           searchArray[i].likeLen = searchArray[i].like.items.length;
         }
@@ -81,7 +84,7 @@ function Search(props) {
       }
     }
     fetchData();
-  }, []);
+  }, [props.user.username, query]);
 
   function goToPoll(pollID) {
     navigate({
@@ -157,29 +160,35 @@ function Search(props) {
       <div className="search__results">
         {searchList.map((val, key) => {
           return (
-            <div className="poll__results">
-              <h3
-                className="result__title"
-                onClick={() => goToPoll(val.id)}
-                key={key}
-              >
-                {val.title}
-              </h3>
-              <p className="result__categories">Category: {val.categories}</p>
-              <div className="result__bottom">
-                <div className="result__left">
-                  <p className="result__likes">Likes: {val.likeLen}</p>
-                  <p className="result__views">Views: {val.views}</p>
-                </div>
+            <>
+              {val.public && (
+                <div className="poll__results">
+                  <h3
+                    className="result__title"
+                    onClick={() => goToPoll(val.id)}
+                    key={key}
+                  >
+                    {val.title}
+                  </h3>
+                  <p className="result__categories">
+                    Category: {val.categories}
+                  </p>
+                  <div className="result__bottom">
+                    <div className="result__left">
+                      <p className="result__likes">Likes: {val.likeLen}</p>
+                      <p className="result__views">Views: {val.views}</p>
+                    </div>
 
-                <p
-                  className="result__created"
-                  onClick={() => goToUser(val.userID)}
-                >
-                  Created by: {val.userID}
-                </p>
-              </div>
-            </div>
+                    <p
+                      className="result__created"
+                      onClick={() => goToUser(val.userID)}
+                    >
+                      Created by: {val.userID}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </>
           );
         })}
       </div>

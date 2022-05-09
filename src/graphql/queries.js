@@ -240,12 +240,17 @@ export const getUserInformation = /* GraphQL */ `
       }
       pollAnswers {
         items {
-          id
-          pollID
-          userID
-          answer
-          createdAt
-          updatedAt
+          Poll {
+            title
+            createdAt
+            id
+            views
+            like {
+              items {
+                id
+              }
+            }
+          }
         }
         nextToken
       }
@@ -262,11 +267,17 @@ export const getUserInformation = /* GraphQL */ `
       }
       likedPolls {
         items {
-          id
-          pollID
-          userID
-          createdAt
-          updatedAt
+          Poll {
+            title
+            createdAt
+            id
+            views
+            like {
+              items {
+                id
+              }
+            }
+          }
         }
         nextToken
       }
@@ -347,6 +358,41 @@ export const listUserInformations = /* GraphQL */ `
           nextToken
         }
         polls {
+          items {
+            id
+            userID
+            title
+            publicity
+            disclaimer
+            description
+            answerChoices
+            categories
+            tags
+            like {
+              items {
+                id
+                pollID
+                userID
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            views
+            timeStart
+            timeEnd
+            comments {
+              nextToken
+            }
+            userAnswers {
+              nextToken
+            }
+            activity {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         pollAnswers {
@@ -356,6 +402,13 @@ export const listUserInformations = /* GraphQL */ `
           nextToken
         }
         likedPolls {
+          items {
+            id
+            pollID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         conversations {
@@ -547,6 +600,13 @@ export const listPolls = /* GraphQL */ `
         categories
         tags
         like {
+          items {
+            id
+            pollID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         views

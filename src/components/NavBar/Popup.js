@@ -1,15 +1,18 @@
 import React from "react";
+import "./Popup.css";
 
-
-const Popup = props => {
-    return (
-        <div className = "popupbox">
-            <div className="box">
-                <span className = "close" onClick = {props.handleClose}>x</span>
-                {props.content}
-            </div>
-        </div>
-    );
+function Popup() {
+  return (
+    <div className="Popup">
+      <div className="popup__info">
+        <h1 className="popup__title">Anonymous mode: </h1>
+        <p className="popup__details">
+          Switching to anonymous mode prevents you from participating in polls
+          that collect data.
+        </p>
+      </div>
+    </div>
+  );
 }
 
-export default Popup; 
+export default Popup;

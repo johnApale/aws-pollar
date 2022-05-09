@@ -21,7 +21,7 @@
     left:-30px;
     top:5px;
 
-    
+
 }
 
 .liked_username{
@@ -68,4 +68,48 @@
 .poll_link:hover {
     cursor: pointer;
     color: rgb(126, 173, 204);
+}
+
+.r_title{
+    position: center;
+    font-weight: 500;
+}
+
+.Recommended{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.recommended__options{
+   margin-top: 20px;
+   margin-bottom: 50px;
+   background-color: whitesmoke;
+   width: 600px;
+   padding: 15px;
+    
+}
+
+.recommended__checkbox{
+    display: flex;
+    margin-top: 10px;
+}
+
+.check__label{
+    margin-right: 8px;
+}
+
+.color__check{
+    margin-right: 25px;
+
+}
+
+.recommend__button{
+    margin-left: auto;
+}
+
+.recommend__results{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position:relative; 
 }

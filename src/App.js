@@ -1,9 +1,8 @@
 import "./App.css";
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./pages/Home/Home";
-import CommentTest from "./pages/Test/CommentTest";
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
 import Message from "./pages/Test/messageTest";
@@ -278,6 +277,9 @@ const formFields = {
 };
 
 export default function App() {
+  const [anonymous, setAnonymous] = useState(false);
+  const value = { anonymous, setAnonymous };
+
   return (
     <Authenticator formFields={formFields} components={components}>
       {({ signOut, user }) => (
@@ -289,50 +291,48 @@ export default function App() {
 
             <NotificationContainer />
           </div>
-
-          <Router>
-            <nav>
-              <NavBar user={user} signOut={signOut} />
-            </nav>
-            <Routes>
-              <Route path="/" element={<Home user={user} />}></Route>
-              <Route path="/message" element={<Messages user={user} />}></Route>
-              <Route path="home" element={<Home user={user} />}></Route>
-              <Route
-                path="poll/create"
-                element={<CreatePoll user={user} />}
-              ></Route>
-              <Route
-                path="poll/view"
-                element={<ViewPoll user={user} />}
-              ></Route>
-              <Route
-                path="messages"
-                element={<Messenger user={user} />}
-              ></Route>
-              <Route path="trending" element={<Trending user={user} />}></Route>
-              <Route path="test"></Route>
-              <Route
-                path="comment_test"
-                element={<Recommended user={user} />}
-              ></Route>
-              <Route
-                path="poll/answer"
-                element={<AnswerPoll user={user} />}
-              ></Route>
-              <Route path="results" element={<Search user={user} />}></Route>
-              <Route
-                path="profile/:username"
-                element={<UserProfile user={user} />}
-              ></Route>
-              {/* <Route path="Settings" element={<Settings />}></Route>
+          <AnonymousContext.Provider value={value}>
+            <Router>
+              <nav>
+                <NavBar user={user} signOut={signOut} />
+              </nav>
+              <Routes>
+                <Route path="/" element={<Home user={user} />}></Route>
+                <Route path="home" element={<Home user={user} />}></Route>
+                <Route
+                  path="poll/create"
+                  element={<CreatePoll user={user} />}
+                ></Route>
+                <Route
+                  path="poll/view"
+                  element={<ViewPoll user={user} />}
+                ></Route>
+                <Route
+                  path="messages"
+                  element={<Messenger user={user} />}
+                ></Route>
+                <Route
+                  path="trending"
+                  element={<Trending user={user} />}
+                ></Route>
+                <Route
+                  path="poll/answer"
+                  element={<AnswerPoll user={user} />}
+                ></Route>
+                <Route path="results" element={<Search user={user} />}></Route>
+                <Route
+                  path="profile/:username"
+                  element={<UserProfile user={user} />}
+                ></Route>
+                {/* <Route path="Settings" element={<Settings />}></Route>
               <Route
                 path="/Settings/ProfilePicture"
                 element={<ProfilePicture />}
               ></Route> */}
-              <Route path="recommended" element={<Recommended />}></Route>
-            </Routes>
-          </Router>
+                <Route path="recommended" element={<Recommended />}></Route>
+              </Routes>
+            </Router>
+          </AnonymousContext.Provider>
         </div>
       )}
     </Authenticator>
