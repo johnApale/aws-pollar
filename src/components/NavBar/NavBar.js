@@ -64,7 +64,7 @@ function NavBar(props) {
           </p>
 
           <p className="nav__create" onClick={goToCreate}>
-            Create A Poll
+            Create Poll
           </p>
           <p className="nav__recommended" onClick={goToRecommended}>
             Recommended Polls
@@ -109,7 +109,7 @@ function NavBar(props) {
             <>
               <p className="anon_title">Anonymous Mode</p>
               <div className="mode_description">
-                <p>
+                <p className = "anon_desc">
                   What you do on Pollar is private, your activity won't affect
                   your account.{" "}
                 </p>

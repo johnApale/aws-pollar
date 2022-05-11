@@ -11,6 +11,8 @@
     width: 70vw;
     height: 780px;
     border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    z-index: -1;
 }
 
 .messenger__left{
@@ -38,6 +40,7 @@
     align-items: center;
     padding-right: 15px;
     border-bottom: 1px solid grey;
+   
 }
 
 .conversation__card:hover{
@@ -49,7 +52,10 @@
     font-weight: 500;
 }
 
+.conversation__user:hover{
+    color: rgba(116, 155, 190, 1);
 
+}
 
 .messenger__title {
     font-size: 30px;
@@ -58,6 +64,7 @@
     width: 100%;
     height: 115px;
     border-bottom: 1px solid grey;
+
 }
 
 .messenger__messages {

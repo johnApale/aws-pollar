@@ -91,23 +91,23 @@ function goToUser(username) {
       <h className = "r_title">
         Recommended Polls
       </h>
-    <div>
+    <div className="r__check1">
       <Checkbox
-        label="Color"
+        label=" Color"
         value={checked}
         onChange={handleChange}
       />
     </div>
-      <div>
+      <div className="r__check2">
         <Checkbox
-          label="Sports"
-         value={checkedTwo}
+          label=" Sports"
+          value={checkedTwo}
           onChange={handleChangeTwo}
        />
      </div>
 
     <div>
-    <button type="button" onClick = {fetchPoll}>Recommend Poll</button>
+    <button type="button" onClick = {fetchPoll} className = "recommended__submit">Recommend Poll</button>
     </div>
     </div>
     </div>
