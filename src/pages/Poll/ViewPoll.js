@@ -196,6 +196,10 @@ function ViewPoll(props) {
         );
         setLike("Unlike");
         setLikeCount(likeCount + 1);
+        NotificationManager.success(
+          "You have liked this user's post.",
+          "Liked"
+        );
       } catch (error) {
         console.log("Delete error, ", error);
       }

@@ -19,6 +19,7 @@ import ProfilePicture from "./pages/Settings/ProfilePicture";
 import Recommended from "./pages/Recommended/Recommended";
 import { AnonymousContext } from "./components/ToggleButton/anonymous-context";
 import AnonymousToggleButton from "./components/ToggleButton/AnonymousToggleButton";
+
 import {
   Authenticator,
   useTheme,
