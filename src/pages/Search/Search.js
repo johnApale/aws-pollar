@@ -161,7 +161,7 @@ function Search(props) {
         {searchList.map((val, key) => {
           return (
             <>
-              {val.public && (
+              {val.publicity && (
                 <div className="poll__results">
                   <h3
                     className="result__title"
