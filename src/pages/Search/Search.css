@@ -1,8 +1,6 @@
 .Search{
     display: flex;
     flex-direction: column;
-    position: relative;
-    top:20px;
 }
 
 .result__query{
@@ -11,8 +9,6 @@
     font-size: 20px;
     width: 700px;
     padding-bottom: 10px;
-    position:relative; 
-    bottom:5px;
 }
 
 .user__results {
@@ -24,10 +20,6 @@
     width: 700px;
     height: 200px;
     margin-bottom: 10px;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    border-radius: 10px;
-    position: relative;
-    top:10px;
 }
 
 .user__left {
@@ -43,8 +35,6 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    position: relative;
-    right:200px;
 }
 
 .user__right {
@@ -68,18 +58,6 @@
     margin-bottom: 5px;
 }
 
-.search__followUser{
-    box-sizing: border-box;
-    background: #9BCCE1;
-    border: 1px solid #9BCCE1;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
-    border-radius: 50px;
-    color:White; 
-    font-weight: 500;
-    position: relative;
-    bottom:35px;
-}
-
 .search__results {
     display: flex;
     flex-direction: column;
@@ -93,10 +71,6 @@
     margin-bottom: 10px;
     width: 700px;
     border: 1px #ecebeb;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    border-radius: 10px;
-    position: relative;
-    top:10px;
 }
 
 .result__bottom{

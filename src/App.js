@@ -5,7 +5,6 @@ import NavBar from "./components/NavBar/NavBar";
 import Home from "./pages/Home/Home";
 import Search from "./pages/Search/Search";
 import CreatePoll from "./pages/Poll/CreatePoll";
-import Message from "./pages/Test/messageTest";
 import AnswerPoll from "./pages/Poll/AnswerPoll";
 import ViewPoll from "./pages/Poll/ViewPoll";
 import Messenger from "./pages/Messenger/Messenger";
@@ -18,8 +17,8 @@ import awsconfig from "./aws-exports";
 import Settings from "./pages/Settings/Settings";
 import ProfilePicture from "./pages/Settings/ProfilePicture";
 import Recommended from "./pages/Recommended/Recommended";
-import {NotificationContainer, NotificationManager, createNotification} from "react-notifications";
-
+import { AnonymousContext } from "./components/ToggleButton/anonymous-context";
+import AnonymousToggleButton from "./components/ToggleButton/AnonymousToggleButton";
 import {
   Authenticator,
   useTheme,
@@ -32,6 +31,11 @@ import {
 } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import UserProfile from "./pages/User/UserProfile";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
+
 Amplify.configure(awsconfig);
 
 const components = {

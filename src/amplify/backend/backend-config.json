@@ -1,6 +1,6 @@
 {
   "api": {
-    "awspollar": {
+    "api4awspollar": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
