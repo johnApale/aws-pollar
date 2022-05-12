@@ -1,4 +1,5 @@
 import React from "react";
+
 import "./Popup.css";
 
 function Popup() {
@@ -13,6 +14,7 @@ function Popup() {
       </div>
     </div>
   );
+
 }
 
 export default Popup;

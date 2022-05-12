@@ -93,30 +93,35 @@ function RecommendedPolls() {
   }
 
   return (
-    <div className="Recommended">
-      <div className="recommended__options">
-        <div>
-          <h className="r_title">Select what you're interested in</h>
-          <div className="recommended__checkbox">
-            <div className="color__check">
-              <Checkbox label="Color" value={checked} onChange={handleChange} />
-            </div>
-            <div className="sports__check">
-              <Checkbox
-                label="Sports"
-                value={checkedTwo}
-                onChange={handleChangeTwo}
-              />
-            </div>
-            <button className="recommend__button" onClick={fetchPoll}>
-              Recommend Poll
-            </button>
-          </div>
 
-          <div></div>
-        </div>
-      </div>
-      <div className="recommend__results">
+    <div>
+    <div className = "encasedR">
+    <div>
+      <h className = "r_title">
+        Recommended Polls
+      </h>
+    <div className="r__check1">
+      <Checkbox
+        label=" Color"
+        value={checked}
+        onChange={handleChange}
+      />
+    </div>
+      <div className="r__check2">
+        <Checkbox
+          label=" Sports"
+          value={checkedTwo}
+          onChange={handleChangeTwo}
+       />
+     </div>
+
+    <div>
+    <button type="button" onClick = {fetchPoll} className = "recommended__submit">Recommend Poll</button>
+    </div>
+    </div>
+    </div>
+    <div className="recommend__results">
+
         {searchList.map((val, key) => {
           return (
             <div className="poll__results">
