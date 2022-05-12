@@ -5,8 +5,6 @@
     background-color: whitesmoke;
     border-radius: 10px;
     padding: 15px;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    z-index: -1;
 }
 
 .homecard__user {
@@ -16,11 +14,6 @@
 
 .homecard__date {
     font-size: 12px;
-}
-
-.homecard__info{
-    position: relative;
-    right:50px;
 }
 
 .homecard__top {
@@ -85,6 +78,7 @@
 .homecard__user:hover, .homecard__question:hover, .homecard__comments:hover {
     cursor: pointer;
 }
+
 
 .homecard__comment{
     margin-top: 25px;

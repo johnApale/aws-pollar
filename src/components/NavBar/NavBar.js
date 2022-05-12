@@ -66,7 +66,7 @@ function NavBar(props) {
           </p>
 
           <p className="nav__create" onClick={goToCreate}>
-            Create Poll
+            Create A Poll
           </p>
           <p className="nav__recommended" onClick={goToRecommended}>
             Recommended Polls
@@ -108,9 +108,7 @@ function NavBar(props) {
           </Dropdown>
         </div>
       </div>
-
       {isOpen && <Popup />}
-
     </div>
   );
 }

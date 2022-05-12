@@ -19,7 +19,6 @@ import {
   deleteUserAnswer,
   updateUserAnswer,
   updatePoll,
-  createNotification,
 } from "../../graphql/mutations";
 import CommentSection from "../../components/CommentSection/CommentSection";
 import "./ViewPoll.css";
@@ -131,18 +130,6 @@ function ViewPoll(props) {
       }
     }
 
-    async function fetchAnalytics() {
-      try {
-        const analytics = await API.graphql(
-          graphqlOperation(getPoll, {
-            pollID: id,
-          })
-        );
-      } catch (error) {
-        console.log("Error compiling analytics");
-      }
-    }
-
     fetchData();
     fetchAnswer();
     calculateVotes();
@@ -209,7 +196,6 @@ function ViewPoll(props) {
         );
         setLike("Unlike");
         setLikeCount(likeCount + 1);
-        NotificationManager.success("You have liked this user's post.", 'Liked');
       } catch (error) {
         console.log("Delete error, ", error);
       }
