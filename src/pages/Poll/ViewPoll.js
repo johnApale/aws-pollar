@@ -23,6 +23,11 @@ import {
 import CommentSection from "../../components/CommentSection/CommentSection";
 import "./ViewPoll.css";
 import { AnonymousContext } from "../../components/ToggleButton/anonymous-context";
+import { createMyNotification } from "../Notifications/Notifications";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 function ViewPoll(props) {
   const [poll, setPoll] = useState([]);
@@ -196,6 +201,10 @@ function ViewPoll(props) {
         );
         setLike("Unlike");
         setLikeCount(likeCount + 1);
+        NotificationManager.success(
+          "You have liked this user's post.",
+          "Liked"
+        );
       } catch (error) {
         console.log("Delete error, ", error);
       }
