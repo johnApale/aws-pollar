@@ -5,14 +5,14 @@ import "react-notifications/lib/notifications.css";
 import "react-router-dom";
 
 class Notification extends React.Component {
-    createNotification = (type) => {
+    createMyNotification = (type) => {
         return () => {
           switch (type) {
             case 'Subscribed':
             NotificationManager.info('A user has subscribed to you.');
             break;
             case 'Liked':
-            NotificationManager.success('A user liked your post.', 'Liked');
+            NotificationManager.success("You have liked a user's post.", 'Liked');
             break;
             case 'Posted':
             NotificationManager.success('Someone you follow has posted a new poll.', 'New Post');

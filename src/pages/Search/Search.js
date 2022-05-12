@@ -84,7 +84,7 @@ function Search(props) {
       }
     }
     fetchData();
-  }, []);
+  }, [props.user.username, query]);
 
   function goToPoll(pollID) {
     navigate({
@@ -160,29 +160,35 @@ function Search(props) {
       <div className="search__results">
         {searchList.map((val, key) => {
           return (
-            <div className="poll__results">
-              <h3
-                className="result__title"
-                onClick={() => goToPoll(val.id)}
-                key={key}
-              >
-                {val.title}
-              </h3>
-              <p className="result__categories">Category: {val.categories}</p>
-              <div className="result__bottom">
-                <div className="result__left">
-                  <p className="result__likes">Likes: {val.likeLen}</p>
-                  <p className="result__views">Views: {val.views}</p>
-                </div>
+            <>
+              {val.public && (
+                <div className="poll__results">
+                  <h3
+                    className="result__title"
+                    onClick={() => goToPoll(val.id)}
+                    key={key}
+                  >
+                    {val.title}
+                  </h3>
+                  <p className="result__categories">
+                    Category: {val.categories}
+                  </p>
+                  <div className="result__bottom">
+                    <div className="result__left">
+                      <p className="result__likes">Likes: {val.likeLen}</p>
+                      <p className="result__views">Views: {val.views}</p>
+                    </div>
 
-                <p
-                  className="result__created"
-                  onClick={() => goToUser(val.userID)}
-                >
-                  Created by: {val.userID}
-                </p>
-              </div>
-            </div>
+                    <p
+                      className="result__created"
+                      onClick={() => goToUser(val.userID)}
+                    >
+                      Created by: {val.userID}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </>
           );
         })}
       </div>

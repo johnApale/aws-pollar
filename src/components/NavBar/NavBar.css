@@ -70,6 +70,13 @@
     width: 40px;
     height: 30px;
     margin-right: 20px;
+    margin-left: 20px;
+}
+
+.anon__info{
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
 }
 
 .notifications__icon {
@@ -78,7 +85,7 @@
     margin-right:10px;
 }
 
-.navbar__avatar:hover, .notifications__icon:hover,  .msgbttn:hover {
+.navbar__avatar:hover, .notifications__icon:hover,  .msgbttn:hover, .anon__info:hover{
     cursor: pointer;
 }
 
@@ -142,6 +149,7 @@
     left:4px;
 }
 
+
 .popupbox {
     background: #00000050;
     width: 100%;
@@ -175,6 +183,7 @@
     margin-right: -50%;
     transform: translate(-50%, -50%);
     top:210px;
+
   }
   
   .close {

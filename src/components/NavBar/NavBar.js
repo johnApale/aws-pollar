@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import Popup from "./Popup";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useNavigate } from "react-router-dom";
+import { AnonymousContext } from "../ToggleButton/anonymous-context";
+import AnonymousToggleButton from "../ToggleButton/AnonymousToggleButton";
 
 function NavBar(props) {
   const [isOpen, setIsOpen] = useState(false);
@@ -72,6 +74,12 @@ function NavBar(props) {
         </div>
       </div>
       <div className="navbar__right">
+        <AnonymousToggleButton />
+        <img
+          src={process.env.PUBLIC_URL + "/info-icon.png"}
+          className="anon__info"
+          onClick={togglePopup}
+        />
         <img
           src={process.env.PUBLIC_URL + "/messages.png"}
           className="msgbttn"
@@ -87,9 +95,6 @@ function NavBar(props) {
               &#9776;
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item href="#" onClick={togglePopup}>
-                Anonymous Mode
-              </Dropdown.Item>
               <Dropdown.Item href="#" onClick={goToProfile}>
                 User Profile
               </Dropdown.Item>
@@ -103,36 +108,9 @@ function NavBar(props) {
           </Dropdown>
         </div>
       </div>
-      {isOpen && (
-        <Popup
-          content={
-            <>
-              <p className="anon_title">Anonymous Mode</p>
-              <div className="mode_description">
-                <p className = "anon_desc">
-                  What you do on Pollar is private, your activity won't affect
-                  your account.{" "}
-                </p>
-              </div>
-              <p className="Mode_On_Desc"> Turn On Anonymous Mode</p>
-              <form>
-                <input
-                  type="checkbox"
-                  id="anonymous_on"
-                  value="anonymous"
-                  className="anonymousMode_On"
-                ></input>
-                <input
-                  type="submit"
-                  id="submit_mode"
-                  className="submit_anon"
-                ></input>
-              </form>
-            </>
-          }
-          handleClose={togglePopup}
-        />
-      )}
+
+      {isOpen && <Popup />}
+
     </div>
   );
 }

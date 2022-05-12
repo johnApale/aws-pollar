@@ -29,11 +29,15 @@
     margin-right: 12px
 }
 
+.poll__categories {
+    font-size: 12px;
+}
+
 .poll__bottom{
     display: flex;
     /* flex-direction: row; */
     font-size: small;
-    margin-top: 10px;
+    margin-top: 15px;
     margin-bottom: -23px;
 }
 
@@ -48,18 +52,17 @@
 }
 .bottom__left{
     display: flex;
-    width: 120px;
     justify-content: space-between;
     margin-top: 5px;
 }
 
 .bottom__right {
-
     display: flex;
     width: 130px;
     justify-content: space-between;
     margin-left: auto;
     margin-right: 0;
+    margin-top: 5px;
     height: 40px;
 }
 
@@ -77,15 +80,32 @@
 }
 
 .poll__views{
+
     margin-left: 10px;
     font-weight: 300;
 }
 .poll__likes{
     font-weight: 300;
+
 }
 
-.poll__username:hover{
+.poll__username:hover, .poll__option:hover, .current__poll__option:hover{
     cursor: pointer;
+}
+
+.poll__percentage{
+    margin-left: auto;
+}
+
+.current__poll__option{
+    display: flex;
+    padding: 7px;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 2px solid #585858;
+    font-size: 13px;
+    font-weight: 600;
+    background-color: #E0E0E0;
 }
 
 .poll__buttons{
@@ -110,9 +130,13 @@
 
 }
 
-.poll__option {
+.poll__option, .anon__poll__option {
     display: flex;
+    padding: 7px;
     align-items: center;
+    margin-bottom: 10px;
+    border: 1px solid grey;
+    font-size: 13px;
 }
 
 .poll__value {
