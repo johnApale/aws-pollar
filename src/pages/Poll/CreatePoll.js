@@ -89,8 +89,8 @@ function CreatePoll(props) {
   return (
     <div className="CreatePoll">
       <form className="poll_form" onSubmit={createPollFe}>
-        <h1>Create A Poll</h1>
-        <p>Title</p>
+        <h1>Create Poll</h1>
+        <p className="cp_title">Title</p>
         <input
           type="text"
           className="create__title"
@@ -99,7 +99,7 @@ function CreatePoll(props) {
           }}
           required
         />
-        <p>Category</p>
+        <p className="cp_category">Category</p>
         <input
           type="text"
           className="category"
@@ -108,7 +108,7 @@ function CreatePoll(props) {
           }}
           required
         />
-        <p>Summary</p>
+        <p className="cp_summary">Summary</p>
         <input
           type="text"
           className="desription"
@@ -116,7 +116,7 @@ function CreatePoll(props) {
             setSummary(event.target.value);
           }}
         />
-        <p>Answer Options</p>
+        <p className="cp_ao">Answer Options</p>
         <div className="answerOptions">
           <input
             type="text"
@@ -201,7 +201,7 @@ function CreatePoll(props) {
         </div>
         <div className="create__options">
           {" "}
-          <p>Poll Options</p>
+          <p className="cp_po">Poll Options</p>
           <input
             type="checkbox"
             className="makePublic"
